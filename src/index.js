@@ -55,10 +55,6 @@ const transformRadixColors = () => {
   return colors;
 };
 
-const getNaturalColorPair = (colorName) => {
-  return naturalColorPairs[colorName] ?? "graydark";
-};
-
 module.exports = plugin(
   ({ addComponents, config, theme }) => {
     const darkSelector =
@@ -67,13 +63,13 @@ module.exports = plugin(
         : ".dark &";
 
     for (const [colorName, color] of Object.entries(theme("colors"))) {
-      if (colorName in fixedColors || colorName.endsWith("dark")) {
+      if (!(colorName in naturalColorPairs)) {
         continue;
       }
 
       const darkColor = theme(`colors.${colorName}dark`);
       const solidTextColorValue = theme(
-        `colors.${getNaturalColorPair(colorName)}.12`
+        `colors.${naturalColorPairs[colorName]}.12`
       );
 
       addComponents({
