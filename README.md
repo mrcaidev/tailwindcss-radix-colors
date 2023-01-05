@@ -54,8 +54,6 @@ Some minimal examples:
 - `divide-gray-6 dark:divide-graydark-6`
 - `text-slate-12 disabled:text-slate-11`
 
-[👉 See utility-first demo](https://tailwindcss-radix-colors.mrcai.dev/utility-first)
-
 ### 🪧 Semantic-First
 
 The plugin also includes a set of component classes, which are essentially pre-defined combinations of utility classes that adhere to [the design guidelines of Radix UI](https://www.radix-ui.com/docs/colors/palette-composition/understanding-the-scale). Though not recommended, it does have some advantages:
@@ -86,8 +84,6 @@ The reference list is shown below in blue as an example.
 |  `text-blue-normal`  |                                           `text-blue-12 dark:text-bluedark-12`                                           |
 
 > Use cases for each semantic classes can be found on [Radix UI's official documentation](https://www.radix-ui.com/docs/colors/palette-composition/understanding-the-scale).
-
-[👉 See semantic-first demo](https://tailwindcss-radix-colors.mrcai.dev/semantic-first)
 
 ## 📜 License
 
