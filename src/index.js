@@ -27,6 +27,14 @@ const naturalColorPairs = {
   amber: "sand",
   orange: "sanddark",
   brown: "sanddark",
+  gray: "graydark",
+  mauve: "mauvedark",
+  slate: "slatedark",
+  sage: "sagedark",
+  olive: "olivedark",
+  sand: "sanddark",
+  gold: "graydark",
+  bronze: "graydark",
 };
 
 const transformRadixColors = () => {
