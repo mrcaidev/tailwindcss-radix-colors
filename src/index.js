@@ -23,10 +23,10 @@ const naturalColorPairs = {
   green: "sagedark",
   lime: "olive",
   grass: "olivedark",
-  yellow: "gold",
-  amber: "gold",
-  orange: "orangedark",
-  brown: "orangedark",
+  yellow: "sand",
+  amber: "sand",
+  orange: "sanddark",
+  brown: "sanddark",
 };
 
 const transformRadixColors = () => {
