@@ -39,7 +39,7 @@
     "tailwindcss": "^3.2.4"
   },
   "peerDependencies": {
-    "tailwindcss": "^3.2.4"
+    "tailwindcss": ">=3.0.0"
   },
   "publishConfig": {
     "access": "public",
