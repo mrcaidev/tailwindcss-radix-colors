@@ -1,80 +1,19 @@
 const radixColors = require("@radix-ui/colors");
 const plugin = require("tailwindcss/plugin");
 
-const fixedColors = {
-  transparent: "transparent",
-  current: "currentColor",
-};
-
-const naturalColorPairs = {
-  tomato: "mauvedark",
-  red: "mauvedark",
-  crimson: "mauvedark",
-  pink: "mauvedark",
-  plum: "mauvedark",
-  purple: "mauvedark",
-  violet: "mauvedark",
-  sky: "slate",
-  indigo: "slatedark",
-  blue: "slatedark",
-  cyan: "slatedark",
-  mint: "sage",
-  teal: "sagedark",
-  green: "sagedark",
-  lime: "olive",
-  grass: "olivedark",
-  yellow: "sand",
-  amber: "sand",
-  orange: "sanddark",
-  brown: "sanddark",
-  gray: "graydark",
-  mauve: "mauvedark",
-  slate: "slatedark",
-  sage: "sagedark",
-  olive: "olivedark",
-  sand: "sanddark",
-  gold: "graydark",
-  bronze: "graydark",
-};
-
-const transformRadixColors = () => {
-  const colors = {};
-
-  for (const [radixColorName, radixColor] of Object.entries(radixColors)) {
-    if (radixColorName.endsWith("A")) {
-      continue;
-    }
-
-    const color = {};
-    for (const [radixScale, value] of Object.entries(radixColor)) {
-      const regexResult = radixScale.match(/\d+$/);
-      if (!regexResult) {
-        continue;
-      }
-
-      const scale = regexResult[0];
-      color[scale] = value;
-    }
-
-    const colorName = radixColorName.toLowerCase();
-    colors[colorName] = color;
-  }
-
-  return colors;
-};
-
 module.exports = plugin(
   ({ addComponents, config, theme }) => {
     const darkSelector = getDarkSelector(config);
 
     for (const [colorName, color] of Object.entries(theme("colors"))) {
-      if (!(colorName in naturalColorPairs)) {
+      const shouldAddComponent = getShouldAddComponent(colorName);
+      if (!shouldAddComponent) {
         continue;
       }
 
       const darkColor = theme(`colors.${colorName}dark`);
       const solidTextColorValue = theme(
-        `colors.${naturalColorPairs[colorName]}.12`
+        `colors.${getNaturalColorPair(colorName)}.12`
       );
 
       addComponents({
@@ -193,12 +132,39 @@ module.exports = plugin(
   {
     theme: {
       colors: {
-        ...fixedColors,
+        transparent: "transparent",
+        current: "currentColor",
         ...transformRadixColors(),
       },
     },
   }
 );
+
+function transformRadixColors() {
+  const colors = {};
+
+  for (const [radixColorName, radixColor] of Object.entries(radixColors)) {
+    if (radixColorName.endsWith("A")) {
+      continue;
+    }
+
+    const colorName = radixColorName.toLowerCase();
+
+    const color = {};
+    for (const [radixScale, value] of Object.entries(radixColor)) {
+      const regexResult = radixScale.match(/\d+$/);
+      if (!regexResult || !regexResult[0]) {
+        continue;
+      }
+      const scale = regexResult[0];
+      color[scale] = value;
+    }
+
+    colors[colorName] = color;
+  }
+
+  return colors;
+}
 
 function getDarkSelector(config) {
   const darkMode = config("darkMode");
@@ -235,4 +201,57 @@ function getDarkSelector(config) {
   }
 
   return '[class="dark"] &';
+}
+
+function getShouldAddComponent(colorName) {
+  const shouldNotAddComponent =
+    colorName === "transparent" ||
+    colorName === "current" ||
+    colorName.endsWith("dark");
+  return !shouldNotAddComponent;
+}
+
+function getNaturalColorPair(colorName) {
+  switch (colorName) {
+    case "tomato":
+    case "red":
+    case "crimson":
+    case "pink":
+    case "plum":
+    case "purple":
+    case "violet":
+    case "mauve":
+      return "mauvedark";
+    case "sky":
+      return "slate";
+    case "indigo":
+    case "blue":
+    case "cyan":
+    case "slate":
+      return "slatedark";
+    case "mint":
+      return "sage";
+    case "teal":
+    case "green":
+    case "sage":
+      return "sagedark";
+    case "lime":
+      return "olive";
+    case "grass":
+    case "olive":
+      return "olivedark";
+    case "yellow":
+    case "amber":
+      return "sand";
+    case "orange":
+    case "brown":
+    case "sand":
+      return "sanddark";
+    case "gray":
+    case "gold":
+    case "bronze":
+      return "graydark";
+    default:
+      return "graydark";
+  }
 }
