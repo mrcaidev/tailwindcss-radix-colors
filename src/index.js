@@ -65,9 +65,13 @@ const transformRadixColors = () => {
 
 module.exports = plugin(
   ({ addComponents, config, theme }) => {
+    const prefix = config("prefix");
+
     const darkSelector =
       config("darkMode") === "media"
         ? "@media (prefers-color-scheme: dark)"
+        : prefix
+        ? `[class="${prefix}dark"] &`
         : '[class="dark"] &';
 
     for (const [colorName, color] of Object.entries(theme("colors"))) {
