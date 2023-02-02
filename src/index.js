@@ -68,7 +68,7 @@ module.exports = plugin(
     const darkSelector =
       config("darkMode") === "media"
         ? "@media (prefers-color-scheme: dark)"
-        : ".dark &";
+        : '[class="dark"] &';
 
     for (const [colorName, color] of Object.entries(theme("colors"))) {
       if (!(colorName in naturalColorPairs)) {
