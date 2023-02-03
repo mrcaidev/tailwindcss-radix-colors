@@ -1,8 +1,8 @@
-# tailwindcss-radix-colors
+![Banner](https://repository-images.githubusercontent.com/584681366/0784c1d7-79a1-40b7-aca1-3fd98216c844)
 
 Bring [Radix UI's color system](https://www.radix-ui.com/colors) to [Tailwind CSS](https://tailwindcss.com/).
 
-## ✨ Introduction
+## 🎨 Why another color palette?
 
 Tailwind CSS includes [an amazing color palette](https://tailwindcss.com/docs/customizing-colors) that is comprehensive, beautiful and easy to use.
 
@@ -11,6 +11,22 @@ However, it falls short when we need to apply different color scales to differen
 Radix UI, on the other hand, is well designed to [handle these states](https://www.radix-ui.com/docs/colors/palette-composition/understanding-the-scale) by assigning a semantic meaning to each color scale, such as "Step 3" for normal states, "Step 4" for hover states, "Step 5" for pressed or selected states, and so on.
 
 This plugin lets you use Radix UI's color system in Tailwind CSS, combining Radix's power and Tailwind's simplicity.
+
+## 🔌 Why this one?
+
+You may have already seen similar plugins on GitHub that provide the same functionality, such as [windy-radix-palette](https://github.com/brattonross/windy-radix-palette) and [radix-colors-for-tailwind](https://github.com/samrobbins85/radix-colors-for-tailwind).
+
+However, most of them have a deadly flaw: They inject the colors into `:root` as CSS variables, which, if not configured properly, will generate a super-bloated CSS bundle. (bloated from ~5KB to ~50KB)
+
+> See [reproduction](https://github.com/mrcaidev/unused-classes-bundled).
+
+And even if you do configure it properly, you will still have some unused CSS variables in your bundle.
+
+This plugin solves this problem by replacing the entire color system of Tailwind with Radix UI, so that it can utilize Tailwind's [class detection](https://tailwindcss.com/docs/content-configuration#class-detection-in-depth) mechanism, and purge unused classes during compilation.
+
+As a result, this plugin will only generate the colors you actually use, which means you will have a much smaller CSS bundle, with zero configuration.
+
+Additionally, this plugin also includes a set of component classes, which can help you build prototypes quickly. (It even knows how to apply the best text color for a certain background!) See [Semantic First](#🪧-semantic-first) section for more details.
 
 ## 🚀 Getting Started
 
@@ -31,7 +47,9 @@ module.exports = {
 };
 ```
 
-## 🎨 Usage
+No configuration is required!
+
+## 💡 Usage
 
 You can style your application in two ways: utility-first or semantic-first.
 
