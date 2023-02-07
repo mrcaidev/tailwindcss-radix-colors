@@ -197,10 +197,10 @@ function getDarkSelector(config) {
   }
 
   if (prefix) {
-    return `[class="${prefix}dark"] &`;
+    return `[class~="${prefix}dark"] &`;
   }
 
-  return '[class="dark"] &';
+  return '[class~="dark"] &';
 }
 
 function getShouldAddComponent(colorName) {
