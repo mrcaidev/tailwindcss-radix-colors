@@ -12,21 +12,7 @@ Radix UI, on the other hand, is well designed to [handle these states](https://w
 
 This plugin lets you use Radix UI's color system in Tailwind CSS, combining Radix's power and Tailwind's simplicity.
 
-## 🔌 Why this one?
-
-You may have already seen similar plugins on GitHub that provide the same functionality, such as [windy-radix-palette](https://github.com/brattonross/windy-radix-palette) and [radix-colors-for-tailwind](https://github.com/samrobbins85/radix-colors-for-tailwind).
-
-However, most of them have a deadly flaw: They inject the colors into `:root` as CSS variables, which, if not configured properly, will generate a super-bloated CSS bundle. (bloated from ~5KB to ~50KB)
-
-> See [reproduction](https://github.com/mrcaidev/unused-classes-bundled).
-
-And even if you do configure it properly, you will still have some unused CSS variables in your bundle.
-
-This plugin solves this problem by replacing the entire color system of Tailwind with Radix UI, so that it can utilize Tailwind's [class detection](https://tailwindcss.com/docs/content-configuration#class-detection-in-depth) mechanism, and purge unused classes during compilation.
-
-As a result, this plugin will only generate the colors you actually use, which means you will have a much smaller CSS bundle, with zero configuration.
-
-Additionally, this plugin also includes a set of component classes, which can help you build prototypes quickly. (It even knows how to apply the best text color for a certain background!) See [Semantic First](#🪧-semantic-first) section for more details.
+[What is this plugin different from other similar plugins?](#🔌-comparison)
 
 ## 🚀 Getting Started
 
@@ -102,6 +88,27 @@ The reference list is shown below in blue as an example.
 |  `text-blue-normal`  |                                           `text-blue-12 dark:text-bluedark-12`                                           |
 
 > Use cases for each semantic classes can be found on [Radix UI's official documentation](https://www.radix-ui.com/docs/colors/palette-composition/understanding-the-scale).
+
+
+## 🔌 Comparison
+
+You may have already seen similar plugins on GitHub that provide the same functionality, such as [windy-radix-palette](https://github.com/brattonross/windy-radix-palette) and [radix-colors-for-tailwind](https://github.com/samrobbins85/radix-colors-for-tailwind).
+
+Most of them do their magic by injecting the colors into `:root` as CSS variables, which, if improperly configured, will generate a super-bloated CSS bundle. (bloated from ~5KB to ~50KB)
+
+> See [reproduction](https://github.com/mrcaidev/unused-classes-bundled).
+
+And even if you do configure it properly, you will still introduce some unused CSS variables into your bundle.
+
+> For example, if you use `red-1` somewhere in your project, the whole red color family, `red-1` to `red-12` plus their dark mode variants, will be included in your bundle, which is probably not what you want.
+
+This plugin solves this problem by replacing the entire color system of Tailwind with Radix UI, so that it can utilize Tailwind's [class detection](https://tailwindcss.com/docs/content-configuration#class-detection-in-depth) mechanism, and purge unused classes during compilation.
+
+As a result, this plugin will only generate the colors you actually use, which means you will have a much smaller CSS bundle, with zero configuration.
+
+Additionally, this plugin also includes a set of component classes, which can help you build prototypes quickly. (It even knows how to apply the best text color for a certain background!) See [Semantic First](#🪧-semantic-first) section for more details.
+
+However, this plugin does not provide you with dark mode support out of the box, which means you always have to write `bg-gray-1 dark:bg-grakdark-1` instead of `bg-gray-1` and let the plugin handle the rest. A detailed discussion can be found in [this issue](https://github.com/mrcaidev/tailwindcss-radix-colors/issues/1).
 
 ## 📜 License
 
