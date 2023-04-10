@@ -1,6 +1,6 @@
 {
   "name": "tailwindcss-radix-colors",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Bring Radix UI's color system to Tailwind CSS.",
   "keywords": [
     "tailwindcss",
