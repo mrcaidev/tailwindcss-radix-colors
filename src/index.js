@@ -11,9 +11,13 @@ module.exports = plugin(
         continue;
       }
 
-      const darkColor = theme(`colors.${colorName}dark`);
+      const { solidColorName, darkColorName } = getColorNameFamily(
+        theme,
+        colorName
+      );
+      const darkColor = theme(`colors.${darkColorName}`);
       const solidTextColorValue = theme(
-        `colors.${getNaturalColorPair(colorName)}.12`
+        `colors.${getNaturalColorPair(solidColorName)}.12`
       );
 
       addComponents({
@@ -144,10 +148,6 @@ function transformRadixColors() {
   const colors = {};
 
   for (const [radixColorName, radixColor] of Object.entries(radixColors)) {
-    if (radixColorName.endsWith("A")) {
-      continue;
-    }
-
     const colorName = radixColorName.toLowerCase();
 
     const color = {};
@@ -207,8 +207,28 @@ function getShouldAddComponent(colorName) {
   const shouldNotAddComponent =
     colorName === "transparent" ||
     colorName === "current" ||
-    colorName.endsWith("dark");
+    colorName.endsWith("dark") ||
+    colorName.endsWith("darka");
   return !shouldNotAddComponent;
+}
+
+function getColorNameFamily(theme, colorName) {
+  if (colorName === "blacka") {
+    return { solidColorName: "black", darkColorName: "whitea" };
+  }
+
+  if (colorName === "whitea") {
+    return { solidColorName: "white", darkColorName: "blacka" };
+  }
+
+  if (colorName.endsWith("a")) {
+    const solidColorName = colorName.slice(0, -1);
+    if (theme("colors." + solidColorName)) {
+      return { solidColorName, darkColorName: solidColorName + "darka" };
+    }
+  }
+
+  return { solidColorName: colorName, darkColorName: colorName + "dark" };
 }
 
 function getNaturalColorPair(colorName) {
@@ -247,9 +267,12 @@ function getNaturalColorPair(colorName) {
     case "brown":
     case "sand":
       return "sanddark";
+    case "white":
+      return "gray";
     case "gray":
     case "gold":
     case "bronze":
+    case "black":
       return "graydark";
     default:
       return "graydark";
