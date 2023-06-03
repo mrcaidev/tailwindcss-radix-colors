@@ -118,6 +118,28 @@ module.exports = plugin(
             },
           },
         },
+        [`.divide-${colorName}-dim`]: {
+          "& > :not([hidden]) ~ :not([hidden])": {
+            borderColor: color["6"],
+            [darkSelector]: {
+              borderColor: darkColor["6"],
+            },
+          },
+        },
+        [`.divide-${colorName}-normal`]: {
+          "& > :not([hidden]) ~ :not([hidden])": {
+            borderColor: color["7"],
+            "&:hover": {
+              borderColor: color["8"],
+            },
+            [darkSelector]: {
+              borderColor: darkColor["7"],
+              "&:hover": {
+                borderColor: darkColor["8"],
+              },
+            },
+          },
+        },
         [`.text-${colorName}-dim`]: {
           color: color["11"],
           [darkSelector]: {
