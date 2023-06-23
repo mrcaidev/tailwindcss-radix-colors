@@ -1,9 +1,14 @@
-const radixColors = require("@radix-ui/colors");
 const plugin = require("tailwindcss/plugin");
+const { buildDarkSelector } = require("./dark");
+const {
+  formatRadixColors,
+  getColorFamily,
+  getShouldAddComponent,
+} = require("./color");
 
 module.exports = plugin(
   ({ addComponents, config, theme }) => {
-    const darkSelector = getDarkSelector(config);
+    const darkSelector = buildDarkSelector(config);
 
     for (const [colorName, color] of Object.entries(theme("colors"))) {
       const shouldAddComponent = getShouldAddComponent(colorName);
@@ -11,14 +16,7 @@ module.exports = plugin(
         continue;
       }
 
-      const { solidColorName, darkColorName } = getColorNameFamily(
-        theme,
-        colorName
-      );
-      const darkColor = theme(`colors.${darkColorName}`);
-      const solidTextColorValue = theme(
-        `colors.${getNaturalColorPair(solidColorName)}.12`
-      );
+      const { darkColor, grayScale } = getColorFamily(theme, colorName);
 
       addComponents({
         [`.bg-${colorName}-app`]: {
@@ -89,7 +87,7 @@ module.exports = plugin(
         },
         [`.bg-${colorName}-solid`]: {
           backgroundColor: color["9"],
-          color: solidTextColorValue,
+          color: grayScale["12"],
           "&:hover": {
             backgroundColor: color["10"],
           },
@@ -160,143 +158,8 @@ module.exports = plugin(
       colors: {
         transparent: "transparent",
         current: "currentColor",
-        ...transformRadixColors(),
+        ...formatRadixColors(),
       },
     },
   }
 );
-
-function transformRadixColors() {
-  const colors = {};
-
-  for (const [radixColorName, radixColor] of Object.entries(radixColors)) {
-    const colorName = radixColorName.toLowerCase();
-
-    const color = {};
-    for (const [radixScale, value] of Object.entries(radixColor)) {
-      const regexResult = radixScale.match(/\d+$/);
-      if (!regexResult || !regexResult[0]) {
-        continue;
-      }
-      const scale = regexResult[0];
-      color[scale] = value;
-    }
-
-    colors[colorName] = color;
-  }
-
-  return colors;
-}
-
-function getDarkSelector(config) {
-  const darkMode = config("darkMode");
-  const prefix = config("prefix");
-
-  if (Array.isArray(darkMode)) {
-    if (darkMode.length < 2) {
-      throw new Error(
-        "To customize the dark mode selector, `darkMode` should contain two items. Documentation: https://tailwindcss.com/docs/dark-mode#customizing-the-class-name"
-      );
-    }
-
-    if (darkMode[0] !== "class") {
-      throw new Error(
-        'To customize the dark mode selector, `darkMode` should have "class" as its first item. Documentation: https://tailwindcss.com/docs/dark-mode#customizing-the-class-name'
-      );
-    }
-
-    return darkMode[1] + " &";
-  }
-
-  if (darkMode === "media") {
-    return "@media (prefers-color-scheme: dark)";
-  }
-
-  if (darkMode !== "class") {
-    throw new Error(
-      "Invalid `darkMode`. Documentation: https://tailwindcss.com/docs/dark-mode"
-    );
-  }
-
-  if (prefix) {
-    return `[class~="${prefix}dark"] &`;
-  }
-
-  return '[class~="dark"] &';
-}
-
-function getShouldAddComponent(colorName) {
-  const shouldNotAddComponent =
-    colorName === "transparent" ||
-    colorName === "current" ||
-    colorName.endsWith("dark") ||
-    colorName.endsWith("darka");
-  return !shouldNotAddComponent;
-}
-
-function getColorNameFamily(theme, colorName) {
-  if (colorName === "blacka") {
-    return { solidColorName: "black", darkColorName: "whitea" };
-  }
-
-  if (colorName === "whitea") {
-    return { solidColorName: "white", darkColorName: "blacka" };
-  }
-
-  if (colorName.endsWith("a")) {
-    const solidColorName = colorName.slice(0, -1);
-    if (theme("colors." + solidColorName)) {
-      return { solidColorName, darkColorName: solidColorName + "darka" };
-    }
-  }
-
-  return { solidColorName: colorName, darkColorName: colorName + "dark" };
-}
-
-function getNaturalColorPair(colorName) {
-  switch (colorName) {
-    case "tomato":
-    case "red":
-    case "crimson":
-    case "pink":
-    case "plum":
-    case "purple":
-    case "violet":
-    case "mauve":
-      return "mauvedark";
-    case "sky":
-      return "slate";
-    case "indigo":
-    case "blue":
-    case "cyan":
-    case "slate":
-      return "slatedark";
-    case "mint":
-      return "sage";
-    case "teal":
-    case "green":
-    case "sage":
-      return "sagedark";
-    case "lime":
-      return "olive";
-    case "grass":
-    case "olive":
-      return "olivedark";
-    case "yellow":
-    case "amber":
-      return "sand";
-    case "orange":
-    case "brown":
-    case "sand":
-      return "sanddark";
-    case "white":
-      return "gray";
-    case "gray":
-    case "gold":
-    case "bronze":
-    case "black":
-      return "graydark";
-    default:
-      return "graydark";
-  }
-}
