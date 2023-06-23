@@ -24,16 +24,16 @@
     "src"
   ],
   "main": "src/index.js",
-  "typings": "src/index.d.ts",
+  "types": "src/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/mrcaidev/tailwindcss-radix-colors.git"
   },
   "dependencies": {
-    "@radix-ui/colors": "^0.1.8"
+    "@radix-ui/colors": "^0.1.9"
   },
   "devDependencies": {
-    "eslint": "^8.42.0",
+    "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.8.0",
     "prettier": "^2.8.8",
     "tailwindcss": "^3.3.2"
