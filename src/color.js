@@ -64,6 +64,10 @@ const alphaColorNames = originalColorNames.map((name) => name + "a");
  *          custom -> false
  */
 function getShouldAddComponent(colorName) {
+  if (colorName === "black" || colorName === "white") {
+    return false;
+  }
+
   return (
     originalColorNames.includes(colorName) ||
     alphaColorNames.includes(colorName)
