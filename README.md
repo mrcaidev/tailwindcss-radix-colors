@@ -109,7 +109,7 @@ As a result, this plugin will only generate the colors you actually use, which m
 
 Additionally, this plugin also includes a set of component classes, which can help you build prototypes quickly. (It even knows how to apply the best text color for a certain background!) See [Semantic First](#🪧-semantic-first) section for more details.
 
-However, this plugin does not provide you with dark mode support out of the box, which means you always have to write `bg-gray-1 dark:bg-grakdark-1` instead of `bg-gray-1` and let the plugin handle the rest. A detailed discussion can be found in [this issue](https://github.com/mrcaidev/tailwindcss-radix-colors/issues/1).
+However, this plugin does not provide you with dark mode support out of the box, which means you always have to write `bg-gray-1 dark:bg-graydark-1` instead of `bg-gray-1` and let the plugin handle the rest. A detailed discussion can be found in [this issue](https://github.com/mrcaidev/tailwindcss-radix-colors/issues/1).
 
 ## 📜 License
 
