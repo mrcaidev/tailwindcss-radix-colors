@@ -30,13 +30,13 @@
     "url": "https://github.com/mrcaidev/tailwindcss-radix-colors.git"
   },
   "dependencies": {
-    "@radix-ui/colors": "^1.0.1"
+    "@radix-ui/colors": "^3.0.0"
   },
   "devDependencies": {
-    "eslint": "^8.45.0",
-    "eslint-config-prettier": "^8.8.0",
-    "prettier": "^3.0.0",
-    "tailwindcss": "^3.3.3"
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.2.4",
+    "tailwindcss": "^3.4.1"
   },
   "peerDependencies": {
     "tailwindcss": ">=3.0.0"
