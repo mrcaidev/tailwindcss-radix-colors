@@ -27,6 +27,7 @@ pnpm add tailwindcss-radix-colors # use pnpm
 Then, add the plugin to your `tailwind.config.js` file:
 
 ```js
+// tailwind.config.js
 module.exports = {
   // ...
   plugins: [require("tailwindcss-radix-colors")],
@@ -90,6 +91,16 @@ The reference list is shown below in blue as an example.
 | `text-blue-normal`   | `text-blue-12 dark:text-bluedark-12`                                                                                     |
 
 > Use cases for each semantic classes can be found on [Radix UI's official documentation](https://www.radix-ui.com/docs/colors/palette-composition/understanding-the-scale).
+
+You can disable semantic classes with option `disableSemantics`:
+
+```js
+// tailwind.config.js
+module.exports = {
+  // ...
+  plugins: [require("tailwindcss-radix-colors")({ disableSemantics: true })],
+};
+```
 
 ## 🔌 Comparison
 
