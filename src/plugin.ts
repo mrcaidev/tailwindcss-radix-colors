@@ -6,15 +6,34 @@ import type {
 import { buildDarkSelector } from "./dark";
 
 /**
+ * Options for the plugin `tailwindcss-radix-colors`.
+ */
+export interface TailwindCSSRadixColorsOptions {
+  /**
+   * Disable the semantics classes, such as `bg-red-solid`.
+   */
+  disableSemantics?: boolean;
+}
+
+/**
+ * Build the plugin with user options.
+ */
+export function buildPlugin(options: TailwindCSSRadixColorsOptions = {}) {
+  const { disableSemantics } = options;
+
+  if (disableSemantics) {
+    return () => 0;
+  }
+
+  return pluginCreator;
+}
+
+/**
  * Add component classes for convenience.
  *
  * @see https://tailwindcss.com/docs/plugins#adding-components
  */
-export const pluginCreator: PluginCreator = ({
-  addComponents,
-  config,
-  theme,
-}) => {
+const pluginCreator: PluginCreator = ({ addComponents, config, theme }) => {
   const darkSelector = buildDarkSelector(config);
   const colors: Record<string, Record<string, string>> = theme("colors");
 

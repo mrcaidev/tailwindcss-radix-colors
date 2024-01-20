@@ -1,29 +1,30 @@
 import * as radixColors from "@radix-ui/colors";
-import type { Config } from "tailwindcss";
 
 /**
  * Override Tailwind CSS color palette.
  *
  * @see https://tailwindcss.com/docs/plugins#extending-the-configuration
  */
-export const config: Partial<Config> = {
-  theme: {
-    colors: {
-      transparent: "transparent",
-      current: "currentColor",
-      black: "black",
-      white: "white",
-      ...formatRadixColors(),
+export function buildConfig() {
+  return {
+    theme: {
+      colors: {
+        transparent: "transparent",
+        current: "currentColor",
+        black: "black",
+        white: "white",
+        ...formatRadixColors(),
+      },
     },
-  },
-};
+  };
+}
 
 /**
  * Format Radix colors into Tailwind CSS format.
  *
  * @example blueDark.blue1 -> bluedark.1
  */
-export function formatRadixColors() {
+function formatRadixColors() {
   const colors: Record<string, Record<string, string>> = {};
 
   for (const [radixColorName, radixColor] of Object.entries(radixColors)) {
