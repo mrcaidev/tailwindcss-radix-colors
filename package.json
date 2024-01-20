@@ -19,24 +19,38 @@
     "email": "mrcaidev@gmail.com",
     "url": "https://mrcai.dev"
   },
-  "type": "commonjs",
+  "type": "module",
   "files": [
-    "src"
+    "dist"
   ],
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/mrcaidev/tailwindcss-radix-colors.git"
+  },
+  "scripts": {
+    "build": "vite build"
   },
   "dependencies": {
     "@radix-ui/colors": "^3.0.0"
   },
   "devDependencies": {
+    "@types/node": "^20.11.5",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.4",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.12",
+    "vite-plugin-dts": "^3.7.1"
   },
   "peerDependencies": {
     "tailwindcss": ">=3.0.0"

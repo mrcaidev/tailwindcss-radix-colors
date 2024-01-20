@@ -1,11 +1,14 @@
 {
-  "root": true,
-  "extends": ["eslint:recommended", "prettier"],
-  "env": {
-    "es2022": true,
-    "node": true
-  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:@typescript-eslint/stylistic-type-checked",
+    "prettier"
+  ],
   "parserOptions": {
-    "ecmaVersion": "latest"
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": true,
+    "tsconfigRootDir": "."
   }
 }
