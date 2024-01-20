@@ -11,6 +11,8 @@ export const config: Partial<Config> = {
     colors: {
       transparent: "transparent",
       current: "currentColor",
+      black: "black",
+      white: "white",
       ...formatRadixColors(),
     },
   },
