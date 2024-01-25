@@ -6,7 +6,7 @@ export default defineConfig({
     lib: {
       entry: "src/index.ts",
       fileName: "index",
-      formats: ["cjs"],
+      formats: ["es", "cjs"],
     },
   },
   plugins: [dts({ rollupTypes: true })],
