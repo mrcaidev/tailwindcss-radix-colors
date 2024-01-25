@@ -40,8 +40,7 @@ const pluginCreator: PluginCreator = ({ addComponents, config, theme }) => {
   for (const [colorName, color] of Object.entries(colors)) {
     if (
       colorName.includes("dark") ||
-      colorName === "transparent" ||
-      colorName === "current"
+      ["transparent", "current", "black", "white"].includes(colorName)
     ) {
       continue;
     }
