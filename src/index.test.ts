@@ -27,6 +27,28 @@ const run = (config: Config) =>
 
 const format = (source: string) => prettier.format(source, { parser: "css" });
 
+it("Given both `style` and `disableSemantics` option, Then `style` takes precedence", async () => {
+  const expected = `
+    .bg-slate-app {
+      background-color: #fcfcfd;
+    }
+    @media (prefers-color-scheme: dark) {
+      .bg-slate-app {
+        background-color: #111113;
+      }
+    }
+  `
+
+  const config = generateConfig({
+    disableSemantics: true,
+    style: "semantic",
+  })
+
+  return run(config).then(async (result) =>
+    assert.strictEqual(await format(result.css), await format(expected))
+  );
+});
+
 it("Given `disableSemantics: true`, Then only step classes are generated", async () => {
   const expected = `
     .bg-slate-1 {
@@ -37,6 +59,44 @@ it("Given `disableSemantics: true`, Then only step classes are generated", async
 
   const config = generateConfig({
     disableSemantics: true,
+  })
+
+  return run(config).then(async (result) =>
+    assert.strictEqual(await format(result.css), await format(expected))
+  );
+});
+
+it("Given `style: step`, Then only step classes are generated", async () => {
+  const expected = `
+    .bg-slate-1 {
+      --tw-bg-opacity: 1;
+      background-color: rgb(252 252 253 / var(--tw-bg-opacity))
+    }
+  `
+
+  const config = generateConfig({
+    style: "step",
+  })
+
+  return run(config).then(async (result) =>
+    assert.strictEqual(await format(result.css), await format(expected))
+  );
+});
+
+it("Given `style: semantic`, Then only semantic classes are generated", async () => {
+  const expected = `
+    .bg-slate-app {
+      background-color: #fcfcfd;
+    }
+    @media (prefers-color-scheme: dark) {
+      .bg-slate-app {
+        background-color: #111113;
+      }
+    }
+  `
+
+  const config = generateConfig({
+    style: "semantic",
   })
 
   return run(config).then(async (result) =>
@@ -208,6 +268,31 @@ it("Given no option, Then every semantic step is generated", async () => {
   `
 
   const config = generateConfig({}, "bg-slate-app bg-slate-subtle bg-slate-ui bg-slate-ghost bg-slate-action border-slate-dim border-slate-normal divide-slate-dim divide-slate-normal text-slate-dim text-slate-normal")
+
+  return run(config).then(async (result) =>
+    assert.strictEqual(await format(result.css), await format(expected))
+  );
+});
+
+it("Given `style: both`, Then both step and semantic classes are generated", async () => {
+  const expected = `
+    .bg-slate-1 {
+      --tw-bg-opacity: 1;
+      background-color: rgb(252 252 253 / var(--tw-bg-opacity))
+    }
+    .bg-slate-app {
+      background-color: #fcfcfd;
+    }
+    @media (prefers-color-scheme: dark) {
+      .bg-slate-app {
+        background-color: #111113;
+      }
+    }
+  `
+
+  const config = generateConfig({
+    style: "both",
+  })
 
   return run(config).then(async (result) =>
     assert.strictEqual(await format(result.css), await format(expected))
