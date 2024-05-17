@@ -11,17 +11,27 @@ import { buildDarkSelector } from "./dark";
 export interface TailwindCSSRadixColorsOptions {
   /**
    * Disable the semantics classes, such as `bg-red-solid`.
+   *
+   * @deprecated Use `style: "step" instead.
    */
   disableSemantics?: boolean;
+
+  /**
+   * Choose the class style to use:
+   * - `semantic`: use semantic classes such as `bg-red-app`
+   * - `step`: use step classes such as `bg-red-1`
+   * - `both`: use both semantic and step classes
+   *
+   * @default "both"
+   */
+  style?: "semantic" | "step" | "both";
 }
 
 /**
  * Build the plugin with user options.
  */
-export function buildPlugin(options: TailwindCSSRadixColorsOptions = {}) {
-  const { disableSemantics } = options;
-
-  if (disableSemantics) {
+export function buildPlugin({ style = "both", disableSemantics }: TailwindCSSRadixColorsOptions) {
+  if (style === "step" || (style === "both" && disableSemantics)) {
     return () => 0;
   }
 
