@@ -37,7 +37,8 @@
     "url": "https://github.com/mrcaidev/tailwindcss-radix-colors.git"
   },
   "scripts": {
-    "build": "vite build"
+    "build": "vite build",
+    "test": "vitest"
   },
   "dependencies": {
     "@radix-ui/colors": "^3.0.0"
@@ -48,11 +49,13 @@
     "@typescript-eslint/parser": "^6.19.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
+    "postcss": "^8.4.38",
     "prettier": "^3.2.4",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3",
     "vite": "^5.0.12",
-    "vite-plugin-dts": "^3.7.1"
+    "vite-plugin-dts": "^3.7.1",
+    "vitest": "^1.6.0"
   },
   "peerDependencies": {
     "tailwindcss": ">=3.0.0"
