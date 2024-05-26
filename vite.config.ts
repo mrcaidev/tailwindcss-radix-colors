@@ -2,13 +2,7 @@ import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
 export default defineConfig({
-  test: {
-    isolate: false,
-    watch: false,
-    sequence: {
-      concurrent: true,
-    }
-  },
+  plugins: [dts({ rollupTypes: true })],
   build: {
     lib: {
       entry: "src/index.ts",
@@ -16,5 +10,11 @@ export default defineConfig({
       formats: ["es", "cjs"],
     },
   },
-  plugins: [dts({ rollupTypes: true })],
+  test: {
+    isolate: false,
+    watch: false,
+    sequence: {
+      concurrent: true,
+    },
+  },
 });
