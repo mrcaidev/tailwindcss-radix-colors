@@ -4,7 +4,7 @@ import { buildConfig } from "./config";
 
 const config = buildConfig();
 
-test("All Radix UI colors are generated", () => {
+test("All Radix UI colors are transformed", () => {
   const radixColorNames = [
     "gray",
     "graya",
