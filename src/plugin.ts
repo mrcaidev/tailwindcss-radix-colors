@@ -35,13 +35,13 @@ export function buildPlugin(options: TailwindCSSRadixColorsOptions = {}) {
  */
 const pluginCreator: PluginCreator = ({ addComponents, config, theme }) => {
   const darkSelector = buildDarkSelector(config);
-  const colors: Record<string, Record<string, string>> = theme("colors");
+  const colors: Record<string, Record<string, string> | string> =
+    theme("colors");
 
   for (const [colorName, color] of Object.entries(colors)) {
-    if (
-      colorName.includes("dark") ||
-      ["transparent", "current", "black", "white"].includes(colorName)
-    ) {
+    const shouldAddComponent = checkShouldAddComponent(colorName, color);
+
+    if (!shouldAddComponent) {
       continue;
     }
 
@@ -225,6 +225,28 @@ const grayScalePairs = {
   white: "gray", // Not officially specified.
   black: "graydark", // Not officially specified.
 };
+
+function checkShouldAddComponent(
+  colorName: string,
+  color: Record<string, string> | string,
+): color is Record<string, string> {
+  if (colorName.includes("dark")) {
+    return false;
+  }
+
+  if (typeof color === "string") {
+    return false;
+  }
+
+  for (let scale = 1; scale <= 12; scale++) {
+    if (!color[scale]) {
+      console.warn(`Missing color scale ${scale.toString()} for ${colorName}`);
+      return false;
+    }
+  }
+
+  return true;
+}
 
 /**
  * Get the corresponding dark color and gray scale color of the original color.

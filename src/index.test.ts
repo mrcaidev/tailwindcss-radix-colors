@@ -11,8 +11,9 @@ import plugin from "./";
 const generateConfig = (
   pluginOptions: TailwindCSSRadixColorsOptions = {},
   content = "bg-slate-1 bg-slate-app",
+  theme: Config["theme"] = {},
 ): Config => ({
-  theme: {},
+  theme,
   content: [
     {
       raw: content,
@@ -28,6 +29,23 @@ const run = (config: Config) =>
   );
 
 const format = (source: string) => prettier.format(source, { parser: "css" });
+
+it("Given existing colors in config theme, no errors are thrown", async () => {
+  const expected = `
+    .bg-slate-1 {
+      --tw-bg-opacity: 1;
+      background-color: rgb(252 252 253 / var(--tw-bg-opacity))
+    }
+  `;
+
+  const config = generateConfig({}, "bg-slate-1", {
+    extend: { colors: { custom: "#123456" } },
+  });
+
+  return run(config).then(async (result) => {
+    assert.strictEqual(await format(result.css), await format(expected));
+  });
+});
 
 it("Given `disableSemantics: true`, Then only step classes are generated", async () => {
   const expected = `
