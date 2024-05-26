@@ -1,7 +1,10 @@
 import * as radixColors from "@radix-ui/colors";
 
 /**
- * Override Tailwind CSS color palette.
+ * Build the "config" part of `tailwindcss-radix-colors`, which will be used as
+ * the second argument of the `plugin.withOptions` function.
+ *
+ * @note This configuration completely overrides Tailwind CSS color palette.
  *
  * @see https://tailwindcss.com/docs/plugins#extending-the-configuration
  */
@@ -13,34 +16,61 @@ export function buildConfig() {
         current: "currentColor",
         black: "black",
         white: "white",
-        ...formatRadixColors(),
+        ...transform(radixColors),
       },
     },
   };
 }
 
 /**
- * Format Radix colors into Tailwind CSS format.
+ * Transform Radix UI's color palette into Tailwind CSS's format.
  *
- * @example blueDark.blue1 -> bluedark.1
+ * Radix UI's color palette looks like:
+ *
+ * ```json
+ * {
+ *   "blueDark": {
+ *     "blue1": "...",
+ *     "blue2": "...",
+ *     // ... other scales
+ *     "blue12": "..."
+ *   }
+ *   // ... other colors
+ * }
+ * ```
+ *
+ * It will be transformed into an object that looks like:
+ *
+ * ```json
+ * {
+ *   "bluedark": {
+ *     "1": "...",
+ *     "2": "...",
+ *     // ... other scales
+ *     "12": "..."
+ *   }
+ *   // ... other colors
+ * }
+ * ```
+ *
+ * @see https://tailwindcss.com/docs/customizing-colors#using-custom-colors
  */
-function formatRadixColors() {
-  const colors: Record<string, Record<string, string>> = {};
+function transform(radixPalette: typeof radixColors) {
+  const tailwindPalette: Record<string, Record<string, string>> = {};
 
-  for (const [radixColorName, radixColor] of Object.entries(radixColors)) {
-    const colorName = radixColorName.toLowerCase();
-    const color: Record<string, string> = {};
+  for (const [radixColorName, radixColor] of Object.entries(radixPalette)) {
+    const tailwindColorName = radixColorName.toLowerCase();
 
-    for (const [radixScale, value] of Object.entries(radixColor)) {
-      const scale = radixScale.match(/\d+$/)?.[0];
-      if (!scale) {
-        continue;
+    const tailwindColor: Record<string, string> = {};
+    for (const [radixColorScale, colorValue] of Object.entries(radixColor)) {
+      const tailwindColorScale = radixColorScale.match(/\d+$/)?.[0];
+      if (tailwindColorScale) {
+        tailwindColor[tailwindColorScale] = colorValue;
       }
-      color[scale] = value;
     }
 
-    colors[colorName] = color;
+    tailwindPalette[tailwindColorName] = tailwindColor;
   }
 
-  return colors;
+  return tailwindPalette;
 }
