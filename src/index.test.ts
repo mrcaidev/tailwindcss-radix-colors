@@ -1,70 +1,39 @@
+import postcss from "postcss";
+import { format as prettierFormat } from "prettier";
 import type { Config } from "tailwindcss";
+import tailwind from "tailwindcss";
+import { expect, test } from "vitest";
+import plugin from "./";
 import type { TailwindCSSRadixColorsOptions } from "./plugin";
 
-import postcss from "postcss";
-import prettier from "prettier";
-import tailwind from "tailwindcss";
-import { assert, it } from "vitest";
+async function run({
+  content,
+  options = {},
+  config = {},
+}: {
+  content: string;
+  options?: TailwindCSSRadixColorsOptions;
+  config?: Omit<Config, "content">;
+}) {
+  const configWithPlugin = {
+    ...config,
+    content: [{ raw: content }],
+    plugins: [plugin(options)],
+  } as Config;
 
-import plugin from "./";
-
-const generateConfig = (
-  pluginOptions: TailwindCSSRadixColorsOptions = {},
-  content = "bg-slate-1 bg-slate-app",
-  theme: Config["theme"] = {},
-): Config => ({
-  theme,
-  content: [
-    {
-      raw: content,
-    },
-  ],
-  plugins: [plugin(pluginOptions)],
-});
-
-const run = (config: Config) =>
-  postcss(tailwind(config)).process(
+  const result = await postcss(tailwind(configWithPlugin)).process(
     "@tailwind utilities; @tailwind components;",
     { from: undefined },
   );
 
-const format = (source: string) => prettier.format(source, { parser: "css" });
+  return result.css;
+}
 
-it("Given existing colors in config theme, no errors are thrown", async () => {
-  const expected = `
-    .bg-slate-1 {
-      --tw-bg-opacity: 1;
-      background-color: rgb(252 252 253 / var(--tw-bg-opacity))
-    }
-  `;
+function format(source: string) {
+  return prettierFormat(source, { parser: "css" });
+}
 
-  const config = generateConfig({}, "bg-slate-1", {
-    extend: { colors: { custom: "#123456" } },
-  });
-
-  return run(config).then(async (result) => {
-    assert.strictEqual(await format(result.css), await format(expected));
-  });
-});
-
-it("Given `disableSemantics: true`, Then only step classes are generated", async () => {
-  const expected = `
-    .bg-slate-1 {
-      --tw-bg-opacity: 1;
-      background-color: rgb(252 252 253 / var(--tw-bg-opacity))
-    }
-  `;
-
-  const config = generateConfig({
-    disableSemantics: true,
-  });
-
-  return run(config).then(async (result) => {
-    assert.strictEqual(await format(result.css), await format(expected));
-  });
-});
-
-it("Given no plugin options, Then both step and semantic classes are generated", async () => {
+test("Given no option, both utility and semantic classes are generated", async () => {
   const expected = `
     .bg-slate-1 {
       --tw-bg-opacity: 1;
@@ -82,14 +51,49 @@ it("Given no plugin options, Then both step and semantic classes are generated",
     }
   `;
 
-  const config = generateConfig();
+  const result = await run({ content: "bg-slate-1 bg-slate-app" });
 
-  return run(config).then(async (result) => {
-    assert.strictEqual(await format(result.css), await format(expected));
-  });
+  expect(await format(result)).toStrictEqual(await format(expected));
 });
 
-it("Given no option, Then every semantic step is generated", async () => {
+test("Given `disableSemantics: true`, only utility classes are generated", async () => {
+  const expected = `
+    .bg-slate-1 {
+      --tw-bg-opacity: 1;
+      background-color: rgb(252 252 253 / var(--tw-bg-opacity))
+    }
+  `;
+
+  const result = await run({
+    content: "bg-slate-1 bg-slate-app",
+    options: { disableSemantics: true },
+  });
+
+  expect(await format(result)).toStrictEqual(await format(expected));
+});
+
+test("Given user-extended colors, no errors are thrown", async () => {
+  const expected = `
+    .bg-slate-1 {
+      --tw-bg-opacity: 1;
+      background-color: rgb(252 252 253 / var(--tw-bg-opacity))
+    }
+  `;
+
+  const result = await run({
+    content: "bg-slate-1",
+    options: {},
+    config: {
+      theme: {
+        extend: { colors: { custom: "#123456" } },
+      },
+    },
+  });
+
+  expect(await format(result)).toStrictEqual(await format(expected));
+});
+
+test("Given no option, every semantic classes is generated", async () => {
   const expected = `
     .bg-slate-app {
       --tw-bg-opacity: 1;
@@ -265,12 +269,10 @@ it("Given no option, Then every semantic step is generated", async () => {
     }
   `;
 
-  const config = generateConfig(
-    {},
-    "bg-slate-app bg-slate-subtle bg-slate-ui bg-slate-ghost bg-slate-action border-slate-dim border-slate-normal divide-slate-dim divide-slate-normal text-slate-dim text-slate-normal",
-  );
-
-  return run(config).then(async (result) => {
-    assert.strictEqual(await format(result.css), await format(expected));
+  const result = await run({
+    content:
+      "bg-slate-app bg-slate-subtle bg-slate-ui bg-slate-ghost bg-slate-action border-slate-dim border-slate-normal divide-slate-dim divide-slate-normal text-slate-dim text-slate-normal",
   });
+
+  expect(await format(result)).toStrictEqual(await format(expected));
 });
