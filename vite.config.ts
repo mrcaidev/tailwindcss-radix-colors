@@ -12,7 +12,6 @@ export default defineConfig({
   },
   test: {
     isolate: false,
-    watch: false,
     sequence: {
       concurrent: true,
     },
