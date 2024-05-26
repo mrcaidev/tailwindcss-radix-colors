@@ -68,14 +68,16 @@ it("Given no plugin options, Then both step and semantic classes are generated",
   const expected = `
     .bg-slate-1 {
       --tw-bg-opacity: 1;
-      background-color: rgb(252 252 253 / var(--tw-bg-opacity))
+      background-color: rgb(252 252 253 / var(--tw-bg-opacity));
     }
     .bg-slate-app {
-      background-color: #fcfcfd;
+      --tw-bg-opacity: 1;
+      background-color: rgb(252 252 253 / var(--tw-bg-opacity));
     }
     @media (prefers-color-scheme: dark) {
       .bg-slate-app {
-        background-color: #111113;
+        --tw-bg-opacity: 1;
+        background-color: rgb(17 17 19 / var(--tw-bg-opacity));
       }
     }
   `;
@@ -90,139 +92,175 @@ it("Given no plugin options, Then both step and semantic classes are generated",
 it("Given no option, Then every semantic step is generated", async () => {
   const expected = `
     .bg-slate-app {
-      background-color: #fcfcfd;
+      --tw-bg-opacity: 1;
+      background-color: rgb(252 252 253 / var(--tw-bg-opacity));
     }
     @media (prefers-color-scheme: dark) {
       .bg-slate-app {
-        background-color: #111113;
+        --tw-bg-opacity: 1;
+        background-color: rgb(17 17 19 / var(--tw-bg-opacity));
       }
     }
     .bg-slate-subtle {
-      background-color: #f9f9fb;
+      --tw-bg-opacity: 1;
+      background-color: rgb(249 249 251 / var(--tw-bg-opacity));
     }
     @media (prefers-color-scheme: dark) {
       .bg-slate-subtle {
-        background-color: #18191b;
+        --tw-bg-opacity: 1;
+        background-color: rgb(24 25 27 / var(--tw-bg-opacity));
       }
     }
     .bg-slate-ui {
-      background-color: #f0f0f3;
+      --tw-bg-opacity: 1;
+      background-color: rgb(240 240 243 / var(--tw-bg-opacity));
     }
     .bg-slate-ui:hover {
-      background-color: #e8e8ec;
+      --tw-bg-opacity: 1;
+      background-color: rgb(232 232 236 / var(--tw-bg-opacity));
     }
     .bg-slate-ui:active {
-      background-color: #e0e1e6;
+      --tw-bg-opacity: 1;
+      background-color: rgb(224 225 230 / var(--tw-bg-opacity));
     }
     @media (prefers-color-scheme: dark) {
       .bg-slate-ui {
-        background-color: #212225;
+        --tw-bg-opacity: 1;
+        background-color: rgb(33 34 37 / var(--tw-bg-opacity));
       }
       .bg-slate-ui:hover {
-        background-color: #272a2d;
+        --tw-bg-opacity: 1;
+        background-color: rgb(39 42 45 / var(--tw-bg-opacity));
       }
       .bg-slate-ui:active {
-        background-color: #2e3135;
+        --tw-bg-opacity: 1;
+        background-color: rgb(46 49 53 / var(--tw-bg-opacity));
       }
     }
     .bg-slate-ghost {
       background-color: transparent;
     }
     .bg-slate-ghost:hover {
-      background-color: #e8e8ec;
+      --tw-bg-opacity: 1;
+      background-color: rgb(232 232 236 / var(--tw-bg-opacity));
     }
     .bg-slate-ghost:active {
-      background-color: #e0e1e6;
+      --tw-bg-opacity: 1;
+      background-color: rgb(224 225 230 / var(--tw-bg-opacity));
     }
     @media (prefers-color-scheme: dark) {
       .bg-slate-ghost {
         background-color: transparent;
       }
       .bg-slate-ghost:hover {
-        background-color: #272a2d;
+        --tw-bg-opacity: 1;
+        background-color: rgb(39 42 45 / var(--tw-bg-opacity));
       }
       .bg-slate-ghost:active {
-        background-color: #2e3135;
+        --tw-bg-opacity: 1;
+        background-color: rgb(46 49 53 / var(--tw-bg-opacity));
       }
     }
     .bg-slate-action {
-      background-color: #e8e8ec;
+      --tw-bg-opacity: 1;
+      background-color: rgb(232 232 236 / var(--tw-bg-opacity));
     }
     .bg-slate-action:hover {
-      background-color: #e0e1e6;
+      --tw-bg-opacity: 1;
+      background-color: rgb(224 225 230 / var(--tw-bg-opacity));
     }
     .bg-slate-action:active {
-      background-color: #d9d9e0;
+      --tw-bg-opacity: 1;
+      background-color: rgb(217 217 224 / var(--tw-bg-opacity));
     }
     @media (prefers-color-scheme: dark) {
       .bg-slate-action {
-        background-color: #272a2d;
+        --tw-bg-opacity: 1;
+        background-color: rgb(39 42 45 / var(--tw-bg-opacity));
       }
       .bg-slate-action:hover {
-        background-color: #2e3135;
+        --tw-bg-opacity: 1;
+        background-color: rgb(46 49 53 / var(--tw-bg-opacity));
       }
       .bg-slate-action:active {
-        background-color: #363a3f;
+        --tw-bg-opacity: 1;
+        background-color: rgb(54 58 63 / var(--tw-bg-opacity));
       }
     }
     .border-slate-dim {
-      border-color: #d9d9e0;
+      --tw-border-opacity: 1;
+      border-color: rgb(217 217 224 / var(--tw-border-opacity));
     }
     @media (prefers-color-scheme: dark) {
       .border-slate-dim {
-        border-color: #363a3f;
+        --tw-border-opacity: 1;
+        border-color: rgb(54 58 63 / var(--tw-border-opacity));
       }
     }
     .border-slate-normal {
-      border-color: #cdced6;
+      --tw-border-opacity: 1;
+      border-color: rgb(205 206 214 / var(--tw-border-opacity));
     }
     .border-slate-normal:hover {
-      border-color: #b9bbc6;
+      --tw-border-opacity: 1;
+      border-color: rgb(185 187 198 / var(--tw-border-opacity));
     }
     @media (prefers-color-scheme: dark) {
       .border-slate-normal {
-        border-color: #43484e;
+        --tw-border-opacity: 1;
+        border-color: rgb(67 72 78 / var(--tw-border-opacity));
       }
       .border-slate-normal:hover {
-        border-color: #5a6169;
+        --tw-border-opacity: 1;
+        border-color: rgb(90 97 105 / var(--tw-border-opacity));
       }
     }
     .divide-slate-dim > :not([hidden]) ~ :not([hidden]) {
-      border-color: #d9d9e0;
+      --tw-divide-opacity: 1;
+      border-color: rgb(217 217 224 / var(--tw-divide-opacity));
     }
     @media (prefers-color-scheme: dark) {
       .divide-slate-dim > :not([hidden]) ~ :not([hidden]) {
-        border-color: #363a3f;
+        --tw-divide-opacity: 1;
+        border-color: rgb(54 58 63 / var(--tw-divide-opacity));
       }
     }
     .divide-slate-normal > :not([hidden]) ~ :not([hidden]) {
-      border-color: #cdced6;
+      --tw-divide-opacity: 1;
+      border-color: rgb(205 206 214 / var(--tw-divide-opacity));
     }
-    .divide-slate-normal > :not([hidden]) ~ :not([hidden]):hover {
-      border-color: #b9bbc6;
+    .divide-slate-normal:hover > :not([hidden]) ~ :not([hidden]) {
+      --tw-divide-opacity: 1;
+      border-color: rgb(185 187 198 / var(--tw-divide-opacity));
     }
     @media (prefers-color-scheme: dark) {
       .divide-slate-normal > :not([hidden]) ~ :not([hidden]) {
-        border-color: #43484e;
+        --tw-divide-opacity: 1;
+        border-color: rgb(67 72 78 / var(--tw-divide-opacity));
       }
-      .divide-slate-normal > :not([hidden]) ~ :not([hidden]):hover {
-        border-color: #5a6169;
+      .divide-slate-normal:hover > :not([hidden]) ~ :not([hidden]) {
+        --tw-divide-opacity: 1;
+        border-color: rgb(90 97 105 / var(--tw-divide-opacity));
       }
     }
     .text-slate-dim {
-      color: #60646c;
+      --tw-text-opacity: 1;
+      color: rgb(96 100 108 / var(--tw-text-opacity));
     }
     @media (prefers-color-scheme: dark) {
       .text-slate-dim {
-        color: #b0b4ba;
+        --tw-text-opacity: 1;
+        color: rgb(176 180 186 / var(--tw-text-opacity));
       }
     }
     .text-slate-normal {
-      color: #1c2024;
+      --tw-text-opacity: 1;
+      color: rgb(28 32 36 / var(--tw-text-opacity));
     }
     @media (prefers-color-scheme: dark) {
       .text-slate-normal {
-        color: #edeef0;
+        --tw-text-opacity: 1;
+        color: rgb(237 238 240 / var(--tw-text-opacity));
       }
     }
   `;

@@ -2,8 +2,8 @@ import type {
   CSSRuleObject,
   PluginAPI,
   PluginCreator,
+  PrefixConfig,
 } from "tailwindcss/types/config";
-import { buildDarkSelector } from "./dark";
 
 /**
  * Options for the plugin `tailwindcss-radix-colors`.
@@ -34,9 +34,9 @@ export function buildPlugin(options: TailwindCSSRadixColorsOptions = {}) {
  * @see https://tailwindcss.com/docs/plugins#adding-components
  */
 const pluginCreator: PluginCreator = ({ addComponents, config, theme }) => {
-  const darkSelector = buildDarkSelector(config);
   const colors: Record<string, Record<string, string> | string> =
     theme("colors");
+  const prefix = config<PrefixConfig>("prefix");
 
   for (const [colorName, color] of Object.entries(colors)) {
     const shouldAddComponent = checkShouldAddComponent(colorName, color);
@@ -48,137 +48,73 @@ const pluginCreator: PluginCreator = ({ addComponents, config, theme }) => {
     const { darkColor, grayScaleColor } = getColorFamily(theme, colorName);
 
     addComponents({
-      [`.bg-${colorName}-app`]: {
-        backgroundColor: color["1"],
-        [darkSelector]: {
-          backgroundColor: darkColor["1"],
-        },
-      },
-      [`.bg-${colorName}-subtle`]: {
-        backgroundColor: color["2"],
-        [darkSelector]: {
-          backgroundColor: darkColor["2"],
-        },
-      },
-      [`.bg-${colorName}-ui`]: {
-        backgroundColor: color["3"],
-        "&:hover": {
-          backgroundColor: color["4"],
-        },
-        "&:active": {
-          backgroundColor: color["5"],
-        },
-        [darkSelector]: {
-          backgroundColor: darkColor["3"],
-          "&:hover": {
-            backgroundColor: darkColor["4"],
-          },
-          "&:active": {
-            backgroundColor: darkColor["5"],
-          },
-        },
-      },
-      [`.bg-${colorName}-ghost`]: {
-        backgroundColor: "transparent",
-        "&:hover": {
-          backgroundColor: color["4"],
-        },
-        "&:active": {
-          backgroundColor: color["5"],
-        },
-        [darkSelector]: {
-          backgroundColor: "transparent",
-          "&:hover": {
-            backgroundColor: darkColor["4"],
-          },
-          "&:active": {
-            backgroundColor: darkColor["5"],
-          },
-        },
-      },
-      [`.bg-${colorName}-action`]: {
-        backgroundColor: color["4"],
-        "&:hover": {
-          backgroundColor: color["5"],
-        },
-        "&:active": {
-          backgroundColor: color["6"],
-        },
-        [darkSelector]: {
-          backgroundColor: darkColor["4"],
-          "&:hover": {
-            backgroundColor: darkColor["5"],
-          },
-          "&:active": {
-            backgroundColor: darkColor["6"],
-          },
-        },
-      },
-      [`.bg-${colorName}-solid`]: {
-        backgroundColor: color["9"],
-        color: grayScaleColor["12"],
-        "&:hover": {
-          backgroundColor: color["10"],
-        },
-        [darkSelector]: {
-          backgroundColor: darkColor["9"],
-          "&:hover": {
-            backgroundColor: darkColor["10"],
-          },
-        },
-      },
-      [`.border-${colorName}-dim`]: {
-        borderColor: color["6"],
-        [darkSelector]: {
-          borderColor: darkColor["6"],
-        },
-      },
-      [`.border-${colorName}-normal`]: {
-        borderColor: color["7"],
-        "&:hover": {
-          borderColor: color["8"],
-        },
-        [darkSelector]: {
-          borderColor: darkColor["7"],
-          "&:hover": {
-            borderColor: darkColor["8"],
-          },
-        },
-      },
-      [`.divide-${colorName}-dim`]: {
-        "& > :not([hidden]) ~ :not([hidden])": {
-          borderColor: color["6"],
-          [darkSelector]: {
-            borderColor: darkColor["6"],
-          },
-        },
-      },
-      [`.divide-${colorName}-normal`]: {
-        "& > :not([hidden]) ~ :not([hidden])": {
-          borderColor: color["7"],
-          "&:hover": {
-            borderColor: color["8"],
-          },
-          [darkSelector]: {
-            borderColor: darkColor["7"],
-            "&:hover": {
-              borderColor: darkColor["8"],
-            },
-          },
-        },
-      },
-      [`.text-${colorName}-dim`]: {
-        color: color["11"],
-        [darkSelector]: {
-          color: darkColor["11"],
-        },
-      },
-      [`.text-${colorName}-normal`]: {
-        color: color["12"],
-        [darkSelector]: {
-          color: darkColor["12"],
-        },
-      },
+      [`.bg-${colorName}-app`]: apply(
+        `bg-[${color["1"]!}]`,
+        `${prefix}dark:bg-[${darkColor["1"]!}]`,
+      ),
+      [`.bg-${colorName}-subtle`]: apply(
+        `bg-[${color["2"]!}]`,
+        `${prefix}dark:bg-[${darkColor["2"]!}]`,
+      ),
+      [`.bg-${colorName}-ui`]: apply(
+        `bg-[${color["3"]!}]`,
+        `hover:bg-[${color["4"]!}]`,
+        `active:bg-[${color["5"]!}]`,
+        `${prefix}dark:bg-[${darkColor["3"]!}]`,
+        `${prefix}dark:hover:bg-[${darkColor["4"]!}]`,
+        `${prefix}dark:active:bg-[${darkColor["5"]!}]`,
+      ),
+      [`.bg-${colorName}-ghost`]: apply(
+        `bg-transparent`,
+        `hover:bg-[${color["4"]!}]`,
+        `active:bg-[${color["5"]!}]`,
+        `${prefix}dark:bg-transparent`,
+        `${prefix}dark:hover:bg-[${darkColor["4"]!}]`,
+        `${prefix}dark:active:bg-[${darkColor["5"]!}]`,
+      ),
+      [`.bg-${colorName}-action`]: apply(
+        `bg-[${color["4"]!}]`,
+        `hover:bg-[${color["5"]!}]`,
+        `active:bg-[${color["6"]!}]`,
+        `${prefix}dark:bg-[${darkColor["4"]!}]`,
+        `${prefix}dark:hover:bg-[${darkColor["5"]!}]`,
+        `${prefix}dark:active:bg-[${darkColor["6"]!}]`,
+      ),
+      [`.bg-${colorName}-solid`]: apply(
+        `bg-[${color["9"]!}]`,
+        `hover:bg-[${color["10"]!}]`,
+        `${prefix}dark:bg-[${darkColor["9"]!}]`,
+        `${prefix}dark:hover:bg-[${darkColor["10"]!}]`,
+        `text-[${grayScaleColor["12"]!}]`,
+      ),
+      [`.border-${colorName}-dim`]: apply(
+        `border-[${color["6"]!}]`,
+        `${prefix}dark:border-[${darkColor["6"]!}]`,
+      ),
+      [`.border-${colorName}-normal`]: apply(
+        `border-[${color["7"]!}]`,
+        `hover:border-[${color["8"]!}]`,
+        `${prefix}dark:border-[${darkColor["7"]!}]`,
+        `${prefix}dark:hover:border-[${darkColor["8"]!}]`,
+      ),
+      [`.divide-${colorName}-dim`]: apply(
+        `divide-[${color["6"]!}]`,
+        `${prefix}dark:divide-[${darkColor["6"]!}]`,
+      ),
+      [`.divide-${colorName}-normal`]: apply(
+        `divide-[${color["7"]!}]`,
+        `hover:divide-[${color["8"]!}]`,
+        `${prefix}dark:divide-[${darkColor["7"]!}]`,
+        `${prefix}dark:hover:divide-[${darkColor["8"]!}]`,
+      ),
+      [`.text-${colorName}-dim`]: apply(
+        `text-[${color["11"]!}]`,
+        `${prefix}dark:text-[${darkColor["11"]!}]`,
+      ),
+      [`.text-${colorName}-normal`]: apply(
+        `text-[${color["12"]!}]`,
+        `${prefix}dark:text-[${darkColor["12"]!}]`,
+      ),
     } as CSSRuleObject);
   }
 };
@@ -276,4 +212,8 @@ function getColorFamily(theme: PluginAPI["theme"], colorName: string) {
   );
 
   return { darkColor, grayScaleColor };
+}
+
+function apply(...classes: string[]) {
+  return { [`@apply ${classes.join(" ")}`]: {} };
 }

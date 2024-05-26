@@ -15,5 +15,8 @@ export default ts.config(
       },
     },
     ignores: ["dist"],
+    rules: {
+      "@typescript-eslint/no-non-null-assertion": "off",
+    },
   },
 );
