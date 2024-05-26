@@ -33,10 +33,10 @@ jobs:
         run: pnpm exec eslint .
 
       - name: Lint format
-        run: pnpm prettier . --check
+        run: pnpm exec prettier . --check
 
       - name: Lint commit message
-        run: pnpm commitlint --last
+        run: pnpm exec commitlint --last
 
   test:
     runs-on: ubuntu-latest
