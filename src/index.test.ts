@@ -8,22 +8,24 @@ import { assert, it } from "vitest";
 
 import plugin from "./";
 
-const generateConfig = (pluginOptions: TailwindCSSRadixColorsOptions = {}, content = "bg-slate-1 bg-slate-app"): Config => ({
+const generateConfig = (
+  pluginOptions: TailwindCSSRadixColorsOptions = {},
+  content = "bg-slate-1 bg-slate-app",
+): Config => ({
   theme: {},
   content: [
     {
       raw: content,
-    }
+    },
   ],
   plugins: [plugin(pluginOptions)],
 });
 
 const run = (config: Config) =>
-  postcss(tailwind(config))
-    .process(
-      "@tailwind utilities; @tailwind components;",
-      { from: undefined }
-    );
+  postcss(tailwind(config)).process(
+    "@tailwind utilities; @tailwind components;",
+    { from: undefined },
+  );
 
 const format = (source: string) => prettier.format(source, { parser: "css" });
 
@@ -33,15 +35,15 @@ it("Given `disableSemantics: true`, Then only step classes are generated", async
       --tw-bg-opacity: 1;
       background-color: rgb(252 252 253 / var(--tw-bg-opacity))
     }
-  `
+  `;
 
   const config = generateConfig({
     disableSemantics: true,
-  })
+  });
 
-  return run(config).then(async (result) =>
-    assert.strictEqual(await format(result.css), await format(expected))
-  );
+  return run(config).then(async (result) => {
+    assert.strictEqual(await format(result.css), await format(expected));
+  });
 });
 
 it("Given no plugin options, Then both step and semantic classes are generated", async () => {
@@ -58,13 +60,13 @@ it("Given no plugin options, Then both step and semantic classes are generated",
         background-color: #111113;
       }
     }
-  `
+  `;
 
-  const config = generateConfig()
+  const config = generateConfig();
 
-  return run(config).then(async (result) =>
-    assert.strictEqual(await format(result.css), await format(expected))
-  );
+  return run(config).then(async (result) => {
+    assert.strictEqual(await format(result.css), await format(expected));
+  });
 });
 
 it("Given no option, Then every semantic step is generated", async () => {
@@ -205,11 +207,14 @@ it("Given no option, Then every semantic step is generated", async () => {
         color: #edeef0;
       }
     }
-  `
+  `;
 
-  const config = generateConfig({}, "bg-slate-app bg-slate-subtle bg-slate-ui bg-slate-ghost bg-slate-action border-slate-dim border-slate-normal divide-slate-dim divide-slate-normal text-slate-dim text-slate-normal")
-
-  return run(config).then(async (result) =>
-    assert.strictEqual(await format(result.css), await format(expected))
+  const config = generateConfig(
+    {},
+    "bg-slate-app bg-slate-subtle bg-slate-ui bg-slate-ghost bg-slate-action border-slate-dim border-slate-normal divide-slate-dim divide-slate-normal text-slate-dim text-slate-normal",
   );
+
+  return run(config).then(async (result) => {
+    assert.strictEqual(await format(result.css), await format(expected));
+  });
 });

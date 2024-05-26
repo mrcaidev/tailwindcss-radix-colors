@@ -14,12 +14,6 @@ export function buildDarkSelector(config: PluginAPI["config"]) {
   const prefix: PrefixConfig = config("prefix");
 
   if (Array.isArray(darkMode)) {
-    if (darkMode.length !== 2) {
-      throw new Error(
-        "Configuration `darkMode` should contain exactly two items. Documentation: https://tailwindcss.com/docs/dark-mode#customizing-the-class-name",
-      );
-    }
-
     if (darkMode[0] === "variant") {
       throw new Error(
         "This plugin currently does not support using variant to customize dark mode selector.",
