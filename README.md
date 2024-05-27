@@ -39,7 +39,7 @@ export default {
 
 No configuration is required! Tailwind CSS will now use Radix UI's color system, and automatically shake off unused colors during compilation.
 
-See [⚙️ Configuration](#⚙️-configuration) for configurable options and more advanced usage.
+See [⚙️ Configuration](#️-configuration) for configurable options and more advanced usage.
 
 ## 💡 Usage
 
