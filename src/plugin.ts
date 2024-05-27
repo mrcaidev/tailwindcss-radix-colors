@@ -237,5 +237,8 @@ function findColorFamily(palette: Palette, colorName: string) {
  * @see https://github.com/tailwindlabs/tailwindcss/discussions/2049
  */
 function apply(...classes: string[]) {
-  return { [`@apply ${classes.join(" ")}`]: {} };
+  const processedClasses = classes.map((className) =>
+    className.replaceAll(" ", "_"),
+  );
+  return { [`@apply ${processedClasses.join(" ")}`]: {} };
 }

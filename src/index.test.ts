@@ -56,6 +56,26 @@ test("Given no option, both utility and semantic classes are generated", async (
   expect(await format(result)).toStrictEqual(await format(expected));
 });
 
+test("Given no option, both utility and semantic classes are generated for P3 colors", async () => {
+  const expected = `
+    .bg-slatep3-1 {
+      background-color: color(display-p3 0.988 0.988 0.992);
+    }
+    .bg-slatep3-app {
+      background-color: color(display-p3 0.988 0.988 0.992);
+    }
+    @media (prefers-color-scheme: dark) {
+      .bg-slatep3-app {
+        background-color: color(display-p3 0.067 0.067 0.074);
+      }
+    }
+  `;
+
+  const result = await run({ content: "bg-slatep3-1 bg-slatep3-app" });
+
+  expect(await format(result)).toStrictEqual(await format(expected));
+});
+
 test("Given `disableSemantics: true`, only utility classes are generated", async () => {
   const expected = `
     .bg-slate-1 {
