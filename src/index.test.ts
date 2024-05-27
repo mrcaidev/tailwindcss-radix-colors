@@ -4,7 +4,7 @@ import type { Config } from "tailwindcss";
 import tailwind from "tailwindcss";
 import { expect, test } from "vitest";
 import plugin from "./";
-import type { TailwindCSSRadixColorsOptions } from "./plugin";
+import type { TailwindcssRadixColorsOptions } from "./types";
 
 async function run({
   content,
@@ -12,7 +12,7 @@ async function run({
   config = {},
 }: {
   content: string;
-  options?: TailwindCSSRadixColorsOptions;
+  options?: TailwindcssRadixColorsOptions;
   config?: Omit<Config, "content">;
 }) {
   const configWithPlugin = {

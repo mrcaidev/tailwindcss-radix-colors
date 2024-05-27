@@ -3,24 +3,19 @@ import type {
   PluginAPI,
   PrefixConfig,
 } from "tailwindcss/types/config";
-import type { Color, ColorName, ColorScale, Palette } from "./types";
-
-/**
- * Options for the plugin `tailwindcss-radix-colors`.
- */
-export interface TailwindCSSRadixColorsOptions {
-  /**
-   * Disable the generation (and hence the intellisense) of semantics classes,
-   * such as `bg-red-solid` or `text-slate-normal`.
-   */
-  disableSemantics?: boolean;
-}
+import type {
+  Color,
+  ColorName,
+  ColorScale,
+  Palette,
+  TailwindcssRadixColorsOptions,
+} from "./types";
 
 /**
  * Build the "plugin" part of `tailwindcss-radix-colors`, which will be used as
  * the first argument of the `plugin.withOptions` function.
  */
-export function buildPlugin(options: TailwindCSSRadixColorsOptions = {}) {
+export function buildPlugin(options: TailwindcssRadixColorsOptions = {}) {
   const { disableSemantics } = options;
 
   if (disableSemantics) {

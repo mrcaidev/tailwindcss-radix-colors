@@ -1,4 +1,6 @@
 import * as radixColors from "@radix-ui/colors";
+import type { TailwindcssRadixColorsOptions } from "./types";
+import { parseColorName, type ParsedColorName } from "./utils";
 
 /**
  * Build the "config" part of `tailwindcss-radix-colors`, which will be used as
@@ -8,7 +10,7 @@ import * as radixColors from "@radix-ui/colors";
  *
  * @see https://tailwindcss.com/docs/plugins#extending-the-configuration
  */
-export function buildConfig() {
+export function buildConfig(options: TailwindcssRadixColorsOptions = {}) {
   return {
     theme: {
       colors: {
@@ -16,7 +18,7 @@ export function buildConfig() {
         current: "currentColor",
         black: "black",
         white: "white",
-        ...transform(radixColors),
+        ...transform(radixColors, options),
       },
     },
   };
@@ -55,10 +57,22 @@ export function buildConfig() {
  *
  * @see https://tailwindcss.com/docs/customizing-colors#using-custom-colors
  */
-function transform(radixPalette: typeof radixColors) {
+function transform(
+  radixPalette: typeof radixColors,
+  options: TailwindcssRadixColorsOptions,
+) {
+  const { include = undefined, exclude = [] } = options;
+  const checkShouldInclude = createChecker(include, exclude);
+
   const tailwindPalette: Record<string, Record<string, string>> = {};
 
   for (const [radixColorName, radixColor] of Object.entries(radixPalette)) {
+    const shouldInclude = checkShouldInclude(radixColorName);
+
+    if (!shouldInclude) {
+      continue;
+    }
+
     const tailwindColorName = radixColorName.toLowerCase();
 
     const tailwindColor: Record<string, string> = {};
@@ -73,4 +87,40 @@ function transform(radixPalette: typeof radixColors) {
   }
 
   return tailwindPalette;
+}
+
+/**
+ * Create a function that checks whether a color name should be included, i.e.
+ * transformed and added to the Tailwind CSS color palette.
+ */
+function createChecker(include: string[] | undefined, exclude: string[]) {
+  const parsedInclude = include?.map(parseColorName);
+  const parsedExclude = exclude.map(parseColorName);
+
+  return (candidate: string) => {
+    const parsedCandidate = parseColorName(candidate);
+
+    if (
+      include !== undefined &&
+      !parsedInclude?.some((colorName) => areSame(colorName, parsedCandidate))
+    ) {
+      return false;
+    }
+
+    if (
+      parsedExclude.some((colorName) => areSame(colorName, parsedCandidate))
+    ) {
+      return false;
+    }
+
+    return true;
+  };
+}
+
+function areSame(name1: ParsedColorName, name2: ParsedColorName) {
+  return (
+    name1.base === name2.base &&
+    name1.p3 === name2.p3 &&
+    name1.alpha === name2.alpha
+  );
 }
