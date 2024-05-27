@@ -10,6 +10,7 @@ import type {
   Palette,
   TailwindcssRadixColorsOptions,
 } from "./types";
+import { buildColorName, parseColorName } from "./utils";
 
 /**
  * Build the "plugin" part of `tailwindcss-radix-colors`, which will be used as
@@ -211,27 +212,18 @@ function checkShouldProcess(
  * it makes no sense to have a foreground text with alpha value.
  */
 function findColorFamily(palette: Palette, colorName: string) {
-  // Dark colors have already been filtered by `checkShouldProcess`, so there
-  // is no need to put "dark" into regular expression again.
-  const regex = colorName.match(/^(.+?)(a|p3|p3a)?$/);
-
-  if (!regex) {
-    throw new Error(`Invalid color name: ${colorName}`);
-  }
-
-  const baseColorName = regex[1] as keyof typeof foregroundColorPairs;
-  const suffix = regex[2] ?? "";
+  const { base, p3, alpha } = parseColorName(colorName);
 
   const darkColorName: ColorName =
-    baseColorName === "black"
-      ? `white${suffix}`
-      : baseColorName === "white"
-        ? `black${suffix}`
-        : `${baseColorName}dark${suffix}`;
+    base === "black"
+      ? buildColorName({ base: "white", dark: false, p3, alpha })
+      : base === "white"
+        ? buildColorName({ base: "black", dark: false, p3, alpha })
+        : buildColorName({ base, dark: true, p3, alpha });
 
-  const foregroundColorName = suffix.includes("p3")
-    ? `${foregroundColorPairs[baseColorName]}p3`
-    : foregroundColorPairs[baseColorName];
+  const foregroundColorName = p3
+    ? `${foregroundColorPairs[base as keyof typeof foregroundColorPairs]}p3`
+    : foregroundColorPairs[base as keyof typeof foregroundColorPairs];
 
   const darkColor = palette[darkColorName] as Color;
   const foregroundColor = palette[foregroundColorName] as Color;

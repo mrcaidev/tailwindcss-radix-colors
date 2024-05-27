@@ -31,3 +31,26 @@ export function parseColorName(colorName: string) {
     alpha: alpha !== undefined,
   } as ParsedColorName;
 }
+
+/**
+ * Build a color name string from a parsed color name object.
+ */
+export function buildColorName(parsedColorName: ParsedColorName) {
+  const { base, dark, p3, alpha } = parsedColorName;
+
+  let colorName = base;
+
+  if (dark) {
+    colorName += "dark";
+  }
+
+  if (p3) {
+    colorName += "p3";
+  }
+
+  if (alpha) {
+    colorName += "a";
+  }
+
+  return colorName;
+}
