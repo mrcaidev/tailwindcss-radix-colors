@@ -37,11 +37,11 @@ export default defineConfig({
             link: "/getting-started",
           },
           {
-            text: "Why another palette?",
+            text: "Why Another Palette?",
             link: "/why-another-palette",
           },
           {
-            text: "Why this plugin?",
+            text: "Why This Plugin?",
             link: "/why-this-plugin",
           },
         ],
