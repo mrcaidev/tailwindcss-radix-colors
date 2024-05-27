@@ -19,22 +19,27 @@ This plugin lets you use Radix UI's color system in Tailwind CSS, combining Radi
 Install the plugin:
 
 ```sh
-npm install tailwindcss-radix-colors # use npm
-yarn add tailwindcss-radix-colors # use yarn
-pnpm add tailwindcss-radix-colors # use pnpm
+npm install -D tailwindcss-radix-colors # use npm
+yarn add -D tailwindcss-radix-colors # use yarn
+pnpm add -D tailwindcss-radix-colors # use pnpm
 ```
 
-Then, add the plugin to your `tailwind.config.js` file:
+Then, add the plugin to your Tailwind CSS configuration file:
 
-```js
-// tailwind.config.js
-module.exports = {
+```ts
+// tailwind.config.ts
+import type { Config } from "tailwindcss";
+import tailwindcssRadixColors from "tailwindcss-radix-colors";
+
+export default {
   // ...
-  plugins: [require("tailwindcss-radix-colors")],
-};
+  plugins: [tailwindcssRadixColors],
+} as Config;
 ```
 
-No configuration is required!
+No configuration is required! Tailwind CSS will now use Radix UI's color system, and automatically shake off unused colors during compilation.
+
+See [⚙️ Configuration](#⚙️-configuration) for configurable options and more advanced usage.
 
 ## 💡 Usage
 
@@ -101,6 +106,48 @@ module.exports = {
   plugins: [require("tailwindcss-radix-colors")({ disableSemantics: true })],
 };
 ```
+
+## ⚙️ Configuration
+
+Although no config is required to use this plugin, we still provide some options for you to tweak its behaviors.
+
+```ts
+interface TailwindcssRadixColorsOptions {
+  disableSemantics?: boolean;
+  include?: string[] | undefined;
+  exclude?: string[];
+}
+```
+
+### disableSemantics
+
+Disable the generation (and hence the intellisense) of semantics classes, such as `bg-red-solid` or `text-slate-normal`.
+
+Defaults to `false`.
+
+> [!NOTE]
+>
+> This option does not affect the final CSS bundle size; Tailwind CSS will shake off unused classes for you anyway. It only affects the classes that appear in your IDE intellisense, so that you will not be overwhelmed by the semantic classes you don't even use.
+
+### include
+
+Name of the colors you want to use in your project.
+
+Defaults to `undefined`, in which case all colors are included.
+
+> [!NOTE]
+>
+> This option only affects IDE intellisense, similar to `disableSemantics`.
+
+### exclude
+
+Name of the colors you don't want to use in your project.
+
+Defaults to `[]`, in which case no colors are excluded.
+
+> [!NOTE]
+>
+> This option only affects IDE intellisense, similar to `disableSemantics`.
 
 ## 🔌 Comparison
 
