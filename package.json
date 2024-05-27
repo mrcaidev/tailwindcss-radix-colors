@@ -11,7 +11,7 @@
     "ui",
     "design"
   ],
-  "homepage": "https://github.com/mrcaidev/tailwindcss-radix-colors#readme",
+  "homepage": "https://tailwindcss-radix-colors.mrcai.dev",
   "bugs": "https://github.com/mrcaidev/tailwindcss-radix-colors/issues",
   "license": "MIT",
   "author": {
@@ -39,7 +39,10 @@
   "scripts": {
     "build": "vite build",
     "test": "vitest",
-    "prepare": "husky"
+    "prepare": "husky",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
     "@radix-ui/colors": "^3.0.0"
@@ -61,6 +64,7 @@
     "typescript-eslint": "^7.10.0",
     "vite": "^5.2.11",
     "vite-plugin-dts": "^3.9.1",
+    "vitepress": "^1.2.2",
     "vitest": "^1.6.0"
   },
   "peerDependencies": {

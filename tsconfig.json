@@ -31,5 +31,6 @@
     "verbatimModuleSyntax": true,
     "target": "ESNext",
     "skipLibCheck": true
-  }
+  },
+  "include": ["**/*", "docs/.vitepress/**/*.ts"]
 }
