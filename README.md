@@ -1,8 +1,10 @@
 # tailwindcss-radix-colors
 
-Bring [Radix UI](https://www.radix-ui.com/)'s color system to [Tailwind CSS](https://tailwindcss.com/). Follow the [documentation](https://tailwindcss-radix-colors.mrcai.dev) to get started!
+Bring [Radix UI](https://www.radix-ui.com/)'s color system to [Tailwind CSS](https://tailwindcss.com/).
 
-# 🤝 Contributing
+Follow the [documentation](https://tailwindcss-radix-colors.mrcai.dev) to get started!
+
+## 🤝 Contributing
 
 Any contribution is welcomed and appreciated.
 
