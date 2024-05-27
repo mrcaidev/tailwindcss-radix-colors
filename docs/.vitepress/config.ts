@@ -54,8 +54,8 @@ export default defineConfig({
             link: "/utility-first",
           },
           {
-            text: "Semantics First",
-            link: "/semantics-first",
+            text: "Semantic First",
+            link: "/semantic-first",
           },
         ],
       },
