@@ -142,8 +142,8 @@ function hasAllScales(
     return false;
   }
 
-  for (let i = 1; i <= 12; i++) {
-    if (!color[i]) {
+  for (let scale = 1; scale <= 12; scale++) {
+    if (!color[scale]) {
       return false;
     }
   }
