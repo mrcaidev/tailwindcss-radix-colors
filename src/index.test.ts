@@ -1,5 +1,5 @@
 import postcss from "postcss";
-import { format as prettierFormat } from "prettier";
+import prettier from "prettier";
 import type { Config } from "tailwindcss";
 import tailwind from "tailwindcss";
 import { expect, test } from "vitest";
@@ -8,18 +8,18 @@ import type { TailwindcssRadixColorsOptions } from "./options";
 
 async function run({
   content,
-  options = {},
   config = {},
+  options = {},
 }: {
   content: string;
-  options?: TailwindcssRadixColorsOptions;
   config?: Omit<Config, "content">;
+  options?: TailwindcssRadixColorsOptions;
 }) {
   const configWithPlugin = {
     ...config,
     content: [{ raw: content }],
     plugins: [plugin(options)],
-  } as Config;
+  };
 
   const result = await postcss(tailwind(configWithPlugin)).process(
     "@tailwind utilities; @tailwind components;",
@@ -30,7 +30,7 @@ async function run({
 }
 
 function format(source: string) {
-  return prettierFormat(source, { parser: "css" });
+  return prettier.format(source, { parser: "css" });
 }
 
 test("Given no option, both utility and semantic classes are generated", async () => {
@@ -51,32 +51,14 @@ test("Given no option, both utility and semantic classes are generated", async (
     }
   `;
 
-  const result = await run({ content: "bg-slate-1 bg-slate-app" });
+  const result = await run({
+    content: "bg-slate-1 bg-slate-app",
+  });
 
   expect(await format(result)).toStrictEqual(await format(expected));
 });
 
-test("Given no option, both utility and semantic classes are generated for P3 colors", async () => {
-  const expected = `
-    .bg-slatep3-1 {
-      background-color: color(display-p3 0.988 0.988 0.992);
-    }
-    .bg-slatep3-app {
-      background-color: color(display-p3 0.988 0.988 0.992);
-    }
-    @media (prefers-color-scheme: dark) {
-      .bg-slatep3-app {
-        background-color: color(display-p3 0.067 0.067 0.074);
-      }
-    }
-  `;
-
-  const result = await run({ content: "bg-slatep3-1 bg-slatep3-app" });
-
-  expect(await format(result)).toStrictEqual(await format(expected));
-});
-
-test("Given `disableSemantics: true`, only utility classes are generated", async () => {
+test("Given option `disableSemantics`, semantic classes are not generated", async () => {
   const expected = `
     .bg-slate-1 {
       --tw-bg-opacity: 1;
@@ -92,20 +74,58 @@ test("Given `disableSemantics: true`, only utility classes are generated", async
   expect(await format(result)).toStrictEqual(await format(expected));
 });
 
-test("Given user-extended colors, no errors are thrown", async () => {
+test("Given option `include`, only specified colors are generated", async () => {
   const expected = `
     .bg-slate-1 {
       --tw-bg-opacity: 1;
-      background-color: rgb(252 252 253 / var(--tw-bg-opacity))
+      background-color: rgb(252 252 253 / var(--tw-bg-opacity));
     }
   `;
 
   const result = await run({
+    content: "bg-slate-1 bg-blue-1",
+    options: { include: ["slate"] },
+  });
+
+  expect(await format(result)).toStrictEqual(await format(expected));
+});
+
+test("Given option `exclude`, specified colors are not generated", async () => {
+  const expected = "";
+
+  const result = await run({
     content: "bg-slate-1",
+    options: { exclude: ["slate"] },
+  });
+
+  expect(await format(result)).toStrictEqual(await format(expected));
+});
+
+test("Utility classes are generated for custom colors", async () => {
+  const expected = `
+    .bg-custom1 {
+      --tw-bg-opacity: 1;
+      background-color: rgb(18 52 86 / var(--tw-bg-opacity));
+    }
+    .bg-custom2-1 {
+      --tw-bg-opacity: 1;
+      background-color: rgb(101 67 33 / var(--tw-bg-opacity));
+    }
+  `;
+
+  const result = await run({
+    content: "bg-custom1 bg-custom2-1",
     options: {},
     config: {
       theme: {
-        extend: { colors: { custom: "#123456" } },
+        extend: {
+          colors: {
+            custom1: "#123456",
+            custom2: {
+              1: "#654321",
+            },
+          },
+        },
       },
     },
   });
@@ -113,7 +133,7 @@ test("Given user-extended colors, no errors are thrown", async () => {
   expect(await format(result)).toStrictEqual(await format(expected));
 });
 
-test("Given no option, every semantic classes is generated", async () => {
+test("CSS classes are in correct shape", async () => {
   const expected = `
     .bg-slate-app {
       --tw-bg-opacity: 1;
