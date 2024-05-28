@@ -1,40 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { describe, expect, test } from "vitest";
+import { baseColorNames } from "./colors";
 import { buildConfig } from "./config";
-
-const radixColorNames = [
-  "gray",
-  "mauve",
-  "slate",
-  "sage",
-  "olive",
-  "sand",
-  "gold",
-  "bronze",
-  "brown",
-  "yellow",
-  "amber",
-  "orange",
-  "tomato",
-  "red",
-  "ruby",
-  "crimson",
-  "pink",
-  "plum",
-  "purple",
-  "violet",
-  "iris",
-  "indigo",
-  "blue",
-  "cyan",
-  "teal",
-  "jade",
-  "green",
-  "grass",
-  "lime",
-  "mint",
-  "sky",
-];
 
 const colorShape = {
   "1": expect.any(String),
@@ -51,51 +18,31 @@ const colorShape = {
   "12": expect.any(String),
 };
 
-describe("Given no options", () => {
+describe("Given no option", () => {
   const config = buildConfig();
   const colors = config.theme.colors;
 
-  test("All base colors and their dark variants are correctly transformed", () => {
-    for (const colorName of radixColorNames) {
+  test("All Radix colors are correctly transformed", () => {
+    for (const colorName of baseColorNames) {
       expect(colors).toHaveProperty(colorName, colorShape);
-      expect(colors).toHaveProperty(colorName + "dark", colorShape);
-    }
-  });
-
-  test("All alpha colors and their dark variants are correctly transformed", () => {
-    for (const colorName of radixColorNames) {
       expect(colors).toHaveProperty(colorName + "a", colorShape);
-      expect(colors).toHaveProperty(colorName + "darka", colorShape);
-    }
-  });
-
-  test("All P3 colors and their dark variants are correctly transformed", () => {
-    for (const colorName of radixColorNames) {
       expect(colors).toHaveProperty(colorName + "p3", colorShape);
-      expect(colors).toHaveProperty(colorName + "darkp3", colorShape);
-    }
-  });
-
-  test("All P3 alpha colors and their dark variants are correctly transformed", () => {
-    for (const colorName of radixColorNames) {
       expect(colors).toHaveProperty(colorName + "p3a", colorShape);
+      expect(colors).toHaveProperty(colorName + "dark", colorShape);
+      expect(colors).toHaveProperty(colorName + "darka", colorShape);
+      expect(colors).toHaveProperty(colorName + "darkp3", colorShape);
       expect(colors).toHaveProperty(colorName + "darkp3a", colorShape);
     }
-  });
 
-  test("`blacka` and `whitea` and their P3 variants are correctly transformed", () => {
     expect(colors).toHaveProperty("blacka", colorShape);
-    expect(colors).toHaveProperty("whitea", colorShape);
     expect(colors).toHaveProperty("blackp3a", colorShape);
+    expect(colors).toHaveProperty("whitea", colorShape);
     expect(colors).toHaveProperty("whitep3a", colorShape);
   });
 
-  test("`transparent` and `currentColor` are included", () => {
+  test("Common colors are included", () => {
     expect(colors).toHaveProperty("transparent", "transparent");
     expect(colors).toHaveProperty("current", "currentColor");
-  });
-
-  test("`black` and `white` are included", () => {
     expect(colors).toHaveProperty("black", "black");
     expect(colors).toHaveProperty("white", "white");
   });
@@ -107,7 +54,7 @@ describe("Given option `include`", () => {
   });
   const colors = config.theme.colors;
 
-  test("The specified colors and their dark variants are included", () => {
+  test("Specified colors and their dark variants are included", () => {
     expect(colors).toHaveProperty("red", colorShape);
     expect(colors).toHaveProperty("reddark", colorShape);
 
@@ -121,18 +68,15 @@ describe("Given option `include`", () => {
     expect(colors).toHaveProperty("yellowdarkp3a", colorShape);
   });
 
-  test("Other colors are not included", () => {
+  test("Unspecified colors are excluded", () => {
     // 4 stands for `transparent`, `current`, `black`, and `white`.
     // 8 stands for 4 specified colors and their 4 dark variants.
     expect(Object.keys(colors)).toHaveLength(4 + 8);
   });
 
-  test("`transparent` and `currentColor` are included", () => {
+  test("Common colors are included", () => {
     expect(colors).toHaveProperty("transparent", "transparent");
     expect(colors).toHaveProperty("current", "currentColor");
-  });
-
-  test("`black` and `white` are included", () => {
     expect(colors).toHaveProperty("black", "black");
     expect(colors).toHaveProperty("white", "white");
   });
@@ -144,7 +88,7 @@ describe("Given option `exclude`", () => {
   });
   const colors = config.theme.colors;
 
-  test("The specified colors and their dark variants are excluded", () => {
+  test("Specified colors and their dark variants are excluded", () => {
     expect(colors).not.toHaveProperty("red");
     expect(colors).not.toHaveProperty("reddark");
 
@@ -158,7 +102,7 @@ describe("Given option `exclude`", () => {
     expect(colors).not.toHaveProperty("yellowdarkp3a");
   });
 
-  test("Other colors are included", () => {
+  test("Unspecified colors are included", () => {
     expect(colors).toHaveProperty("reda", colorShape);
     expect(colors).toHaveProperty("reddarka", colorShape);
 
@@ -172,41 +116,35 @@ describe("Given option `exclude`", () => {
     expect(colors).toHaveProperty("yellowdark", colorShape);
   });
 
-  test("`transparent` and `currentColor` are included", () => {
+  test("Common colors are included", () => {
     expect(colors).toHaveProperty("transparent", "transparent");
     expect(colors).toHaveProperty("current", "currentColor");
-  });
-
-  test("`black` and `white` are included", () => {
     expect(colors).toHaveProperty("black", "black");
     expect(colors).toHaveProperty("white", "white");
   });
 });
 
-describe("Given option `include` and `exclude`", () => {
+describe("Given options `include` and `exclude`", () => {
   const config = buildConfig({
     include: ["red", "greena", "bluep3", "yellowp3a"],
     exclude: ["red", "greena", "bluep3"],
   });
   const colors = config.theme.colors;
 
-  test("The specified colors and their dark variants are included", () => {
+  test("Specified colors and their dark variants are included", () => {
     expect(colors).toHaveProperty("yellowp3a", colorShape);
     expect(colors).toHaveProperty("yellowdarkp3a", colorShape);
   });
 
-  test("Other colors are excluded", () => {
+  test("Unspecified colors are excluded", () => {
     // 4 stands for `transparent`, `current`, `black`, and `white`.
     // 2 stands for 1 specified color and its 1 dark variant.
     expect(Object.keys(colors)).toHaveLength(4 + 2);
   });
 
-  test("`transparent` and `currentColor` are included", () => {
+  test("Common colors are included", () => {
     expect(colors).toHaveProperty("transparent", "transparent");
     expect(colors).toHaveProperty("current", "currentColor");
-  });
-
-  test("`black` and `white` are included", () => {
     expect(colors).toHaveProperty("black", "black");
     expect(colors).toHaveProperty("white", "white");
   });

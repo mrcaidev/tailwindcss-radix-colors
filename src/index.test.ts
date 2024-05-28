@@ -4,7 +4,7 @@ import type { Config } from "tailwindcss";
 import tailwind from "tailwindcss";
 import { expect, test } from "vitest";
 import plugin from "./";
-import type { TailwindcssRadixColorsOptions } from "./types";
+import type { TailwindcssRadixColorsOptions } from "./options";
 
 async function run({
   content,

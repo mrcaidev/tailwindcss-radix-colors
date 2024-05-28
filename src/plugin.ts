@@ -3,17 +3,18 @@ import type {
   PluginAPI,
   PrefixConfig,
 } from "tailwindcss/types/config";
-import type {
-  Color,
-  ColorName,
-  ColorScale,
-  Palette,
-  TailwindcssRadixColorsOptions,
-} from "./types";
-import { buildColorName, parseColorName } from "./utils";
+import {
+  buildColorName,
+  foregroundColorNamePairs,
+  parseColorName,
+  type BaseColorName,
+  type Color,
+  type Palette,
+} from "./colors";
+import type { TailwindcssRadixColorsOptions } from "./options";
 
 /**
- * Build the "plugin" part of `tailwindcss-radix-colors`, which will be used as
+ * Build the plugin part of `tailwindcss-radix-colors`, which will be used as
  * the first argument of the `plugin.withOptions` function.
  */
 export function buildPlugin(options: TailwindcssRadixColorsOptions = {}) {
@@ -21,38 +22,40 @@ export function buildPlugin(options: TailwindcssRadixColorsOptions = {}) {
 
   if (disableSemantics) {
     return () => {
-      // Do nothing, since the only purpose of the "plugin" part is to generate
+      // Do nothing, since the only purpose of the plugin part is to generate
       // semantics classes.
     };
   }
 
-  return createPlugin;
+  return generateSemanticClasses;
 }
 
 /**
- * Generate semantic classes via `addComponents`.
- *
- * These semantic classes will be generated for each base color (i.e. one
- * without suffixes like `dark`, `a` or `p3`). If the user extends the color
- * palette via `config.theme.extend.colors`, and that extended color has all 12
- * scales defined, then semantic classes will also be generated for them.
- *
- * @todo The extended color feature is not implemented yet.
+ * Generate semantic classes, via Tailwind's `addComponents` API.
  *
  * @see https://tailwindcss.com/docs/plugins#adding-components
  */
-function createPlugin({ addComponents, config, theme }: PluginAPI) {
-  const palette: Palette = theme("colors");
+function generateSemanticClasses({ addComponents, config, theme }: PluginAPI) {
+  const palette = theme<Palette>("colors");
   const prefix = config<PrefixConfig>("prefix");
 
   for (const [colorName, color] of Object.entries(palette)) {
-    const shouldProcess = checkShouldProcess(colorName, color);
-
-    if (!shouldProcess) {
+    if (!hasAllScales(color)) {
       continue;
     }
 
-    const { darkColor, foregroundColor } = findColorFamily(palette, colorName);
+    const { darkColorName, foregroundColorName } = findColorFamily(colorName);
+    const darkColor = palette[darkColorName];
+    const foregroundColor = palette[foregroundColorName];
+
+    if (
+      !darkColor ||
+      !hasAllScales(darkColor) ||
+      !foregroundColor ||
+      !hasAllScales(foregroundColor)
+    ) {
+      continue;
+    }
 
     addComponents({
       [`.bg-${colorName}-app`]: apply(
@@ -127,73 +130,20 @@ function createPlugin({ addComponents, config, theme }: PluginAPI) {
 }
 
 /**
- * Every base color has its corresponding saturated gray scale, which can
- * create a more colorful and harmonious vibe, if used on the text against
- * the original color background.
- *
- * @see https://www.radix-ui.com/colors/docs/palette-composition/composing-a-palette#natural-pairing
+ * Check whether a color has all 12 scales needed to generate semantic classes.
  */
-const foregroundColorPairs = {
-  mauve: "mauvedark",
-  tomato: "mauvedark",
-  red: "mauvedark",
-  ruby: "mauvedark",
-  crimson: "mauvedark",
-  pink: "mauvedark",
-  plum: "mauvedark",
-  purple: "mauvedark",
-  violet: "mauvedark",
-  slate: "slatedark",
-  iris: "slatedark",
-  indigo: "slatedark",
-  blue: "slatedark",
-  sky: "slate",
-  cyan: "slatedark",
-  sage: "sagedark",
-  mint: "sage",
-  teal: "sagedark",
-  jade: "sagedark",
-  green: "sagedark",
-  olive: "olivedark",
-  grass: "olivedark",
-  lime: "olive",
-  sand: "sanddark",
-  yellow: "sand",
-  amber: "sand",
-  orange: "sanddark",
-  brown: "sanddark",
-  gold: "sanddark", // Not officially specified.
-  bronze: "sanddark", // Not officially specified.
-  gray: "graydark", // Not officially specified.
-  white: "gray", // Not officially specified.
-  black: "graydark", // Not officially specified.
-};
-
-/**
- * Check if semantic classes should be generated for the given color.
- *
- * Colors that pass the check are assured to have all 12 scales defined, be it
- * Radix UI colors or user-extended colors.
- */
-function checkShouldProcess(
-  colorName: string,
+function hasAllScales(
   color: Color | string,
-): color is Color {
-  if (colorName.includes("dark")) {
-    return false;
-  }
-
+): color is Record<
+  "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11" | "12",
+  string
+> {
   if (typeof color === "string") {
     return false;
   }
 
-  // Radix UI colors are guaranteed to have all 12 scales, as long as the tests
-  // pass. The loop below is intended to check user-extended colors.
-  for (let scale = 1; scale <= 12; scale++) {
-    if (!color[scale.toString() as ColorScale]) {
-      console.warn(
-        `Missing color scale ${colorName}.${scale.toString()}. In order to generate semantic classes, all 12 scales must be defined. If it is an intended behavior to leave some certain scales undefined, this warning can be safely ignored.`,
-      );
+  for (let i = 1; i <= 12; i++) {
+    if (!color[i]) {
       return false;
     }
   }
@@ -202,37 +152,66 @@ function checkShouldProcess(
 }
 
 /**
- * For a given base color, find its dark color and foreground color.
- *
- * For example, the dark color of "blue" is "bluedark", and the foreground
- * color is "slate".
- *
- * For the suffix "p3", it will be preserved in both dark color and foreground
- * colors. But for the suffix "a", it will only be preserved in dark color, as
- * it makes no sense to have a foreground text with alpha value.
+ * For a given base color name, find its corresponding dark color name and
+ * foreground color name.
  */
-function findColorFamily(palette: Palette, colorName: string) {
+function findColorFamily(colorName: string) {
   const { base, p3, alpha } = parseColorName(colorName);
 
-  const darkColorName: ColorName =
-    base === "black"
-      ? buildColorName({ base: "white", dark: false, p3, alpha })
-      : base === "white"
-        ? buildColorName({ base: "black", dark: false, p3, alpha })
-        : buildColorName({ base, dark: true, p3, alpha });
+  // blacka / blackp3a
+  if (base === "black") {
+    return {
+      darkColorName: buildColorName({
+        base: "white",
+        dark: false,
+        p3,
+        alpha,
+      }),
+      foregroundColorName: buildColorName({
+        base: "white",
+        dark: false,
+        p3,
+        alpha: false,
+      }),
+    };
+  }
 
-  const foregroundColorName = p3
-    ? `${foregroundColorPairs[base as keyof typeof foregroundColorPairs]}p3`
-    : foregroundColorPairs[base as keyof typeof foregroundColorPairs];
+  // whitea / whitep3a
+  if (base === "white") {
+    return {
+      darkColorName: buildColorName({
+        base: "black",
+        dark: false,
+        p3,
+        alpha,
+      }),
+      foregroundColorName: buildColorName({
+        base: "black",
+        dark: false,
+        p3,
+        alpha: false,
+      }),
+    };
+  }
 
-  const darkColor = palette[darkColorName] as Color;
-  const foregroundColor = palette[foregroundColorName] as Color;
-
-  return { darkColor, foregroundColor };
+  return {
+    darkColorName: buildColorName({
+      base,
+      dark: true,
+      p3,
+      alpha,
+    }),
+    foregroundColorName: buildColorName({
+      base: foregroundColorNamePairs[base as BaseColorName],
+      dark: false,
+      p3,
+      alpha: false,
+    }),
+  };
 }
 
 /**
- * Composite utility classes just like `@apply` rule.
+ * Composite utility classes using `@apply`.
  *
  * @see https://github.com/tailwindlabs/tailwindcss/discussions/2049
  */
