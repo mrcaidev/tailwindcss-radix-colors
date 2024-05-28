@@ -45,17 +45,16 @@ function generateSemanticClasses({ addComponents, config, theme }: PluginAPI) {
     }
 
     const { darkColorName, foregroundColorName } = findFamily(colorName);
-    const darkColor = palette[darkColorName];
-    const foregroundColor = palette[foregroundColorName];
 
-    if (
-      !darkColor ||
-      !hasAllScales(darkColor) ||
-      !foregroundColor ||
-      !hasAllScales(foregroundColor)
-    ) {
+    const darkColor = palette[darkColorName];
+
+    if (!darkColor || !hasAllScales(darkColor)) {
       continue;
     }
+
+    const foregroundColor = palette[foregroundColorName];
+    const shouldApplyForeground =
+      foregroundColor && hasAllScales(foregroundColor);
 
     addComponents({
       [`.bg-${colorName}-app`]: apply(
@@ -95,7 +94,7 @@ function generateSemanticClasses({ addComponents, config, theme }: PluginAPI) {
         `hover:bg-${colorName}-10`,
         `${prefix}dark:bg-${darkColorName}-9`,
         `${prefix}dark:hover:bg-${darkColorName}-10`,
-        `text-${foregroundColorName}-12`,
+        shouldApplyForeground ? `text-${foregroundColorName}-12` : "",
       ),
       [`.border-${colorName}-dim`]: apply(
         `border-${colorName}-6`,
@@ -216,8 +215,8 @@ function findFamily(colorName: string) {
  * @see https://github.com/tailwindlabs/tailwindcss/discussions/2049
  */
 function apply(...classes: string[]) {
-  const processedClasses = classes.map((className) =>
-    className.replaceAll(" ", "_"),
-  );
+  const processedClasses = classes
+    .filter((className) => className !== "")
+    .map((className) => className.replaceAll(" ", "_"));
   return { [`@apply ${processedClasses.join(" ")}`]: {} };
 }
