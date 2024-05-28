@@ -1,5 +1,5 @@
 import plugin from "tailwindcss/plugin";
-import { buildConfig } from "./config";
-import { buildPlugin } from "./plugin";
+import { createConfig } from "./config";
+import { createPlugin } from "./plugin";
 
-export default plugin.withOptions(buildPlugin, buildConfig);
+export default plugin.withOptions(createPlugin, createConfig);

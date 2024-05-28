@@ -17,7 +17,7 @@ import type { TailwindcssRadixColorsOptions } from "./options";
  * Build the plugin part of `tailwindcss-radix-colors`, which will be used as
  * the first argument of the `plugin.withOptions` function.
  */
-export function buildPlugin(options: TailwindcssRadixColorsOptions = {}) {
+export function createPlugin(options: TailwindcssRadixColorsOptions = {}) {
   const { disableSemantics } = options;
 
   if (disableSemantics) {

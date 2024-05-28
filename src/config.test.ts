@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { describe, expect, test } from "vitest";
 import { baseColorNames } from "./colors";
-import { buildConfig } from "./config";
+import { createConfig } from "./config";
 
 const colorShape = {
   "1": expect.any(String),
@@ -19,7 +19,7 @@ const colorShape = {
 };
 
 describe("Given no option", () => {
-  const config = buildConfig();
+  const config = createConfig();
   const colors = config.theme.colors;
 
   test("All Radix colors are correctly transformed", () => {
@@ -49,7 +49,7 @@ describe("Given no option", () => {
 });
 
 describe("Given option `include`", () => {
-  const config = buildConfig({
+  const config = createConfig({
     include: ["red", "greena", "bluep3", "yellowp3a"],
   });
   const colors = config.theme.colors;
@@ -83,7 +83,7 @@ describe("Given option `include`", () => {
 });
 
 describe("Given option `exclude`", () => {
-  const config = buildConfig({
+  const config = createConfig({
     exclude: ["red", "greena", "bluep3", "yellowp3a"],
   });
   const colors = config.theme.colors;
@@ -125,7 +125,7 @@ describe("Given option `exclude`", () => {
 });
 
 describe("Given options `include` and `exclude`", () => {
-  const config = buildConfig({
+  const config = createConfig({
     include: ["red", "greena", "bluep3", "yellowp3a"],
     exclude: ["red", "greena", "bluep3"],
   });

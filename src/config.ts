@@ -15,7 +15,7 @@ import type { TailwindcssRadixColorsOptions } from "./options";
  *
  * @see https://tailwindcss.com/docs/plugins#extending-the-configuration
  */
-export function buildConfig(options: TailwindcssRadixColorsOptions = {}) {
+export function createConfig(options: TailwindcssRadixColorsOptions = {}) {
   return {
     theme: {
       colors: {
