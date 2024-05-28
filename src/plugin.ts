@@ -44,7 +44,7 @@ function generateSemanticClasses({ addComponents, config, theme }: PluginAPI) {
       continue;
     }
 
-    const { darkColorName, foregroundColorName } = findColorFamily(colorName);
+    const { darkColorName, foregroundColorName } = findFamily(colorName);
     const darkColor = palette[darkColorName];
     const foregroundColor = palette[foregroundColorName];
 
@@ -155,7 +155,7 @@ function hasAllScales(
  * For a given base color name, find its corresponding dark color name and
  * foreground color name.
  */
-function findColorFamily(colorName: string) {
+function findFamily(colorName: string) {
   const { base, p3, alpha } = parseColorName(colorName);
 
   // blacka / blackp3a
