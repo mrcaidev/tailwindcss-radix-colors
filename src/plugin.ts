@@ -40,7 +40,7 @@ function generateSemanticClasses({ addComponents, config, theme }: PluginAPI) {
   const prefix = config<PrefixConfig>("prefix");
 
   for (const [colorName, color] of Object.entries(palette)) {
-    if (!hasAllScales(color)) {
+    if (parseColorName(colorName).dark || !hasAllScales(color)) {
       continue;
     }
 
@@ -59,71 +59,71 @@ function generateSemanticClasses({ addComponents, config, theme }: PluginAPI) {
 
     addComponents({
       [`.bg-${colorName}-app`]: apply(
-        `bg-[${color["1"]}]`,
-        `${prefix}dark:bg-[${darkColor["1"]}]`,
+        `bg-${colorName}-1`,
+        `${prefix}dark:bg-${darkColorName}-1`,
       ),
       [`.bg-${colorName}-subtle`]: apply(
-        `bg-[${color["2"]}]`,
-        `${prefix}dark:bg-[${darkColor["2"]}]`,
+        `bg-${colorName}-2`,
+        `${prefix}dark:bg-${darkColorName}-2`,
       ),
       [`.bg-${colorName}-ui`]: apply(
-        `bg-[${color["3"]}]`,
-        `hover:bg-[${color["4"]}]`,
-        `active:bg-[${color["5"]}]`,
-        `${prefix}dark:bg-[${darkColor["3"]}]`,
-        `${prefix}dark:hover:bg-[${darkColor["4"]}]`,
-        `${prefix}dark:active:bg-[${darkColor["5"]}]`,
+        `bg-${colorName}-3`,
+        `hover:bg-${colorName}-4`,
+        `active:bg-${colorName}-5`,
+        `${prefix}dark:bg-${darkColorName}-3`,
+        `${prefix}dark:hover:bg-${darkColorName}-4`,
+        `${prefix}dark:active:bg-${darkColorName}-5`,
       ),
       [`.bg-${colorName}-ghost`]: apply(
         `bg-transparent`,
-        `hover:bg-[${color["4"]}]`,
-        `active:bg-[${color["5"]}]`,
+        `hover:bg-${colorName}-4`,
+        `active:bg-${colorName}-5`,
         `${prefix}dark:bg-transparent`,
-        `${prefix}dark:hover:bg-[${darkColor["4"]}]`,
-        `${prefix}dark:active:bg-[${darkColor["5"]}]`,
+        `${prefix}dark:hover:bg-${darkColorName}-4`,
+        `${prefix}dark:active:bg-${darkColorName}-5`,
       ),
       [`.bg-${colorName}-action`]: apply(
-        `bg-[${color["4"]}]`,
-        `hover:bg-[${color["5"]}]`,
-        `active:bg-[${color["6"]}]`,
-        `${prefix}dark:bg-[${darkColor["4"]}]`,
-        `${prefix}dark:hover:bg-[${darkColor["5"]}]`,
-        `${prefix}dark:active:bg-[${darkColor["6"]}]`,
+        `bg-${colorName}-4`,
+        `hover:bg-${colorName}-5`,
+        `active:bg-${colorName}-6`,
+        `${prefix}dark:bg-${darkColorName}-4`,
+        `${prefix}dark:hover:bg-${darkColorName}-5`,
+        `${prefix}dark:active:bg-${darkColorName}-6`,
       ),
       [`.bg-${colorName}-solid`]: apply(
-        `bg-[${color["9"]}]`,
-        `hover:bg-[${color["10"]}]`,
-        `${prefix}dark:bg-[${darkColor["9"]}]`,
-        `${prefix}dark:hover:bg-[${darkColor["10"]}]`,
-        `text-[${foregroundColor["12"]}]`,
+        `bg-${colorName}-9`,
+        `hover:bg-${colorName}-10`,
+        `${prefix}dark:bg-${darkColorName}-9`,
+        `${prefix}dark:hover:bg-${darkColorName}-10`,
+        `text-${foregroundColorName}-12`,
       ),
       [`.border-${colorName}-dim`]: apply(
-        `border-[${color["6"]}]`,
-        `${prefix}dark:border-[${darkColor["6"]}]`,
+        `border-${colorName}-6`,
+        `${prefix}dark:border-${darkColorName}-6`,
       ),
       [`.border-${colorName}-normal`]: apply(
-        `border-[${color["7"]}]`,
-        `hover:border-[${color["8"]}]`,
-        `${prefix}dark:border-[${darkColor["7"]}]`,
-        `${prefix}dark:hover:border-[${darkColor["8"]}]`,
+        `border-${colorName}-7`,
+        `hover:border-${colorName}-8`,
+        `${prefix}dark:border-${darkColorName}-7`,
+        `${prefix}dark:hover:border-${darkColorName}-8`,
       ),
       [`.divide-${colorName}-dim`]: apply(
-        `divide-[${color["6"]}]`,
-        `${prefix}dark:divide-[${darkColor["6"]}]`,
+        `divide-${colorName}-6`,
+        `${prefix}dark:divide-${darkColorName}-6`,
       ),
       [`.divide-${colorName}-normal`]: apply(
-        `divide-[${color["7"]}]`,
-        `hover:divide-[${color["8"]}]`,
-        `${prefix}dark:divide-[${darkColor["7"]}]`,
-        `${prefix}dark:hover:divide-[${darkColor["8"]}]`,
+        `divide-${colorName}-7`,
+        `hover:divide-${colorName}-8`,
+        `${prefix}dark:divide-${darkColorName}-7`,
+        `${prefix}dark:hover:divide-${darkColorName}-8`,
       ),
       [`.text-${colorName}-dim`]: apply(
-        `text-[${color["11"]}]`,
-        `${prefix}dark:text-[${darkColor["11"]}]`,
+        `text-${colorName}-11`,
+        `${prefix}dark:text-${darkColorName}-11`,
       ),
       [`.text-${colorName}-normal`]: apply(
-        `text-[${color["12"]}]`,
-        `${prefix}dark:text-[${darkColor["12"]}]`,
+        `text-${colorName}-12`,
+        `${prefix}dark:text-${darkColorName}-12`,
       ),
     } as CSSRuleObject);
   }
