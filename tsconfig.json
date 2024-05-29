@@ -29,6 +29,7 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
+    "lib": ["ESNext"],
     "target": "ESNext",
     "skipLibCheck": true
   },
