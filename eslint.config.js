@@ -15,5 +15,5 @@ export default ts.config(
       },
     },
   },
-  { ignores: ["dist"] },
+  { ignores: ["dist", "docs/.vitepress/cache", "docs/.vitepress/dist"] },
 );
