@@ -131,12 +131,7 @@ function generateSemanticClasses({ addComponents, config, theme }: PluginAPI) {
 /**
  * Check whether a color has all 12 scales needed to generate semantic classes.
  */
-function hasAllScales(
-  color: Color | string,
-): color is Record<
-  "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11" | "12",
-  string
-> {
+function hasAllScales(color: Color) {
   if (typeof color === "string") {
     return false;
   }

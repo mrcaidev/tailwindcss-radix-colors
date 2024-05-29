@@ -89,12 +89,12 @@ export const foregroundColorNamePairs: Record<BaseColorName, string> = {
 /**
  * A map from color scale to color value.
  */
-export type Color = Record<string, string>;
+export type Color = Record<string, string> | string;
 
 /**
  * A map from color name to color.
  */
-export type Palette = Record<string, Color | string>;
+export type Palette = Record<string, Color>;
 
 /**
  * Property components of a color name.
