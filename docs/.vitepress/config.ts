@@ -3,7 +3,7 @@ import { defineConfig } from "vitepress";
 export default defineConfig({
   title: "Tailwind Radix Colors",
   description:
-    "Bring Radix's Color System to Tailwind, and enjoy the best of both Tailwind CSS and Radix UI",
+    "Bring Radix's color system to Tailwind, and enjoy the best of both Tailwind CSS and Radix UI",
   head: [
     [
       "link",
@@ -21,21 +21,60 @@ export default defineConfig({
     nav: [
       {
         text: "Tailwind CSS",
-        link: "https://tailwindcss.com",
+        link: "https://tailwindcss.com/",
       },
       {
-        text: "Radix Colors",
-        link: "https://www.radix-ui.com/colors",
+        text: "Radix UI",
+        link: "https://www.radix-ui.com/",
       },
     ],
     sidebar: [
       {
         text: "Introduction",
+        base: "/introduction",
         items: [
           {
             text: "Getting Started",
             link: "/getting-started",
           },
+          {
+            text: "Usage",
+            link: "/usage",
+          },
+        ],
+      },
+      {
+        text: "Guide",
+        base: "/guide",
+        items: [
+          {
+            text: "Utility-First",
+            link: "/utility-first",
+          },
+          {
+            text: "Semantic-First",
+            link: "/semantic-first",
+          },
+        ],
+      },
+      {
+        text: "Reference",
+        base: "/reference",
+        items: [
+          {
+            text: "Plugin Options",
+            link: "/options",
+          },
+          {
+            text: "Semantic Table",
+            link: "/semantic-table",
+          },
+        ],
+      },
+      {
+        text: "FAQ",
+        base: "/faq",
+        items: [
           {
             text: "Why Another Palette?",
             link: "/why-another-palette",
@@ -44,32 +83,13 @@ export default defineConfig({
             text: "Why This Plugin?",
             link: "/why-this-plugin",
           },
-        ],
-      },
-      {
-        text: "Guide",
-        items: [
           {
-            text: "Utility First",
-            link: "/utility-first",
-          },
-          {
-            text: "Semantic First",
-            link: "/semantic-first",
-          },
-        ],
-      },
-      {
-        text: "Reference",
-        items: [
-          {
-            text: "Options",
-            link: "/options",
+            text: "Why Smaller CSS Bundle?",
+            link: "/why-smaller-css-bundle",
           },
         ],
       },
     ],
-
     socialLinks: [
       {
         icon: "github",

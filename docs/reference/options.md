@@ -1,6 +1,6 @@
-# Options
+# Plugin Options
 
-No configuration is required for this plugin to take effect. However, you can still tweak the plugin's behavior by passing an options object to the plugin function.
+No configuration is required for this plugin to take effect. However, you can still tweak the plugin's behavior, by passing an options object to the plugin function.
 
 ::: code-group
 
@@ -34,7 +34,7 @@ module.exports = {
 
 :::
 
-The interface of the acceptable options is:
+The interface of the options is:
 
 ```ts
 interface TailwindcssRadixColorsOptions {
@@ -49,7 +49,7 @@ interface TailwindcssRadixColorsOptions {
 - Type: `boolean`
 - Default: `false`
 
-Disable the generation (and hence the IDE Intellisense) of [semantic classes](/semantic-first), such as `bg-red-solid` or `text-slate-normal`. You will now only see [utility classes](/utility-first) in your IDE Intellisense, such as `bg-red-9` or `text-slate-12`.
+Disable the generation (and hence the IDE Intellisense) of [semantic classes](/guide/semantic-first), such as `bg-red-solid` or `text-slate-normal`. You will now only see [utility classes](/guide/utility-first) in your IDE Intellisense, such as `bg-red-9` or `text-slate-12`.
 
 ::: info Clarification
 

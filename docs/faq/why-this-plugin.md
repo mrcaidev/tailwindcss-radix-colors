@@ -10,4 +10,4 @@ This plugin solves this problem by replacing the entire color system of Tailwind
 
 As a result, this plugin will only generate the colors you actually use, which means you will have a much smaller CSS bundle, with zero configuration.
 
-Additionally, this plugin also includes a set of [semantic classes](/semantic-first), which can help you build prototypes quickly.
+Additionally, this plugin also includes a set of [semantic classes](/guide/semantic-first), which can help you build prototypes quickly.

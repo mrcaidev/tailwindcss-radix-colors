@@ -10,7 +10,7 @@ Tailwind's color palette falls short, when we need to apply different color scal
 
 Radix colors, on the other hand, is particularly designed to handle these states, by assigning a semantic meaning to each color scale. For example, "Step 3" stands for normal state, "Step 4" stands for hover state, "Step 5" stands for pressed or selected states, and so on. For a complete list of semantic meanings, please see [Understanding the Scale](https://www.radix-ui.com/docs/colors/palette-composition/understanding-the-scale).
 
-It's also fine to use this plugin, even if you know nothing about the semantic meaning of each scale, or if you find it hard or boring to remember all those guidelines. This plugin provides a set of [semantic classes](/semantic-first), which internally adhere to Radix's design system and best practices. You can use these classes to apply different color scales to different states, without knowing the underlying design principles.
+It's also fine to use this plugin, even if you know nothing about the semantic meaning of each scale, or if you find it hard or boring to remember all those guidelines. This plugin provides a set of [semantic classes](/guide/semantic-first), which internally adhere to Radix's design system and best practices. You can use these classes to apply different color scales to different states, without knowing the underlying design principles.
 
 ## P3 and Alpha Variants
 
