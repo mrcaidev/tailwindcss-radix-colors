@@ -108,5 +108,8 @@ export default defineConfig({
       pattern:
         "https://github.com/mrcaidev/tailwindcss-radix-colors/edit/master/docs/:path",
     },
+    search: {
+      provider: "local",
+    },
   },
 });
