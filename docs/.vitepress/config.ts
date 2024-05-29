@@ -55,6 +55,10 @@ export default defineConfig({
             text: "Semantic-First",
             link: "/semantic-first",
           },
+          {
+            text: "Custom Colors",
+            link: "/custom-colors",
+          },
         ],
       },
       {
