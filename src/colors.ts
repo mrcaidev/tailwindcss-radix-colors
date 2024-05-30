@@ -129,7 +129,7 @@ export function parseColorName(colorName: string) {
     /^(?<base>.+?)(?<dark>dark)?(?<p3>p3)?(?<alpha>a)?$/i,
   )?.groups;
 
-  if (!matchGroups?.base) {
+  if (!matchGroups?.["base"]) {
     // Unreachable. The regular expression will always match.
     throw new Error(`Invalid color name: ${colorName}`);
   }
