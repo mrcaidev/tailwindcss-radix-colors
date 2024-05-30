@@ -15,5 +15,9 @@ export default defineConfig({
     sequence: {
       concurrent: true,
     },
+    coverage: {
+      provider: "istanbul",
+      include: ["src/**/*.ts"],
+    },
   },
 });

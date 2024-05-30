@@ -39,6 +39,7 @@
   "scripts": {
     "build": "vite build",
     "test": "vitest",
+    "coverage": "vitest run --coverage",
     "prepare": "husky",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
@@ -53,6 +54,7 @@
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/eslint__js": "^8.42.3",
     "@types/node": "^20.12.12",
+    "@vitest/coverage-istanbul": "^1.6.0",
     "eslint": "^9.3.0",
     "eslint-config-prettier": "^9.1.0",
     "husky": "^9.0.11",
