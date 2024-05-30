@@ -1,6 +1,11 @@
-# tailwindcss-radix-colors
+# Tailwind CSS Radix Colors
 
-Bring [Radix UI](https://www.radix-ui.com/)'s color system to [Tailwind CSS](https://tailwindcss.com/).
+![NPM version](https://img.shields.io/npm/v/tailwindcss-radix-colors)
+![CI status](https://img.shields.io/github/actions/workflow/status/mrcaidev/tailwindcss-radix-colors/ci.yaml?label=ci)
+
+A [Tailwind CSS](https://tailwindcss.com/) plugin that brings [Radix UI](https://www.radix-ui.com/)'s color system to Tailwind CSS.
+
+## 🚀 Getting Started
 
 Follow the [documentation](https://tailwindcss-radix-colors.mrcai.dev) to get started!
 
@@ -8,9 +13,7 @@ Follow the [documentation](https://tailwindcss-radix-colors.mrcai.dev) to get st
 
 Any contribution is welcomed and appreciated.
 
-[Open an issue](https://github.com/mrcaidev/tailwindcss-radix-colors/issues) to report a bug or request a feature.
-
-[Create a pull request](https://github.com/mrcaidev/tailwindcss-radix-colors/pulls) to fix an issue or add a feature. Before a PR, please make sure a corresponding issue exists and is fully discussed.
+Before making a [pull request](https://github.com/mrcaidev/tailwindcss-radix-colors/pulls), please make sure a corresponding [issue](https://github.com/mrcaidev/tailwindcss-radix-colors/issues) exists and is fully discussed.
 
 ## 📜 License
 
