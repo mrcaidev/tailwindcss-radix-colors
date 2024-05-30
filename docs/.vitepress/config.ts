@@ -102,7 +102,7 @@ export default defineConfig({
     ],
     footer: {
       message: "Released under the MIT license.",
-      copyright: "© 2024-present Yuwang Cai",
+      copyright: "© 2023-present Yuwang Cai",
     },
     editLink: {
       pattern:
