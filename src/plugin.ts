@@ -35,6 +35,7 @@ export function createPlugin(options: TailwindcssRadixColorsOptions = {}) {
  *
  * @see https://tailwindcss.com/docs/plugins#adding-components
  */
+// eslint-disable-next-line @typescript-eslint/unbound-method
 function generateSemanticClasses({ addComponents, config, theme }: PluginAPI) {
   const palette = theme<Palette>("colors");
   const prefix = config<PrefixConfig>("prefix");
