@@ -54,7 +54,6 @@
     "@commitlint/config-conventional": "^19.4.1",
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/eslint__js": "^8.42.3",
-    "@types/node": "^22.5.2",
     "@vitest/coverage-istanbul": "^2.0.5",
     "eslint": "^9.9.1",
     "eslint-config-prettier": "^9.1.0",
