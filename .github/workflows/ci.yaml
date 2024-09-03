@@ -21,20 +21,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: latest
+          node-version: lts/*
           cache: pnpm
 
       - name: Install dependencies
         run: pnpm install
 
       - name: Lint error
-        run: pnpm exec eslint .
+        run: pnpm eslint .
 
-      - name: Lint format
-        run: pnpm exec prettier . --check
+      - name: Check format
+        run: pnpm prettier . --check
 
       - name: Lint commit message
-        run: pnpm exec commitlint --last
+        run: pnpm commitlint --last
 
       - name: Run tests
-        run: pnpm run test
+        run: pnpm run coverage
