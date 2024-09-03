@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -35,24 +35,6 @@ jobs:
 
       - name: Lint commit message
         run: pnpm exec commitlint --last
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: latest
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install
 
       - name: Run tests
         run: pnpm run test
