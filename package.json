@@ -20,6 +20,7 @@
     "url": "https://mrcai.dev"
   },
   "type": "module",
+  "packageManager": "pnpm@9.9.0",
   "files": [
     "dist"
   ],
