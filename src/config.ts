@@ -82,7 +82,7 @@ function transform(
 
     const tailwindColor: Color = {};
     for (const [radixColorScale, colorValue] of Object.entries(radixColor)) {
-      const tailwindColorScale = radixColorScale.match(/\d+$/)?.[0];
+      const tailwindColorScale = /\d+$/.exec(radixColorScale)?.[0];
       if (tailwindColorScale) {
         tailwindColor[tailwindColorScale] = colorValue;
       }

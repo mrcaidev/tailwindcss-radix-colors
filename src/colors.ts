@@ -125,9 +125,8 @@ export interface ColorNameComponents {
  * Parse a given color name into components.
  */
 export function parseColorName(colorName: string) {
-  const matchGroups = colorName.match(
-    /^(?<base>.+?)(?<dark>dark)?(?<p3>p3)?(?<alpha>a)?$/i,
-  )?.groups;
+  const colorNameRegExp = /^(?<base>.+?)(?<dark>dark)?(?<p3>p3)?(?<alpha>a)?$/i;
+  const matchGroups = colorNameRegExp.exec(colorName)?.groups;
 
   if (!matchGroups?.["base"]) {
     // Unreachable. The regular expression will always match.
