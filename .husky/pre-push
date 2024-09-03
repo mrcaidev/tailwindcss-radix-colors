@@ -1,1 +1,1 @@
-pnpm run test --run
+pnpm test -- --run
