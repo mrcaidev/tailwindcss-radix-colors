@@ -56,6 +56,7 @@ describe("When `priority=no-tailwind`", () => {
 
     expect(colors).not.toHaveProperty("zinc");
 
+    expect(colors).toHaveProperty("inherit", "inherit");
     expect(colors).toHaveProperty("transparent", "transparent");
     expect(colors).toHaveProperty("current", "currentColor");
     expect(colors).toHaveProperty("black", "#000");
@@ -90,6 +91,7 @@ describe("When `priority=no-tailwind`", () => {
 
     expect(colors).not.toHaveProperty("green");
 
+    expect(colors).toHaveProperty("inherit", "inherit");
     expect(colors).toHaveProperty("transparent", "transparent");
     expect(colors).toHaveProperty("current", "currentColor");
     expect(colors).toHaveProperty("black", "#000");
@@ -131,6 +133,7 @@ describe("When `priority=no-tailwind`", () => {
     expect(colors).toHaveProperty("greendarka", radixColorShape);
     expect(colors).toHaveProperty("greendarkp3a", radixColorShape);
 
+    expect(colors).toHaveProperty("inherit", "inherit");
     expect(colors).toHaveProperty("transparent", "transparent");
     expect(colors).toHaveProperty("current", "currentColor");
     expect(colors).toHaveProperty("black", "#000");
@@ -173,6 +176,7 @@ describe("When `priority=no-tailwind`", () => {
 
     expect(colors).not.toHaveProperty("zinc");
 
+    expect(colors).toHaveProperty("inherit", "inherit");
     expect(colors).toHaveProperty("transparent", "transparent");
     expect(colors).toHaveProperty("current", "currentColor");
     expect(colors).toHaveProperty("black", "#000");
@@ -207,6 +211,7 @@ describe("When `priority=radix-first`", () => {
 
     expect(colors).toHaveProperty("zinc", tailwindColorShape);
 
+    expect(colors).toHaveProperty("inherit", "inherit");
     expect(colors).toHaveProperty("transparent", "transparent");
     expect(colors).toHaveProperty("current", "currentColor");
     expect(colors).toHaveProperty("black", "#000");
@@ -242,6 +247,7 @@ describe("When `priority=radix-first`", () => {
 
     expect(colors).not.toHaveProperty("green");
 
+    expect(colors).toHaveProperty("inherit", "inherit");
     expect(colors).toHaveProperty("transparent", "transparent");
     expect(colors).toHaveProperty("current", "currentColor");
     expect(colors).toHaveProperty("black", "#000");
@@ -284,6 +290,7 @@ describe("When `priority=radix-first`", () => {
     expect(colors).toHaveProperty("greendarka", radixColorShape);
     expect(colors).toHaveProperty("greendarkp3a", radixColorShape);
 
+    expect(colors).toHaveProperty("inherit", "inherit");
     expect(colors).toHaveProperty("transparent", "transparent");
     expect(colors).toHaveProperty("current", "currentColor");
     expect(colors).toHaveProperty("black", "#000");
@@ -327,6 +334,7 @@ describe("When `priority=radix-first`", () => {
 
     expect(colors).toHaveProperty("zinc", tailwindColorShape);
 
+    expect(colors).toHaveProperty("inherit", "inherit");
     expect(colors).toHaveProperty("transparent", "transparent");
     expect(colors).toHaveProperty("current", "currentColor");
     expect(colors).toHaveProperty("black", "#000");
@@ -361,6 +369,7 @@ describe("When `priority=tailwind-first`", () => {
 
     expect(colors).toHaveProperty("zinc", tailwindColorShape);
 
+    expect(colors).toHaveProperty("inherit", "inherit");
     expect(colors).toHaveProperty("transparent", "transparent");
     expect(colors).toHaveProperty("current", "currentColor");
     expect(colors).toHaveProperty("black", "#000");
@@ -396,6 +405,7 @@ describe("When `priority=tailwind-first`", () => {
 
     expect(colors).not.toHaveProperty("green");
 
+    expect(colors).toHaveProperty("inherit", "inherit");
     expect(colors).toHaveProperty("transparent", "transparent");
     expect(colors).toHaveProperty("current", "currentColor");
     expect(colors).toHaveProperty("black", "#000");
@@ -438,6 +448,7 @@ describe("When `priority=tailwind-first`", () => {
     expect(colors).toHaveProperty("greendarka", radixColorShape);
     expect(colors).toHaveProperty("greendarkp3a", radixColorShape);
 
+    expect(colors).toHaveProperty("inherit", "inherit");
     expect(colors).toHaveProperty("transparent", "transparent");
     expect(colors).toHaveProperty("current", "currentColor");
     expect(colors).toHaveProperty("black", "#000");
@@ -481,6 +492,7 @@ describe("When `priority=tailwind-first`", () => {
 
     expect(colors).toHaveProperty("zinc", tailwindColorShape);
 
+    expect(colors).toHaveProperty("inherit", "inherit");
     expect(colors).toHaveProperty("transparent", "transparent");
     expect(colors).toHaveProperty("current", "currentColor");
     expect(colors).toHaveProperty("black", "#000");

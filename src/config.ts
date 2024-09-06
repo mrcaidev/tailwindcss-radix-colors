@@ -19,7 +19,7 @@ export function createConfig(options: TailwindcssRadixColorsOptions = {}) {
   return {
     theme: {
       colors: {
-        // TODO: inherit
+        inherit: "inherit",
         transparent: "transparent",
         current: "currentColor",
         black: "#000",
