@@ -49,6 +49,8 @@ function resolvePalette(
     options.aliases ?? {},
   );
 
+  const normalizedTailwindPalette = normalizeTailwindPalette(tailwindPalette);
+
   const checkInclusion = createInclusionChecker(options);
   const filteredRadixPalette = Object.fromEntries(
     Object.entries(aliasedRadixPalette).filter(([colorName]) =>
@@ -56,7 +58,7 @@ function resolvePalette(
     ),
   );
   const filteredTailwindPalette = Object.fromEntries(
-    Object.entries(tailwindPalette).filter(([colorName]) =>
+    Object.entries(normalizedTailwindPalette).filter(([colorName]) =>
       checkInclusion(colorName),
     ),
   );
@@ -138,6 +140,26 @@ function aliasRadixPalette(
   }
 
   return aliasedPalette;
+}
+
+/**
+ * Remove deprecated color names from the Tailwind palette.
+ */
+function normalizeTailwindPalette(tailwindPalette: Palette): Palette {
+  const deprecatedColorNames = [
+    "lightBlue",
+    "warmGray",
+    "trueGray",
+    "coolGray",
+    "blueGray",
+  ];
+
+  return Object.keys(tailwindPalette)
+    .filter((colorName) => !deprecatedColorNames.includes(colorName))
+    .reduce<Palette>((palette, colorName) => {
+      palette[colorName] = tailwindPalette[colorName]!;
+      return palette;
+    }, {});
 }
 
 /**
