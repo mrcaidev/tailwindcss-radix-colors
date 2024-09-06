@@ -499,3 +499,69 @@ describe("When `priority=tailwind-first`", () => {
     expect(colors).toHaveProperty("white", "#fff");
   });
 });
+
+describe("Given `aliases`", () => {
+  test("Radix color names are aliased", () => {
+    const config = createConfig({
+      aliases: {
+        red: "sun",
+      },
+    });
+    const colors = config.theme.colors;
+
+    expect(colors).not.toHaveProperty("red");
+    expect(colors).toHaveProperty("sun", radixColorShape);
+
+    expect(colors).toHaveProperty("inherit", "inherit");
+    expect(colors).toHaveProperty("transparent", "transparent");
+    expect(colors).toHaveProperty("current", "currentColor");
+    expect(colors).toHaveProperty("black", "#000");
+    expect(colors).toHaveProperty("white", "#fff");
+  });
+
+  test("`include` respect aliases", () => {
+    const config = createConfig({
+      aliases: {
+        red: "sun",
+        green: "grass",
+      },
+      include: ["sun", "green"],
+    });
+    const colors = config.theme.colors;
+
+    expect(colors).not.toHaveProperty("red");
+    expect(colors).toHaveProperty("sun", radixColorShape);
+
+    expect(colors).not.toHaveProperty("green");
+    expect(colors).not.toHaveProperty("grass");
+
+    expect(colors).toHaveProperty("inherit");
+    expect(colors).toHaveProperty("transparent");
+    expect(colors).toHaveProperty("current");
+    expect(colors).toHaveProperty("black");
+    expect(colors).toHaveProperty("white");
+  });
+
+  test("`exclude` respect aliases", () => {
+    const config = createConfig({
+      aliases: {
+        red: "sun",
+        green: "grass",
+      },
+      exclude: ["sun", "green"],
+    });
+    const colors = config.theme.colors;
+
+    expect(colors).not.toHaveProperty("red");
+    expect(colors).not.toHaveProperty("sun");
+
+    expect(colors).not.toHaveProperty("green");
+    expect(colors).toHaveProperty("grass", radixColorShape);
+
+    expect(colors).toHaveProperty("inherit");
+    expect(colors).toHaveProperty("transparent");
+    expect(colors).toHaveProperty("current");
+    expect(colors).toHaveProperty("black");
+    expect(colors).toHaveProperty("white");
+  });
+});

@@ -1,6 +1,7 @@
 import rawRadixPalette from "@radix-ui/colors";
 import tailwindPalette from "tailwindcss/colors";
 import {
+  buildColorName,
   parseColorName,
   type Color,
   type ColorName,
@@ -43,10 +44,14 @@ function resolvePalette(
   options: TailwindcssRadixColorsOptions,
 ): Palette {
   const fullRadixPalette = transformRadixPalette(radixPalette);
+  const aliasedRadixPalette = aliasRadixPalette(
+    fullRadixPalette,
+    options.aliases ?? {},
+  );
 
   const checkInclusion = createInclusionChecker(options);
   const filteredRadixPalette = Object.fromEntries(
-    Object.entries(fullRadixPalette).filter(([colorName]) =>
+    Object.entries(aliasedRadixPalette).filter(([colorName]) =>
       checkInclusion(colorName),
     ),
   );
@@ -82,6 +87,29 @@ function transformRadixPalette(radixPalette: Palette): Palette {
   }
 
   return transformedPalette;
+}
+
+/**
+ * Replace Radix color names with their aliases.
+ */
+function aliasRadixPalette(
+  radixPalette: Palette,
+  aliases: Record<string, string>,
+): Palette {
+  const aliasedPalette: Palette = {};
+
+  for (const [radixColorName, radixColor] of Object.entries(radixPalette)) {
+    const colorNameComponents = parseColorName(radixColorName);
+    const aliasedBase =
+      aliases[colorNameComponents.base] ?? colorNameComponents.base;
+    const aliasedColorName = buildColorName({
+      ...colorNameComponents,
+      base: aliasedBase,
+    });
+    aliasedPalette[aliasedColorName] = radixColor;
+  }
+
+  return aliasedPalette;
 }
 
 /**

@@ -1,5 +1,3 @@
-import type { DefaultColors as TailwindColors } from "tailwindcss/types/generated/colors";
-
 type RadixBaseColorName =
   | "gray"
   | "mauve"
@@ -33,22 +31,6 @@ type RadixBaseColorName =
   | "mint"
   | "sky";
 
-type RadixColorName =
-  | `${RadixBaseColorName}`
-  | `${RadixBaseColorName}p3`
-  | `${RadixBaseColorName}a`
-  | `${RadixBaseColorName}p3a`
-  | `${RadixBaseColorName}dark`
-  | `${RadixBaseColorName}darkp3`
-  | `${RadixBaseColorName}darka`
-  | `${RadixBaseColorName}darkp3a`
-  | "blacka"
-  | "blackp3a"
-  | "whitea"
-  | "whitep3a";
-
-type InternalColorName = RadixColorName | keyof TailwindColors;
-
 /**
  * Options of plugin `tailwindcss-radix-colors`.
  */
@@ -69,7 +51,7 @@ export interface TailwindcssRadixColorsOptions {
    *
    * @see https://tailwindcss-radix-colors.mrcai.dev/options#include
    */
-  include?: InternalColorName[] | undefined;
+  include?: string[] | undefined;
 
   /**
    * An array of Radix color names that you do not want to see in Intellisense.
@@ -79,7 +61,7 @@ export interface TailwindcssRadixColorsOptions {
    *
    * @see https://tailwindcss-radix-colors.mrcai.dev/options#exclude
    */
-  exclude?: InternalColorName[];
+  exclude?: string[];
 
   /**
    * A priority strategy to resolve color name conflicts between Radix and
@@ -94,4 +76,16 @@ export interface TailwindcssRadixColorsOptions {
    * @see https://tailwindcss-radix-colors.mrcai.dev/options#priority
    */
   priority?: "no-tailwind" | "radix-first" | "tailwind-first";
+
+  /**
+   * Aliases of Radix color names.
+   *
+   * Useful when a Radix color name conflicts with a Tailwind one, and you are
+   * trying to preserve both of them.
+   *
+   * @default {}
+   *
+   * @see https://tailwindcss-radix-colors.mrcai.dev/options#aliases
+   */
+  aliases?: Partial<Record<RadixBaseColorName, string>>;
 }
