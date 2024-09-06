@@ -101,6 +101,38 @@ test("Given option `exclude`, specified colors are not generated", async () => {
   expect(await format(result)).toStrictEqual(await format(expected));
 });
 
+test("Given option `priority=radix-only`, Tailwind colors are preserved", async () => {
+  const expected = `
+    .bg-zinc-100 {
+      --tw-bg-opacity: 1;
+      background-color: rgb(244 244 245 / var(--tw-bg-opacity));
+    }
+  `;
+
+  const result = await run({
+    content: "bg-zinc-100",
+    options: { priority: "radix-first" },
+  });
+
+  expect(await format(result)).toStrictEqual(await format(expected));
+});
+
+test("Given option `priority=tailwind-first`, Tailwind colors take precedence", async () => {
+  const expected = `
+    .bg-red-100 {
+      --tw-bg-opacity: 1;
+      background-color: rgb(254 226 226 / var(--tw-bg-opacity));
+    }
+  `;
+
+  const result = await run({
+    content: "bg-red-100",
+    options: { priority: "tailwind-first" },
+  });
+
+  expect(await format(result)).toStrictEqual(await format(expected));
+});
+
 test("Utility classes are generated for custom colors", async () => {
   const expected = `
     .bg-custom1 {
