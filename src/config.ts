@@ -90,29 +90,6 @@ function transformRadixPalette(radixPalette: Palette): Palette {
 }
 
 /**
- * Replace Radix color names with their aliases.
- */
-function aliasRadixPalette(
-  radixPalette: Palette,
-  aliases: Record<string, string>,
-): Palette {
-  const aliasedPalette: Palette = {};
-
-  for (const [radixColorName, radixColor] of Object.entries(radixPalette)) {
-    const colorNameComponents = parseColorName(radixColorName);
-    const aliasedBase =
-      aliases[colorNameComponents.base] ?? colorNameComponents.base;
-    const aliasedColorName = buildColorName({
-      ...colorNameComponents,
-      base: aliasedBase,
-    });
-    aliasedPalette[aliasedColorName] = radixColor;
-  }
-
-  return aliasedPalette;
-}
-
-/**
  * Radix color name: `blueDarkP3A`
  *
  * Transformed color name: `bluedarkp3a`
@@ -138,6 +115,29 @@ function transformRadixColor(radixColor: Color): Color {
   }
 
   return transformedColor;
+}
+
+/**
+ * Replace Radix color names with their aliases.
+ */
+function aliasRadixPalette(
+  radixPalette: Palette,
+  aliases: Record<string, string>,
+): Palette {
+  const aliasedPalette: Palette = {};
+
+  for (const [radixColorName, radixColor] of Object.entries(radixPalette)) {
+    const colorNameComponents = parseColorName(radixColorName);
+    const aliasedBase =
+      aliases[colorNameComponents.base] ?? colorNameComponents.base;
+    const aliasedColorName = buildColorName({
+      ...colorNameComponents,
+      base: aliasedBase,
+    });
+    aliasedPalette[aliasedColorName] = radixColor;
+  }
+
+  return aliasedPalette;
 }
 
 /**
