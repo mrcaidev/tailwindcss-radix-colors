@@ -5,17 +5,18 @@ import type {
 } from "tailwindcss/types/config";
 import {
   buildColorName,
-  foregroundColorNamePairs,
   parseColorName,
-  type BaseColorName,
   type Color,
+  type ColorName,
   type Palette,
 } from "./colors";
 import type { TailwindcssRadixColorsOptions } from "./options";
 
 /**
- * Build the plugin part of `tailwindcss-radix-colors`, which will be used as
- * the first argument of the `plugin.withOptions` function.
+ * Build the plugin part of this plugin, which will be the first argument of
+ * `plugin.withOptions`.
+ *
+ * @see https://tailwindcss.com/docs/plugins
  */
 export function createPlugin(options: TailwindcssRadixColorsOptions = {}) {
   const { disableSemantics } = options;
@@ -147,6 +148,47 @@ function hasAllScales(color: Color) {
 }
 
 /**
+ * Each Radix base color name has a corresponding gray scale color name, which,
+ * if applied on the foreground against the base color background, can create a
+ * more colorful and harmonious vibe.
+ *
+ * @see https://www.radix-ui.com/colors/docs/palette-composition/composing-a-palette#natural-pairing
+ */
+const naturalColorPairs: Record<ColorName, ColorName> = {
+  mauve: "mauvedark",
+  tomato: "mauvedark",
+  red: "mauvedark",
+  ruby: "mauvedark",
+  crimson: "mauvedark",
+  pink: "mauvedark",
+  plum: "mauvedark",
+  purple: "mauvedark",
+  violet: "mauvedark",
+  slate: "slatedark",
+  iris: "slatedark",
+  indigo: "slatedark",
+  blue: "slatedark",
+  sky: "slate",
+  cyan: "slatedark",
+  sage: "sagedark",
+  mint: "sage",
+  teal: "sagedark",
+  jade: "sagedark",
+  green: "sagedark",
+  olive: "olivedark",
+  grass: "olivedark",
+  lime: "olive",
+  sand: "sanddark",
+  yellow: "sand",
+  amber: "sand",
+  orange: "sanddark",
+  brown: "sanddark",
+  gold: "sanddark", // Not officially specified.
+  bronze: "sanddark", // Not officially specified.
+  gray: "graydark", // Not officially specified.
+} as const;
+
+/**
  * For a given base color name, find its corresponding dark color name and
  * foreground color name.
  */
@@ -197,7 +239,7 @@ function findFamily(colorName: string) {
       alpha,
     }),
     foregroundColorName: buildColorName({
-      base: foregroundColorNamePairs[base as BaseColorName],
+      base: naturalColorPairs[base]!,
       dark: false,
       p3,
       alpha: false,

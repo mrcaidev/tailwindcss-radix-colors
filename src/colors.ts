@@ -1,107 +1,48 @@
 /**
- * All base color names in Radix palette.
+ * A descriptive color name.
  *
- * @note This list does not consider overlays, as they do not have a base color.
- * They are special colors that need special handling.
+ * @example "red", "greenp3a", "bluedark"
+ */
+export type ColorName = string;
+
+/**
+ * One single color can have many different scales.
  *
- * @see https://www.radix-ui.com/colors/docs/palette-composition/scales
+ * @example
+ * 50, 100, 200, ..., 900, 950 // Tailwind
+ * 1, 2, 3, ..., 11, 12 // Radix
  */
-export const baseColorNames = [
-  "gray",
-  "mauve",
-  "slate",
-  "sage",
-  "olive",
-  "sand",
-  "gold",
-  "bronze",
-  "brown",
-  "yellow",
-  "amber",
-  "orange",
-  "tomato",
-  "red",
-  "ruby",
-  "crimson",
-  "pink",
-  "plum",
-  "purple",
-  "violet",
-  "iris",
-  "indigo",
-  "blue",
-  "cyan",
-  "teal",
-  "jade",
-  "green",
-  "grass",
-  "lime",
-  "mint",
-  "sky",
-] as const;
+export type ColorScale = string;
 
 /**
- * All base color names in Radix palette.
- */
-export type BaseColorName = (typeof baseColorNames)[number];
-
-/**
- * Each base color has a corresponding saturated gray scale, which, if used on
- * the foreground against the base color background, can create a more colorful
- * and harmonious vibe.
+ * A hex notation or a `color` function.
  *
- * @see https://www.radix-ui.com/colors/docs/palette-composition/composing-a-palette#natural-pairing
+ * @example "#641723", "color(display-p3 0.36 0.115 0.143)"
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_colors/Color_values
  */
-export const foregroundColorNamePairs: Record<BaseColorName, string> = {
-  mauve: "mauvedark",
-  tomato: "mauvedark",
-  red: "mauvedark",
-  ruby: "mauvedark",
-  crimson: "mauvedark",
-  pink: "mauvedark",
-  plum: "mauvedark",
-  purple: "mauvedark",
-  violet: "mauvedark",
-  slate: "slatedark",
-  iris: "slatedark",
-  indigo: "slatedark",
-  blue: "slatedark",
-  sky: "slate",
-  cyan: "slatedark",
-  sage: "sagedark",
-  mint: "sage",
-  teal: "sagedark",
-  jade: "sagedark",
-  green: "sagedark",
-  olive: "olivedark",
-  grass: "olivedark",
-  lime: "olive",
-  sand: "sanddark",
-  yellow: "sand",
-  amber: "sand",
-  orange: "sanddark",
-  brown: "sanddark",
-  gold: "sanddark", // Not officially specified.
-  bronze: "sanddark", // Not officially specified.
-  gray: "graydark", // Not officially specified.
-} as const;
+export type ColorValue = string;
 
 /**
- * A map from color scale to color value.
+ * An object of different color scales and their color values, or a single
+ * color value string.
+ *
+ * For those colors coming from Tailwind or Radix, they are always objects. For
+ * user-customized colors, they can be either an object or a string.
  */
-export type Color = Record<string, string> | string;
+export type Color = Record<ColorScale, ColorValue> | ColorValue;
 
 /**
- * A map from color name to color.
+ * A collection of colors.
  */
-export type Palette = Record<string, Color>;
+export type Palette = Record<ColorName, Color>;
 
 /**
- * Property components of a color name.
+ * The components that together make up a color name.
  */
 export interface ColorNameComponents {
   /**
-   * Its base color name in lowercase.
+   * Its base color name, in lowercase.
    */
   base: string;
 
@@ -122,31 +63,28 @@ export interface ColorNameComponents {
 }
 
 /**
- * Parse a given color name into components.
+ * Parse a given color name into its components.
  */
-export function parseColorName(colorName: string) {
-  const colorNameRegExp = /^(?<base>.+?)(?<dark>dark)?(?<p3>p3)?(?<alpha>a)?$/i;
-  const matchGroups = colorNameRegExp.exec(colorName)?.groups;
-
-  if (!matchGroups?.["base"]) {
-    // Unreachable. The regular expression will always match.
-    throw new Error(`Invalid color name: ${colorName}`);
-  }
+export function parseColorName(colorName: ColorName): ColorNameComponents {
+  const matchGroups =
+    /^(?<base>.+?)(?<dark>dark)?(?<p3>p3)?(?<alpha>a)?$/i.exec(
+      colorName,
+    )!.groups!;
 
   const { base, dark, p3, alpha } = matchGroups;
 
   return {
-    base: base.toLowerCase(),
+    base: base!.toLowerCase(),
     dark: dark !== undefined,
     p3: p3 !== undefined,
     alpha: alpha !== undefined,
-  } as ColorNameComponents;
+  };
 }
 
 /**
  * Build a color name from given components.
  */
-export function buildColorName(components: ColorNameComponents) {
+export function buildColorName(components: ColorNameComponents): ColorName {
   const { base, dark, p3, alpha } = components;
 
   let colorName = base;

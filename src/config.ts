@@ -1,17 +1,17 @@
-import * as radixColors from "@radix-ui/colors";
+import rawRadixPalette from "@radix-ui/colors";
+import tailwindPalette from "tailwindcss/colors";
 import {
   parseColorName,
   type Color,
+  type ColorName,
   type ColorNameComponents,
   type Palette,
 } from "./colors";
 import type { TailwindcssRadixColorsOptions } from "./options";
 
 /**
- * Build the config part of `tailwindcss-radix-colors`, which will be used as
- * the second argument of the `plugin.withOptions` function.
- *
- * This configuration **completely overrides** Tailwind color palette.
+ * Build the config part of this plugin, which will be the second argument of
+ * `plugin.withOptions`.
  *
  * @see https://tailwindcss.com/docs/plugins#extending-the-configuration
  */
@@ -19,90 +19,112 @@ export function createConfig(options: TailwindcssRadixColorsOptions = {}) {
   return {
     theme: {
       colors: {
+        // TODO: inherit
         transparent: "transparent",
         current: "currentColor",
-        black: "black",
-        white: "white",
-        ...transform(radixColors, options),
+        black: "#000",
+        white: "#fff",
+        ...resolvePalette(
+          rawRadixPalette,
+          tailwindPalette as unknown as Palette,
+          options,
+        ),
       },
     },
   };
 }
-
 /**
- * Transform Radix color palette into Tailwind format.
- *
- * Radix color palette looks like:
- *
- * ```json
- * {
- *   "blueDark": {
- *     "blue1": "...",
- *     "blue2": "...",
- *     // ... other scales
- *     "blue12": "..."
- *   }
- *   // ... other colors
- * }
- * ```
- *
- * Tailwind format looks like:
- *
- * ```json
- * {
- *   "bluedark": {
- *     "1": "...",
- *     "2": "...",
- *     // ... other scales
- *     "12": "..."
- *   }
- *   // ... other colors
- * }
- * ```
- *
- * @see https://tailwindcss.com/docs/customizing-colors#using-custom-colors
+ * According to the options given by the user, resolve the final palette from
+ * both Radix and Tailwind.
  */
-function transform(
+function resolvePalette(
   radixPalette: Palette,
+  tailwindPalette: Palette,
   options: TailwindcssRadixColorsOptions,
-) {
-  const { include = undefined, exclude = [] } = options;
-  const checkShouldInclude = createChecker(include, exclude);
+): Palette {
+  const fullRadixPalette = transformRadixPalette(radixPalette);
 
-  const tailwindPalette: Palette = {};
+  const checkInclusion = createInclusionChecker(options);
+  const filteredRadixPalette = Object.fromEntries(
+    Object.entries(fullRadixPalette).filter(([colorName]) =>
+      checkInclusion(colorName),
+    ),
+  );
+  const filteredTailwindPalette = Object.fromEntries(
+    Object.entries(tailwindPalette).filter(([colorName]) =>
+      checkInclusion(colorName),
+    ),
+  );
 
-  for (const [radixColorName, radixColor] of Object.entries(radixPalette)) {
-    const shouldInclude = checkShouldInclude(radixColorName);
-
-    if (!shouldInclude) {
-      continue;
-    }
-
-    const tailwindColorName = radixColorName.toLowerCase();
-
-    const tailwindColor: Color = {};
-    for (const [radixColorScale, colorValue] of Object.entries(radixColor)) {
-      const tailwindColorScale = /\d+$/.exec(radixColorScale)?.[0];
-      if (tailwindColorScale) {
-        tailwindColor[tailwindColorScale] = colorValue;
-      }
-    }
-
-    tailwindPalette[tailwindColorName] = tailwindColor;
+  if (options.priority === "radix-first") {
+    return { ...filteredTailwindPalette, ...filteredRadixPalette };
   }
 
-  return tailwindPalette;
+  if (options.priority === "tailwind-first") {
+    return { ...filteredRadixPalette, ...filteredTailwindPalette };
+  }
+
+  return filteredRadixPalette;
 }
 
 /**
- * Create a function that checks whether a color name should be included, i.e.
- * transformed and added to the new color palette.
+ * Transform the Radix palette to a format that Tailwind understands.
+ *
+ * @see https://tailwindcss.com/docs/customizing-colors#using-custom-colors
  */
-function createChecker(include: string[] | undefined, exclude: string[]) {
+function transformRadixPalette(radixPalette: Palette): Palette {
+  const transformedPalette: Palette = {};
+
+  for (const [radixColorName, radixColor] of Object.entries(radixPalette)) {
+    const transformedColorName = transformRadixColorName(radixColorName);
+    const transformedColor = transformRadixColor(radixColor);
+    transformedPalette[transformedColorName] = transformedColor;
+  }
+
+  return transformedPalette;
+}
+
+/**
+ * Radix color name: `blueDarkP3A`
+ *
+ * Transformed color name: `bluedarkp3a`
+ */
+function transformRadixColorName(radixColorName: ColorName): ColorName {
+  return radixColorName.toLowerCase();
+}
+
+/**
+ * Radix color: `{ blue1: "#0d1520", blue2: "#111927", ..., blue12: "#c2e6ff" }`
+ *
+ * Transformed color: `{ 1: "#0d1520", 2: "#111927", ..., 12: "#c2e6ff" }`
+ */
+function transformRadixColor(radixColor: Color): Color {
+  const transformedColor: Color = {};
+
+  for (const [radixColorScale, colorValue] of Object.entries(radixColor)) {
+    const transformedColorScale = /\d+$/.exec(radixColorScale)?.[0];
+
+    if (transformedColorScale) {
+      transformedColor[transformedColorScale] = colorValue;
+    }
+  }
+
+  return transformedColor;
+}
+
+/**
+ * Create a function that checks whether a Radix color name should be included,
+ * i.e. be transformed and added to the new palette.
+ *
+ * This particularly deals with the `include` and `exclude` options.
+ */
+function createInclusionChecker(options: TailwindcssRadixColorsOptions) {
+  const { include = undefined, exclude = [] } = options;
+
   const parsedInclude = include?.map(parseColorName);
   const parsedExclude = exclude.map(parseColorName);
 
-  return (candidate: string) => {
+  return (candidate: ColorName) => {
     const parsedCandidate = parseColorName(candidate);
 
     if (

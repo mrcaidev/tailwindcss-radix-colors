@@ -1,10 +1,10 @@
 import { describe, expect, test } from "vitest";
 import { buildColorName, parseColorName } from "./colors";
 
-describe("parseColorName", () => {
-  test("It correctly parses base color", () => {
+describe("Parse color name", () => {
+  test("base", () => {
     const result = parseColorName("blue");
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       base: "blue",
       dark: false,
       alpha: false,
@@ -12,19 +12,9 @@ describe("parseColorName", () => {
     });
   });
 
-  test("It correctly parses alpha color", () => {
-    const result = parseColorName("bluea");
-    expect(result).toStrictEqual({
-      base: "blue",
-      dark: false,
-      alpha: true,
-      p3: false,
-    });
-  });
-
-  test("It correctly parses P3 color", () => {
+  test("P3", () => {
     const result = parseColorName("bluep3");
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       base: "blue",
       dark: false,
       alpha: false,
@@ -32,9 +22,19 @@ describe("parseColorName", () => {
     });
   });
 
-  test("It correctly parses P3 alpha color", () => {
+  test("alpha", () => {
+    const result = parseColorName("bluea");
+    expect(result).toEqual({
+      base: "blue",
+      dark: false,
+      alpha: true,
+      p3: false,
+    });
+  });
+
+  test("P3 alpha", () => {
     const result = parseColorName("bluep3a");
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       base: "blue",
       dark: false,
       alpha: true,
@@ -42,9 +42,9 @@ describe("parseColorName", () => {
     });
   });
 
-  test("It correctly parses dark color", () => {
+  test("dark", () => {
     const result = parseColorName("bluedark");
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       base: "blue",
       dark: true,
       alpha: false,
@@ -52,19 +52,9 @@ describe("parseColorName", () => {
     });
   });
 
-  test("It correctly parses dark alpha color", () => {
-    const result = parseColorName("bluedarka");
-    expect(result).toStrictEqual({
-      base: "blue",
-      dark: true,
-      alpha: true,
-      p3: false,
-    });
-  });
-
-  test("It correctly parses dark P3 color", () => {
+  test("dark P3", () => {
     const result = parseColorName("bluedarkp3");
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       base: "blue",
       dark: true,
       alpha: false,
@@ -72,9 +62,19 @@ describe("parseColorName", () => {
     });
   });
 
-  test("It correctly parses dark P3 alpha color", () => {
+  test("dark alpha", () => {
+    const result = parseColorName("bluedarka");
+    expect(result).toEqual({
+      base: "blue",
+      dark: true,
+      alpha: true,
+      p3: false,
+    });
+  });
+
+  test("dark P3 alpha", () => {
     const result = parseColorName("bluedarkp3a");
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       base: "blue",
       dark: true,
       alpha: true,
@@ -83,84 +83,84 @@ describe("parseColorName", () => {
   });
 });
 
-describe("buildColorName", () => {
-  test("It correctly builds base color", () => {
+describe("Build color name", () => {
+  test("base", () => {
     const result = buildColorName({
       base: "blue",
       dark: false,
       alpha: false,
       p3: false,
     });
-    expect(result).toStrictEqual("blue");
+    expect(result).toEqual("blue");
   });
 
-  test("It correctly builds alpha color", () => {
-    const result = buildColorName({
-      base: "blue",
-      dark: false,
-      alpha: true,
-      p3: false,
-    });
-    expect(result).toStrictEqual("bluea");
-  });
-
-  test("It correctly builds P3 color", () => {
+  test("P3", () => {
     const result = buildColorName({
       base: "blue",
       dark: false,
       alpha: false,
       p3: true,
     });
-    expect(result).toStrictEqual("bluep3");
+    expect(result).toEqual("bluep3");
   });
 
-  test("It correctly builds P3 alpha color", () => {
+  test("alpha", () => {
+    const result = buildColorName({
+      base: "blue",
+      dark: false,
+      alpha: true,
+      p3: false,
+    });
+    expect(result).toEqual("bluea");
+  });
+
+  test("P3 alpha", () => {
     const result = buildColorName({
       base: "blue",
       dark: false,
       alpha: true,
       p3: true,
     });
-    expect(result).toStrictEqual("bluep3a");
+    expect(result).toEqual("bluep3a");
   });
 
-  test("It correctly builds dark color", () => {
+  test("dark", () => {
     const result = buildColorName({
       base: "blue",
       dark: true,
       alpha: false,
       p3: false,
     });
-    expect(result).toStrictEqual("bluedark");
+    expect(result).toEqual("bluedark");
   });
 
-  test("It correctly builds dark alpha color", () => {
-    const result = buildColorName({
-      base: "blue",
-      dark: true,
-      alpha: true,
-      p3: false,
-    });
-    expect(result).toStrictEqual("bluedarka");
-  });
-
-  test("It correctly builds dark P3 color", () => {
+  test("dark P3", () => {
     const result = buildColorName({
       base: "blue",
       dark: true,
       alpha: false,
       p3: true,
     });
-    expect(result).toStrictEqual("bluedarkp3");
+    expect(result).toEqual("bluedarkp3");
   });
 
-  test("It correctly builds dark P3 alpha color", () => {
+  test("dark alpha", () => {
+    const result = buildColorName({
+      base: "blue",
+      dark: true,
+      alpha: true,
+      p3: false,
+    });
+    expect(result).toEqual("bluedarka");
+  });
+
+  test("dark P3 alpha", () => {
     const result = buildColorName({
       base: "blue",
       dark: true,
       alpha: true,
       p3: true,
     });
-    expect(result).toStrictEqual("bluedarkp3a");
+    expect(result).toEqual("bluedarkp3a");
   });
 });
