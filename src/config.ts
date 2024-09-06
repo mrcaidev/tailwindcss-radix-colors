@@ -1,4 +1,4 @@
-import rawRadixPalette from "@radix-ui/colors";
+import * as rawRadixPalette from "@radix-ui/colors";
 import tailwindPalette from "tailwindcss/colors";
 import {
   buildColorName,
