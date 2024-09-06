@@ -133,6 +133,31 @@ test("Given option `priority=tailwind-first`, Tailwind colors take precedence", 
   expect(await format(result)).toStrictEqual(await format(expected));
 });
 
+test("Given option `aliases`, conflicted color names are both preserved", async () => {
+  const expected = `
+    .bg-red-700 {
+      --tw-bg-opacity: 1;
+      background-color: rgb(185 28 28 / var(--tw-bg-opacity));
+    }
+    .bg-sun-9 {
+      --tw-bg-opacity: 1;
+      background-color: rgb(229 72 77 / var(--tw-bg-opacity));
+    }
+  `;
+
+  const result = await run({
+    content: "bg-sun-9 bg-red-700",
+    options: {
+      priority: "radix-first",
+      aliases: {
+        red: "sun",
+      },
+    },
+  });
+
+  expect(await format(result)).toStrictEqual(await format(expected));
+});
+
 test("Utility classes are generated for custom colors", async () => {
   const expected = `
     .bg-custom1 {
