@@ -1,6 +1,6 @@
 # Custom Colors
 
-This plugin completely erases Tailwind's color palette, and substitutes it with Radix's color palette. These Radix colors are accessible, semantically meaningful and designed to work with Radix's own design guidelines (and hence this plugin). You probably do not need custom colors.
+This plugin overrides Tailwind palette with Radix palette. These Radix colors are accessible, semantically meaningful and designed to work with Radix's own design guidelines (and hence this plugin). You probably do not need custom colors.
 
 ## How To
 
