@@ -99,3 +99,28 @@ By default, you don't have to worry about this, as Tailwind colors will be compl
 However, if you prefer to keep Tailwind colors, you can set this option otherwise. Setting it to `radix-first` will make Radix colors take precedence over Tailwind colors, while setting it to `tailwind-first` will make Tailwind colors take precedence over Radix colors, in case of any color name conflict.
 
 For example, both Radix and Tailwind have a color named `red`. If you set this option to `radix-first`, the `red` color from Radix will be used, and the `red` color from Tailwind will be ignored. On the contrary, if you set this option to `tailwind-first`, the `red` color from Tailwind will be used, and the `red` color from Radix will be ignored.
+
+## aliases
+
+- Type: `Record<string, string>`
+- Default: `{}`
+
+Maps original Radix color names to a customized alias. This is useful when a Radix color name conflicts with a Tailwind one, and you want to preserve both of them.
+
+For example, both Radix and Tailwind have a color named `red`. If you want to keep both of them, you can set the `aliases` option like this:
+
+```ts
+{
+  priority: "radix-first", // "tailwind-first" is also ok.
+  aliases: {
+    red: "sun",
+  },
+}
+```
+
+And now both Radix's and Tailwind's red color is available.
+
+```html
+<div class="bg-sun-9">Radix red</div>
+<div class="bg-red-700">Tailwind red</div>
+```
