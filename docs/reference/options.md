@@ -86,3 +86,16 @@ By default, no colors are excluded.
 This option does **NOT** affect the final CSS bundle size; Tailwind CSS never bundles unused colors anyway. Specifying this option only prevents other unspecified colors from showing up in your IDE Intellisense, so that you will not be overwhelmed by all the unused colors you don't even use.
 
 :::
+
+## priority
+
+- Type: `"no-tailwind" | "radix-first" | "tailwind-first"`
+- Default: `"no-tailwind"`
+
+When trying to merge Radix colors with Tailwind, certain color names will come into conflict. For example, both Radix and Tailwind have a color named `red`.
+
+By default, you don't have to worry about this, as Tailwind colors will be completely wiped out, and only Radix colors will actually be used. Specifying the option to `no-tailwind` does exactly the same thing.
+
+However, if you prefer to keep Tailwind colors, you can set this option otherwise. Setting it to `radix-first` will make Radix colors take precedence over Tailwind colors, while setting it to `tailwind-first` will make Tailwind colors take precedence over Radix colors, in case of any color name conflict.
+
+For example, both Radix and Tailwind have a color named `red`. If you set this option to `radix-first`, the `red` color from Radix will be used, and the `red` color from Tailwind will be ignored. On the contrary, if you set this option to `tailwind-first`, the `red` color from Tailwind will be used, and the `red` color from Radix will be ignored.
