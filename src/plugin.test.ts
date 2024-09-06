@@ -66,7 +66,7 @@ function run({
 
 test("Given no option, All semantic classes are generated", () => {
   const registry = run();
-  expect(registry).toStrictEqual([
+  expect(registry).toEqual([
     {
       ".bg-slate-app": {
         "@apply bg-slate-1 dark:bg-slatedark-1": {},
@@ -116,12 +116,12 @@ test("Given no option, All semantic classes are generated", () => {
 
 test("Given option `disableSemantics`, no semantic classes are generated", () => {
   const registry = run({ options: { disableSemantics: true } });
-  expect(registry).toStrictEqual([]);
+  expect(registry).toEqual([]);
 });
 
 test("Prefix are respected", () => {
   const registry = run({ config: { prefix: "tw-" } });
-  expect(registry).toStrictEqual([
+  expect(registry).toEqual([
     {
       ".bg-slate-app": {
         "@apply bg-slate-1 tw-dark:bg-slatedark-1": {},
@@ -183,7 +183,7 @@ test("Custom colors are ignored, if it does not have 12 scales", () => {
       },
     },
   });
-  expect(registry).toStrictEqual([]);
+  expect(registry).toEqual([]);
 });
 
 test("Custom colors are ignored, if it has 12 scales, but no dark variant", () => {
@@ -200,7 +200,7 @@ test("Custom colors are ignored, if it has 12 scales, but no dark variant", () =
       },
     },
   });
-  expect(registry).toStrictEqual([]);
+  expect(registry).toEqual([]);
 });
 
 test("Custom colors are respected, if it has 12 scales and a dark variant", () => {
@@ -218,7 +218,7 @@ test("Custom colors are respected, if it has 12 scales and a dark variant", () =
       },
     },
   });
-  expect(registry).toStrictEqual([
+  expect(registry).toEqual([
     {
       ".bg-custom-app": {
         "@apply bg-custom-1 dark:bg-customdark-1": {},

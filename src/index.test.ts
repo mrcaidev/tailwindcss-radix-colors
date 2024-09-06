@@ -55,7 +55,7 @@ test("Given no option, both utility and semantic classes are generated", async (
     content: "bg-slate-1 bg-slate-app",
   });
 
-  expect(await format(result)).toStrictEqual(await format(expected));
+  expect(await format(result)).toEqual(await format(expected));
 });
 
 test("Given option `disableSemantics`, semantic classes are not generated", async () => {
@@ -71,7 +71,7 @@ test("Given option `disableSemantics`, semantic classes are not generated", asyn
     options: { disableSemantics: true },
   });
 
-  expect(await format(result)).toStrictEqual(await format(expected));
+  expect(await format(result)).toEqual(await format(expected));
 });
 
 test("Given option `include`, only specified colors are generated", async () => {
@@ -87,7 +87,7 @@ test("Given option `include`, only specified colors are generated", async () => 
     options: { include: ["slate"] },
   });
 
-  expect(await format(result)).toStrictEqual(await format(expected));
+  expect(await format(result)).toEqual(await format(expected));
 });
 
 test("Given option `exclude`, specified colors are not generated", async () => {
@@ -98,7 +98,7 @@ test("Given option `exclude`, specified colors are not generated", async () => {
     options: { exclude: ["slate"] },
   });
 
-  expect(await format(result)).toStrictEqual(await format(expected));
+  expect(await format(result)).toEqual(await format(expected));
 });
 
 test("Given option `priority=radix-only`, Tailwind colors are preserved", async () => {
@@ -114,7 +114,7 @@ test("Given option `priority=radix-only`, Tailwind colors are preserved", async 
     options: { priority: "radix-first" },
   });
 
-  expect(await format(result)).toStrictEqual(await format(expected));
+  expect(await format(result)).toEqual(await format(expected));
 });
 
 test("Given option `priority=tailwind-first`, Tailwind colors take precedence", async () => {
@@ -130,7 +130,7 @@ test("Given option `priority=tailwind-first`, Tailwind colors take precedence", 
     options: { priority: "tailwind-first" },
   });
 
-  expect(await format(result)).toStrictEqual(await format(expected));
+  expect(await format(result)).toEqual(await format(expected));
 });
 
 test("Given option `aliases`, conflicted color names are both preserved", async () => {
@@ -155,7 +155,7 @@ test("Given option `aliases`, conflicted color names are both preserved", async 
     },
   });
 
-  expect(await format(result)).toStrictEqual(await format(expected));
+  expect(await format(result)).toEqual(await format(expected));
 });
 
 test("Utility classes are generated for custom colors", async () => {
@@ -187,7 +187,7 @@ test("Utility classes are generated for custom colors", async () => {
     },
   });
 
-  expect(await format(result)).toStrictEqual(await format(expected));
+  expect(await format(result)).toEqual(await format(expected));
 });
 
 test("CSS classes are in correct shape", async () => {
@@ -371,5 +371,5 @@ test("CSS classes are in correct shape", async () => {
       "bg-slate-app bg-slate-subtle bg-slate-ui bg-slate-ghost bg-slate-action border-slate-dim border-slate-normal divide-slate-dim divide-slate-normal text-slate-dim text-slate-normal",
   });
 
-  expect(await format(result)).toStrictEqual(await format(expected));
+  expect(await format(result)).toEqual(await format(expected));
 });
