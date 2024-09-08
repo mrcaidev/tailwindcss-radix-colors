@@ -34,16 +34,6 @@ module.exports = {
 
 :::
 
-The interface of the options is:
-
-```ts
-interface TailwindcssRadixColorsOptions {
-  disableSemantics?: boolean;
-  include?: string[] | undefined;
-  exclude?: string[];
-}
-```
-
 ## disableSemantics
 
 - Type: `boolean`
