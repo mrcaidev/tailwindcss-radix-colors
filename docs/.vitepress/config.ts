@@ -56,6 +56,10 @@ export default defineConfig({
             link: "/semantic-first",
           },
           {
+            text: "Color variants",
+            link: "/color-variants",
+          },
+          {
             text: "Custom Colors",
             link: "/custom-colors",
           },
