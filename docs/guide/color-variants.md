@@ -3,7 +3,7 @@
 Every Radix color comes with 3 variants:
 
 1. **Dark variant:** Original color under dark mode.
-2. **P3 variant**: Original color in DCI-P3 color space.
+2. **P3 variant:** Original color in DCI-P3 color space.
 3. **Alpha variant:** Original color with transparency.
 
 This plugin supports all these variants out of the box. You can use these variants by suffixing the color name with the desired variant names, namely `dark`, `p3` and `a` respectively.
