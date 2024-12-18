@@ -27,11 +27,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Lint error
-        run: pnpm eslint .
-
-      - name: Check format
-        run: pnpm prettier . --check
+      - name: Check code
+        run: pnpm tsc && pnpm biome ci
 
       - name: Lint commit message
         run: pnpm commitlint --last

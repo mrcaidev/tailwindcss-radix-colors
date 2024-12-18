@@ -67,9 +67,8 @@ export interface ColorNameComponents {
  */
 export function parseColorName(colorName: ColorName): ColorNameComponents {
   const matchGroups =
-    /^(?<base>.+?)(?<dark>dark)?(?<p3>p3)?(?<alpha>a)?$/i.exec(
-      colorName,
-    )!.groups!;
+    /^(?<base>.+?)(?<dark>dark)?(?<p3>p3)?(?<alpha>a)?$/i.exec(colorName)!
+      .groups!;
 
   const { base, dark, p3, alpha } = matchGroups;
 

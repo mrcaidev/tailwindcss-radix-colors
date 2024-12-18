@@ -76,7 +76,7 @@ function generateSemanticClasses({ addComponents, config, theme }: PluginAPI) {
         `${prefix}dark:active:bg-${darkColorName}-5`,
       ),
       [`.bg-${colorName}-ghost`]: apply(
-        `bg-transparent`,
+        "bg-transparent",
         `hover:bg-${colorName}-4`,
         `active:bg-${colorName}-5`,
         `${prefix}dark:bg-transparent`,

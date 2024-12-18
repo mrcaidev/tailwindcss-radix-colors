@@ -21,9 +21,7 @@
   },
   "type": "module",
   "packageManager": "pnpm@9.15.0+sha512.76e2379760a4328ec4415815bcd6628dee727af3779aaa4c914e3944156c4299921a89f976381ee107d41f12cfa4b66681ca9c718f0668fa0831ed4c6d8ba56c",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "main": "dist/index.umd.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -50,20 +48,15 @@
     "@radix-ui/colors": "^3.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
-    "@types/eslint-config-prettier": "^6.11.3",
-    "@types/eslint__js": "^8.42.3",
     "@vitest/coverage-istanbul": "^2.1.8",
-    "eslint": "^9.17.0",
-    "eslint-config-prettier": "^9.1.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.11",
     "postcss": "^8.4.49",
-    "prettier": "^3.4.2",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.18.1",
     "vite": "^6.0.3",
     "vite-plugin-dts": "^4.3.0",
     "vitepress": "^1.5.0",

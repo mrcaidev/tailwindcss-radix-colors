@@ -1,7 +1,8 @@
-import { defineConfig } from "vite";
+import { defineConfig as defineViteConfig } from "vite";
 import dts from "vite-plugin-dts";
+import { defineConfig as defineVitestConfig, mergeConfig } from "vitest/config";
 
-export default defineConfig({
+const viteConfig = defineViteConfig({
   plugins: [dts({ rollupTypes: true })],
   build: {
     lib: {
@@ -10,6 +11,9 @@ export default defineConfig({
       fileName: "index",
     },
   },
+});
+
+const vitestConfig = defineVitestConfig({
   test: {
     isolate: false,
     sequence: {
@@ -21,3 +25,5 @@ export default defineConfig({
     },
   },
 });
+
+export default mergeConfig(viteConfig, vitestConfig);
