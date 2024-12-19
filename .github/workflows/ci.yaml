@@ -9,29 +9,23 @@ on:
       - main
 
 jobs:
-  test:
+  ci:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-          cache: pnpm
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
-        run: pnpm install
+        run: bun install --frozen-lockfile
 
       - name: Check code
-        run: pnpm tsc && pnpm biome ci
+        run: bun tsc && bun biome ci
 
-      - name: Lint commit message
-        run: pnpm commitlint --last
+      - name: Check commit message
+        run: bun commitlint --last
 
       - name: Run tests
-        run: pnpm run coverage
+        run: bun test --coverage

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "bun:test";
 import { buildColorName, parseColorName } from "./colors";
 
 describe("Parse color name", () => {

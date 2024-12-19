@@ -1,8 +1,8 @@
-import { execSync } from "node:child_process";
+import { $ } from "bun";
+import { expect, test } from "bun:test";
 import postcss from "postcss";
 import type { Config } from "tailwindcss";
 import tailwind from "tailwindcss";
-import { expect, test } from "vitest";
 import plugin from "./";
 import type { TailwindcssRadixColorsOptions } from "./options";
 
@@ -30,10 +30,7 @@ async function run({
 }
 
 function format(input: string) {
-  return execSync(
-    "node_modules/@biomejs/biome/bin/biome format --stdin-file-path=test.css",
-    { input },
-  ).toString();
+  return $`node_modules/@biomejs/biome/bin/biome format --stdin-file-path=test.css ${input}`.toString();
 }
 
 test("Given no option, both utility and semantic classes are generated", async () => {

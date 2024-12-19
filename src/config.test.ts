@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "bun:test";
 import { createConfig } from "./config";
 
 const radixColorShape = {

@@ -1,5 +1,5 @@
+import { expect, test } from "bun:test";
 import type { CSSRuleObject, Config } from "tailwindcss/types/config";
-import { expect, test } from "vitest";
 import type { TailwindcssRadixColorsOptions } from "./options";
 import { createPlugin } from "./plugin";
 

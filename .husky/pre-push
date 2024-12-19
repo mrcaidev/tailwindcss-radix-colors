@@ -1,1 +1,1 @@
-pnpm test -- --run
+bun test

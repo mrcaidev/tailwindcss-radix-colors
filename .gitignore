@@ -1,7 +1,5 @@
 .vscode
-coverage
+cache
 dist
-docs/.vitepress/cache
-docs/.vitepress/dist
 node_modules
 *.tgz

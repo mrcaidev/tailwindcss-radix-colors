@@ -20,15 +20,14 @@
     "url": "https://mrcai.dev"
   },
   "type": "module",
-  "packageManager": "pnpm@9.15.0+sha512.76e2379760a4328ec4415815bcd6628dee727af3779aaa4c914e3944156c4299921a89f976381ee107d41f12cfa4b66681ca9c718f0668fa0831ed4c6d8ba56c",
   "files": ["dist"],
-  "main": "dist/index.umd.cjs",
+  "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.umd.cjs"
+      "require": "./dist/index.cjs"
     }
   },
   "repository": {
@@ -36,10 +35,7 @@
     "url": "https://github.com/mrcaidev/tailwindcss-radix-colors.git"
   },
   "scripts": {
-    "build": "vite build",
-    "test": "vitest",
-    "coverage": "vitest run --coverage",
-    "prepare": "husky",
+    "build": "bun run scripts/build.ts",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
@@ -51,23 +47,16 @@
     "@biomejs/biome": "^1.9.4",
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
-    "@vitest/coverage-istanbul": "^2.1.8",
+    "@types/bun": "^1.1.14",
+    "bun-plugin-dts": "^0.3.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.11",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.2",
-    "vite": "^6.0.3",
-    "vite-plugin-dts": "^4.3.0",
-    "vitepress": "^1.5.0",
-    "vitest": "^2.1.8"
+    "vitepress": "^1.5.0"
   },
   "peerDependencies": {
     "tailwindcss": ">=3.0.0"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/",
-    "tag": "latest"
   }
 }
