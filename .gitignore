@@ -3,3 +3,4 @@ cache
 dist
 node_modules
 *.tgz
+*.tsbuildinfo
