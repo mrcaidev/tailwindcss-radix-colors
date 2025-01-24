@@ -23,7 +23,7 @@ More examples:
 | `text-slate-dim` | `text-slate-11 dark:text-slatedark-11`                                                                       |
 | `bg-yello-solid` | `bg-yellow-9 dark:bg-yellowdark-9`<br />`hover:bg-yellow-10 dark:hover:bg-yellowdark-10`<br />`text-sand-12` |
 
-See [Semantic Table](/reference/semantic-table) for a full cross-reference.
+See [Semantic Table](/v1/reference/semantic-table) for a full cross-reference.
 
 Notice how dark mode, hover/active states and foreground color are automatically styled in this way. The only thing we need to do is to declare the semantic meaning of a component (app, ui, solid, normal, etc.), and the plugin will handle the rest for you.
 

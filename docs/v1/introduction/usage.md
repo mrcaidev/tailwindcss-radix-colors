@@ -52,7 +52,7 @@ Or, if we want to style a ghost button with red color:
 
 This approach is referred to as **"utility-first"**, because it aligns with Tailwind's [utility-first philosophy](https://tailwindcss.com/docs/utility-first), where developers compose primitive classes to build complicated styles.
 
-See [Utility-First](/guide/utility-first) for more details.
+See [Utility-First](/v1/guide/utility-first) for more details.
 
 ## Semantic-First
 
@@ -96,4 +96,4 @@ Now the code is much cleaner!
 
 In contrary to "utility-first", this approach is referred to as **"semantic-first"**, because in this case we only care about the semantic meaning conveyed by the component, instead of imperatively specifying the color scales.
 
-See [Semantic-First](/guide/semantic-first) for more details.
+See [Semantic-First](/v1/guide/semantic-first) for more details.

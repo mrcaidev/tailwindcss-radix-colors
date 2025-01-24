@@ -1,6 +1,6 @@
 # Why Smaller CSS Bundle?
 
-Compared to [semantic-first](/guide/semantic-first) approach, [utility-first](/guide/utility-first) approach on average generates a smaller CSS bundle.
+Compared to [semantic-first](/v1/guide/semantic-first) approach, [utility-first](/v1/guide/utility-first) approach on average generates a smaller CSS bundle.
 
 ## Semantic-First
 
@@ -156,4 +156,4 @@ Clearly there is no duplicated color value, which signals a smaller CSS bundle s
 
 It's hard to blame Tailwind CSS, but this does not seem like an issue that can be solved on plugin-side. Should Tailwind CSS solve this issue one day (maybe in v4), then the CSS bundle sizes would probably not differ too much between the two approaches.
 
-Anyway, the utility-first approach is still recommended for [its other advantages](/guide/utility-first#advantages).
+Anyway, the utility-first approach is still recommended for [its other advantages](/v1/guide/utility-first#advantages).

@@ -4,7 +4,7 @@ A component class is essentially just a built-in combination of several utility 
 
 Using them can make your code more readable and maintainable, but will also violate Tailwind's utility-first philosophy.
 
-You can [disable component classes](/latest/configuration/disable-component-classes) any time.
+You can [disable component classes](/latest/configuration#disable-component-classes) any time.
 
 ## Reference
 

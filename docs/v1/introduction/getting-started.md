@@ -1,5 +1,11 @@
 # Getting Started
 
+> [!IMPORTANT]
+>
+> You are reading the documentation of plugin v1, which only supports Tailwind CSS [v3](https://v3.tailwindcss.com/) and is NOT compatible with Tailwind CSS [v4](https://tailwindcss.com/).
+>
+> If you are using Tailwind CSS v4, please refer to the [latest documentation](/latest/introduction) instead.
+
 **Tailwind CSS Radix Colors** is a [Tailwind CSS](https://tailwindcss.com/) plugin that brings [Radix UI](https://www.radix-ui.com/)'s color system to Tailwind CSS.
 
 It overrides [Tailwind's color palette](https://tailwindcss.com/docs/customizing-colors) with [Radix's color palette](https://www.radix-ui.com/colors), and provides a bunch of shorthand classes for you to automatically handle dark mode, hover/active states, best foreground color and more, via pre-composed component classes.
@@ -70,6 +76,6 @@ No additional configuration is required. Tailwind CSS will now use Radix UI's co
 
 ## What's Next?
 
-- To learn how to use this plugin, proceed to [Usage](/introduction/usage).
-- To look up the configuration options, check out [Options](/reference/options).
-- If you are curious about the differences between this plugin and other similar plugins, read [Why This Plugin?](/faq/why-this-plugin).
+- To learn how to use this plugin, proceed to [Usage](/v1/introduction/usage).
+- To look up the configuration options, check out [Options](/v1/reference/options).
+- If you are curious about the differences between this plugin and other similar plugins, read [Why This Plugin?](/v1/faq/why-this-plugin).

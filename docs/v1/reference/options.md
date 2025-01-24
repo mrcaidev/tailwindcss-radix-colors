@@ -39,7 +39,7 @@ module.exports = {
 - Type: `boolean`
 - Default: `false`
 
-Disable the generation (and hence the IDE Intellisense) of [semantic classes](/guide/semantic-first), such as `bg-red-solid` or `text-slate-normal`. You will now only see [utility classes](/guide/utility-first) in your IDE Intellisense, such as `bg-red-9` or `text-slate-12`.
+Disable the generation (and hence the IDE Intellisense) of [semantic classes](/v1/guide/semantic-first), such as `bg-red-solid` or `text-slate-normal`. You will now only see [utility classes](/v1/guide/utility-first) in your IDE Intellisense, such as `bg-red-9` or `text-slate-12`.
 
 ::: info Clarification
 

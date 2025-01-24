@@ -1,6 +1,6 @@
 # Semantic Table
 
-Each [semantic class](/guide/semantic-first) is equivalent to several [utility classes](/guide/utility-first).
+Each [semantic class](/v1/guide/semantic-first) is equivalent to several [utility classes](/v1/guide/utility-first).
 
 Their cross-reference is given below, using color "blue" for illustration.
 

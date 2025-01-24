@@ -39,4 +39,4 @@ By using utility-first approach, the color-related classes stay consistent with 
 
 Although Tailwind can shake off unused classes in both approaches, utility-first approach generally produces a smaller CSS bundle, which helps further optimization of our website.
 
-See [Why Smaller CSS Bundle?](/faq/why-smaller-css-bundle) for an in-depth explanation.
+See [Why Smaller CSS Bundle?](/v1/faq/why-smaller-css-bundle) for an in-depth explanation.
