@@ -76,6 +76,10 @@ export default defineConfig({
             text: "Component Classes",
             link: "/component-classes",
           },
+          {
+            text: "Migrating to v2",
+            link: "/migrating-to-v2",
+          },
         ],
       },
       v1: {
