@@ -7,7 +7,7 @@
 >
 > Plugin v2 only supports Tailwind CSS v4. If you are not ready to upgrade, please stick with plugin v1.
 
-A [Tailwind CSS](https://tailwindcss.com/) plugin that ports [Radix UI](https://www.radix-ui.com/) color system to Tailwind CSS.
+A [Tailwind CSS](https://tailwindcss.com/) plugin that brings [Radix UI](https://www.radix-ui.com/)'s color system to Tailwind CSS.
 
 ## 🚀 Getting Started
 

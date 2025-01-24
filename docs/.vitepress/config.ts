@@ -1,9 +1,9 @@
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-  title: "Tailwind Radix Colors",
+  title: "tailwindcss-radix-colors",
   description:
-    "Bring Radix's color system to Tailwind, and enjoy the best of both Tailwind CSS and Radix UI",
+    "A Tailwind CSS plugin that brings Radix UI's color system to Tailwind CSS",
   head: [
     [
       "link",
@@ -20,6 +20,19 @@ export default defineConfig({
     logo: "/tailwindcss.svg",
     nav: [
       {
+        text: "Version",
+        items: [
+          {
+            text: "latest (v2)",
+            link: "/latest/introduction/getting-started",
+          },
+          {
+            text: "v1",
+            link: "/v1/introduction/getting-started",
+          },
+        ],
+      },
+      {
         text: "Tailwind CSS",
         link: "https://tailwindcss.com/",
       },
@@ -28,76 +41,96 @@ export default defineConfig({
         link: "https://www.radix-ui.com/",
       },
     ],
-    sidebar: [
-      {
-        text: "Introduction",
-        base: "/introduction",
+    sidebar: {
+      latest: {
+        base: "/latest",
         items: [
           {
-            text: "Getting Started",
-            link: "/getting-started",
-          },
-          {
-            text: "Usage",
-            link: "/usage",
+            text: "Introduction",
+            base: "/introduction",
+            items: [
+              {
+                text: "Getting Started",
+                link: "/getting-started",
+              },
+            ],
           },
         ],
       },
-      {
-        text: "Guide",
-        base: "/guide",
+      v1: {
+        base: "/v1",
         items: [
           {
-            text: "Utility-First",
-            link: "/utility-first",
+            text: "Introduction",
+            base: "/introduction",
+            items: [
+              {
+                text: "Getting Started",
+                link: "/getting-started",
+              },
+              {
+                text: "Usage",
+                link: "/usage",
+              },
+            ],
           },
           {
-            text: "Semantic-First",
-            link: "/semantic-first",
+            text: "Guide",
+            base: "/guide",
+            items: [
+              {
+                text: "Utility-First",
+                link: "/utility-first",
+              },
+              {
+                text: "Semantic-First",
+                link: "/semantic-first",
+              },
+              {
+                text: "Color variants",
+                link: "/color-variants",
+              },
+              {
+                text: "Custom Colors",
+                link: "/custom-colors",
+              },
+            ],
           },
           {
-            text: "Color variants",
-            link: "/color-variants",
+            text: "Reference",
+            base: "/reference",
+            items: [
+              {
+                text: "Plugin Options",
+                link: "/options",
+              },
+              {
+                text: "Semantic Table",
+                link: "/semantic-table",
+              },
+            ],
           },
           {
-            text: "Custom Colors",
-            link: "/custom-colors",
+            text: "FAQ",
+            base: "/faq",
+            items: [
+              {
+                text: "Why Another Palette?",
+                link: "/why-another-palette",
+              },
+              {
+                text: "Why This Plugin?",
+                link: "/why-this-plugin",
+              },
+              {
+                text: "Why Smaller CSS Bundle?",
+                link: "/why-smaller-css-bundle",
+              },
+            ],
           },
         ],
       },
-      {
-        text: "Reference",
-        base: "/reference",
-        items: [
-          {
-            text: "Plugin Options",
-            link: "/options",
-          },
-          {
-            text: "Semantic Table",
-            link: "/semantic-table",
-          },
-        ],
-      },
-      {
-        text: "FAQ",
-        base: "/faq",
-        items: [
-          {
-            text: "Why Another Palette?",
-            link: "/why-another-palette",
-          },
-          {
-            text: "Why This Plugin?",
-            link: "/why-this-plugin",
-          },
-          {
-            text: "Why Smaller CSS Bundle?",
-            link: "/why-smaller-css-bundle",
-          },
-        ],
-      },
-    ],
+    },
     socialLinks: [
       {
         icon: "github",
@@ -110,7 +143,7 @@ export default defineConfig({
     },
     editLink: {
       pattern:
-        "https://github.com/mrcaidev/tailwindcss-radix-colors/edit/master/docs/:path",
+        "https://github.com/mrcaidev/tailwindcss-radix-colors/edit/main/docs/:path",
     },
     search: {
       provider: "local",
