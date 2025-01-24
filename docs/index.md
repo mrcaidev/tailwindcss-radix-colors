@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: Getting Started
-      link: /latest/introduction/getting-started
+      link: /latest/introduction
     - theme: alt
       text: Source Code
       link: https://github.com/mrcaidev/tailwindcss-radix-colors

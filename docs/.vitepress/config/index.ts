@@ -1,4 +1,8 @@
 import { defineConfig } from "vitepress";
+import {
+  groupIconMdPlugin,
+  groupIconVitePlugin,
+} from "vitepress-plugin-group-icons";
 
 export default defineConfig({
   title: "tailwindcss-radix-colors",
@@ -16,6 +20,15 @@ export default defineConfig({
   ],
   cleanUrls: true,
   lastUpdated: true,
+  markdown: {
+    config: (md) => {
+      md.use(groupIconMdPlugin);
+    },
+  },
+  vite: {
+    // @ts-ignore it works
+    plugins: [groupIconVitePlugin()],
+  },
   themeConfig: {
     logo: "/tailwindcss.svg",
     nav: [
@@ -24,11 +37,13 @@ export default defineConfig({
         items: [
           {
             text: "latest (v2)",
-            link: "/latest/introduction/getting-started",
+            link: "/latest/introduction",
+            activeMatch: "^/latest/",
           },
           {
             text: "v1",
             link: "/v1/introduction/getting-started",
+            activeMatch: "^/v1/",
           },
         ],
       },
@@ -47,13 +62,19 @@ export default defineConfig({
         items: [
           {
             text: "Introduction",
-            base: "/introduction",
-            items: [
-              {
-                text: "Getting Started",
-                link: "/getting-started",
-              },
-            ],
+            link: "/introduction",
+          },
+          {
+            text: "Getting Started",
+            link: "/getting-started",
+          },
+          {
+            text: "Configuration",
+            link: "/configuration",
+          },
+          {
+            text: "Component Classes",
+            link: "/component-classes",
           },
         ],
       },
@@ -62,69 +83,69 @@ export default defineConfig({
         items: [
           {
             text: "Introduction",
-            base: "/introduction",
+            collapsed: false,
             items: [
               {
                 text: "Getting Started",
-                link: "/getting-started",
+                link: "/introduction/getting-started",
               },
               {
                 text: "Usage",
-                link: "/usage",
+                link: "/introduction/usage",
               },
             ],
           },
           {
             text: "Guide",
-            base: "/guide",
+            collapsed: false,
             items: [
               {
                 text: "Utility-First",
-                link: "/utility-first",
+                link: "/guide/utility-first",
               },
               {
                 text: "Semantic-First",
-                link: "/semantic-first",
+                link: "/guide/semantic-first",
               },
               {
                 text: "Color variants",
-                link: "/color-variants",
+                link: "/guide/color-variants",
               },
               {
                 text: "Custom Colors",
-                link: "/custom-colors",
+                link: "/guide/custom-colors",
               },
             ],
           },
           {
             text: "Reference",
-            base: "/reference",
+            collapsed: false,
             items: [
               {
                 text: "Plugin Options",
-                link: "/options",
+                link: "/reference/options",
               },
               {
                 text: "Semantic Table",
-                link: "/semantic-table",
+                link: "/reference/semantic-table",
               },
             ],
           },
           {
             text: "FAQ",
-            base: "/faq",
+            collapsed: false,
             items: [
               {
                 text: "Why Another Palette?",
-                link: "/why-another-palette",
+                link: "/faq/why-another-palette",
               },
               {
                 text: "Why This Plugin?",
-                link: "/why-this-plugin",
+                link: "/faq/why-this-plugin",
               },
               {
                 text: "Why Smaller CSS Bundle?",
-                link: "/why-smaller-css-bundle",
+                link: "/faq/why-smaller-css-bundle",
               },
             ],
           },
