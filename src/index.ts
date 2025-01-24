@@ -51,7 +51,7 @@ for (const radixColorName in radixColors) {
         `    @apply bg-${colorName}-3 dark:bg-${darkColorName}-3 hover:bg-${colorName}-4 dark:hover:bg-${darkColorName}-4 active:bg-${colorName}-5 dark:active:bg-${darkColorName}-5;`,
         "  }",
         `  .bg-${colorName}-ghost {`,
-        `    @apply bg-transparent dark:bg-transparent hover:bg-${colorName}-4 dark:hover:bg-${darkColorName}-4 active:bg-${colorName}-5 dark:active:bg-${darkColorName}-5;`,
+        `    @apply bg-transparent dark:bg-transparent hover:bg-${colorName}-3 dark:hover:bg-${darkColorName}-3 active:bg-${colorName}-4 dark:active:bg-${darkColorName}-4;`,
         "  }",
         `  .bg-${colorName}-action {`,
         `    @apply bg-${colorName}-4 dark:bg-${darkColorName}-4 hover:bg-${colorName}-5 dark:hover:bg-${darkColorName}-5 active:bg-${colorName}-6 dark:active:bg-${darkColorName}-6;`,
