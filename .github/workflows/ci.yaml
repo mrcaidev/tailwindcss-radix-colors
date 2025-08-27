@@ -12,8 +12,8 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
+      - run: bun i --frozen-lockfile
       - run: bun tsc
-      - run: bun prettier --check .
+      - run: bun check:ci

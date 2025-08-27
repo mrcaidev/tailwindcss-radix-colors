@@ -1,6 +1,6 @@
 {
   "name": "tailwindcss-radix-colors",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "A Tailwind CSS plugin that brings Radix UI's color system to Tailwind CSS",
   "keywords": [
     "tailwind",
@@ -17,37 +17,34 @@
   "homepage": "https://tailwindcss-radix-colors.mrcai.dev",
   "bugs": "https://github.com/mrcaidev/tailwindcss-radix-colors/issues",
   "license": "MIT",
-  "author": {
-    "name": "Yuwang Cai",
-    "email": "mrcaidev@gmail.com",
-    "url": "https://mrcai.dev"
-  },
+  "author": "Yuwang Cai <mrcaidev@gmail.com> (https://mrcai.dev)",
   "files": [
     "dist"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mrcaidev/tailwindcss-radix-colors.git"
-  },
+  "repository": "github:mrcaidev/tailwindcss-radix-colors",
   "type": "module",
   "scripts": {
-    "build": "bun src/index.ts",
+    "prepare": "husky",
+    "build": "bun ./src/index.ts",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "check": "biome check",
+    "check:write": "biome check --write",
+    "check:ci": "biome ci"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.2.2",
     "@radix-ui/colors": "^3.0.0",
-    "@types/bun": "^1.2.0",
+    "@types/bun": "^1.2.21",
     "husky": "^9.1.7",
-    "lint-staged": "^15.4.1",
-    "prettier": "^3.4.2",
-    "tailwindcss": "^4.0.0",
-    "typescript": "^5.7.3",
-    "vitepress": "^1.6.3",
-    "vitepress-plugin-group-icons": "^1.3.5"
+    "lint-staged": "^16.1.5",
+    "tailwindcss": "^4.1.12",
+    "typescript": "^5.9.2",
+    "vitepress": "^1.6.4",
+    "vitepress-plugin-group-icons": "^1.6.3"
   },
   "peerDependencies": {
-    "tailwindcss": ">=4.0.0"
+    "tailwindcss": ">=4.0.8"
   }
 }

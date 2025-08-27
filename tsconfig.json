@@ -9,17 +9,20 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strict": true,
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "paths": { "@/*": ["./src/*"] },
     "resolveJsonModule": true,
     "noEmit": true,
     "allowJs": true,
+    "erasableSyntaxOnly": true,
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
     "lib": ["ESNext"],
+    "moduleDetection": "force",
     "target": "ESNext",
     "incremental": true,
     "skipLibCheck": true
   },
-  "include": ["**/*", "docs/.vitepress/**/*.ts"]
+  "include": ["**/*", "docs/.vitepress/**/*"]
 }
