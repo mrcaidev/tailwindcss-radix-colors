@@ -1,44 +1,42 @@
+import { rm } from "node:fs/promises";
 import radixColors from "@radix-ui/colors";
-import { rm } from "fs/promises";
-import { buildColorName, parseColorName } from "./parser";
+import { buildColorName, parseColorName, parseScale } from "./parser";
 
 // rm -rf dist
 await rm("dist", { recursive: true, force: true });
 
 // [color].css & [color]-colors-only.css
-for (const radixColorName in radixColors) {
+for (const [radixColorName, radixColor] of Object.entries(radixColors)) {
   const { dark, ...rest } = parseColorName(radixColorName);
 
-  // Dark variant will be handled along with its light variant.
+  // Dark variant will be handled together with its light variant.
   if (dark) {
     continue;
   }
 
-  const darkRadixColorName = buildColorName({ ...rest, dark: true });
-
-  type Key = keyof typeof radixColors;
-  const radixColor = radixColors[radixColorName as Key];
-  const darkRadixColor = radixColors[darkRadixColorName as Key];
+  const radixDarkColorName = buildColorName({ ...rest, dark: true });
+  const radixDarkColor =
+    radixColors[radixDarkColorName as keyof typeof radixColors];
 
   const colorName = radixColorName.toLowerCase();
-  const darkColorName = darkRadixColorName.toLowerCase();
+  const darkColorName = radixDarkColorName.toLowerCase();
 
   const theme = [
     "@theme {",
     // Light variant.
     ...Object.entries(radixColor).map(
       ([scale, value]) =>
-        `  --color-${colorName}-${scale.match(/\d+/)![0]}: ${value};`,
+        `  --color-${colorName}-${parseScale(scale)}: ${value};`,
     ),
     // Dark variant.
-    ...Object.entries(darkRadixColor ?? {}).map(
+    ...Object.entries(radixDarkColor ?? {}).map(
       ([scale, value]) =>
-        `  --color-${darkColorName}-${scale.match(/\d+/)![0]}: ${value};`,
+        `  --color-${darkColorName}-${parseScale(scale)}: ${value};`,
     ),
     "}",
   ].join("\n");
 
-  const layer = darkRadixColor
+  const layer = radixDarkColor
     ? [
         `@utility bg-${colorName}-app {`,
         `  @apply bg-${colorName}-1 dark:bg-${darkColorName}-1;`,
@@ -79,11 +77,11 @@ for (const radixColorName in radixColors) {
       ].join("\n")
     : "";
 
+  Bun.write(`dist/${colorName}-colors-only.css`, theme);
   Bun.write(
     `dist/${colorName}.css`,
     `@import "./${colorName}-colors-only.css";\n${layer}`,
   );
-  Bun.write(`dist/${colorName}-colors-only.css`, theme);
 }
 
 // all.css

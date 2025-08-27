@@ -5,21 +5,22 @@ export type ColorNameComponents = {
   alpha: boolean;
 };
 
-export function parseColorName(colorName: string) {
-  const { base, dark, p3, alpha } =
-    /^(?<base>.+?)(?<dark>dark)?(?<p3>p3)?(?<alpha>a)?$/i.exec(
-      colorName,
-    )!.groups!;
+export function parseColorName(colorName: string): ColorNameComponents {
+  // biome-ignore lint/style/noNonNullAssertion: We know @radix-ui/colors exports follow this rule.
+  const { base, dark, p3, alpha } = colorName.match(
+    /^(?<base>.+?)(?<dark>Dark)?(?<p3>P3)?(?<alpha>A)?$/i,
+  )!.groups!;
 
   return {
+    // biome-ignore lint/style/noNonNullAssertion: There must be a base.
     base: base!,
     dark: dark !== undefined,
     p3: p3 !== undefined,
     alpha: alpha !== undefined,
-  } satisfies ColorNameComponents;
+  };
 }
 
-export function buildColorName(components: ColorNameComponents) {
+export function buildColorName(components: ColorNameComponents): string {
   const { base, dark, p3, alpha } = components;
 
   let colorName = base;
@@ -37,4 +38,9 @@ export function buildColorName(components: ColorNameComponents) {
   }
 
   return colorName;
+}
+
+export function parseScale(scale: string): number {
+  const match = scale.match(/\d+$/);
+  return match ? Number(match[0]) : 0;
 }
