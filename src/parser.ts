@@ -8,7 +8,7 @@ export type ColorNameComponents = {
 export function parseColorName(colorName: string): ColorNameComponents {
   // biome-ignore lint/style/noNonNullAssertion: We know @radix-ui/colors exports follow this rule.
   const { base, dark, p3, alpha } = colorName.match(
-    /^(?<base>.+?)(?<dark>Dark)?(?<p3>P3)?(?<alpha>A)?$/i,
+    /^(?<base>.+?)(?<dark>Dark)?(?<p3>P3)?(?<alpha>A)?$/,
   )!.groups!;
 
   return {
