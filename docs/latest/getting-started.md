@@ -1,12 +1,14 @@
 # Getting Started
 
-## Installation
-
 > [!IMPORTANT]
 >
-> From v2 onwards, this plugin requires Tailwind CSS v4 or higher.
+> Since v2, this plugin requires `tailwindcss >= 4.0.0` and is NOT backward compatible.
 >
-> If you are not yet ready to upgrade Tailwind CSS to v4, please stick with plugin v1 and refer to the [legacy documentation](/v1/introduction/getting-started) for guidance.
+> If you are not ready to upgrade Tailwind CSS from v3 to v4, please stick with plugin [v1](/v1/introduction/getting-started).
+
+This plugin brings [Radix UI](https://www.radix-ui.com/)'s color system to [Tailwind CSS](https://tailwindcss.com/), including color variables and semantic classes that follow Radix's design guidelines.
+
+## Installation
 
 :::code-group
 
@@ -22,65 +24,59 @@ yarn add tailwindcss-radix-colors
 pnpm add tailwindcss-radix-colors
 ```
 
-```bash [deno]
-deno add npm:tailwindcss-radix-colors
-```
-
 ```bash [bun]
 bun add tailwindcss-radix-colors
+```
+
+```bash [deno]
+deno add npm:tailwindcss-radix-colors
 ```
 
 :::
 
 ## Configuration
 
-Import the colors you want in the same CSS file that imports Tailwind CSS:
+Import this plugin in the same file that imports Tailwind CSS.
 
 ```css
-@import "tailwindcss";
-@import "tailwindcss-radix-colors/dist/red.css"; /* [!code ++] */
-@import "tailwindcss-radix-colors/dist/greenp3.css"; /* [!code ++] */
-@import "tailwindcss-radix-colors/dist/bluep3a.css"; /* [!code ++] */
-```
-
-The dark variant is imported together with its light variant. For example, `reddark` is imported together with `red` in `red.css`, `greendarkp3` is imported together with `greenp3` in `greenp3.css`, and so on.
-
-Or if you prefer to import all colors at once:
-
-```css{2}
 @import "tailwindcss";
 @import "tailwindcss-radix-colors/dist/all.css"; /* [!code ++] */
 ```
 
-> [!CAUTION]
->
-> This will make the final CSS bundle super-bloated, as Tailwind CSS v4 no longer tree-shakes unused colors. It will also pollute and slow down your editor's Intellisense with all those colors you will never use. **It is suggested to only import the colors actually needed for better performance.**
->
-> :::details How bloated specifically?
->
-> Importing `all.css` will add ~626KB (or ~74KB gzipped) to the CSS bundle.
->
-> In comparison, importing `red.css` adds only ~3KB (or ~0.5KB gzipped).
->
-> :::
+Usually, you will want to use Radix colors exclusively and discard Tailwind colors.
 
-> Please refer to [Configuration](/latest/configuration) for more details about configuration.
+```css
+@import "tailwindcss";
+@theme {  /* [!code ++] */
+  --color-*: initial;  /* [!code ++] */
+} /* [!code ++] */
+@import "tailwindcss-radix-colors/dist/all.css";
+```
+
+> Please refer to [Configuration](/latest/configuration) for more options.
 
 ## Usage
 
-The imported Radix colors are now available everywhere.
-
-The biggest difference from Tailwind CSS is that the scale is now from 1 to 12, instead of from 50 to 950.
+The imported Radix colors are now available in your application. Note that every color now scales from 1 to 12, instead of 50 to 950 as in Tailwind CSS.
 
 ```html
+<!-- Basic -->
+<div class="bg-blue-1 text-slate-12"></div>
 <!-- Dark mode -->
-<div class="bg-red-1 dark:bg-reddark-1"></div>
+<div class="bg-red-9 dark:bg-reddark-9"></div>
 <!-- DCI-P3 color space -->
-<div class="bg-redp3-1 dark:bg-reddarkp3-1"></div>
+<div class="bg-greenp3-3"></div>
 <!-- Alpha variant -->
-<div class="bg-reda-1 dark:bg-reddarka-1"></div>
-<!-- Alpha variant in DCI-P3 color space -->
-<div class="bg-redp3a-1 dark:bg-reddarkp3a-1"></div>
-<!-- Component classes -->
-<div class="bg-red-ui border-red-dim text-red-normal"></div>
+<div class="bg-blacka-11"></div>
+<!-- Alpha variant in DCI-P3 color space under light/dark mode -->
+<div class="border-yellowp3a-6 dark:border-yellowdarkp3a-6"></div>
 ```
+
+Besides atomic color classes, we also offer some semantic classes that strictly adhere to Radix's design guidelines. For example, writing `bg-red-ui` is the same as writing `bg-red-3 dark:bg-reddark-3 hover:bg-red-4 dark:hover:bg-reddark-4 active:bg-red-5 dark:active:bg-reddark-5`, as per the guideline.
+
+```html
+<!-- Another example -->
+<div class="bg-teal-ui border-teal-dim text-sage-normal"></div>
+```
+
+> Please refer to [Semantic Classes](/latest/semantic-classes) for a complete reference.

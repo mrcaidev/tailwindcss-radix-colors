@@ -26,7 +26,6 @@ export default defineConfig({
     },
   },
   vite: {
-    // @ts-ignore it works
     plugins: [groupIconVitePlugin()],
   },
   themeConfig: {
@@ -36,8 +35,8 @@ export default defineConfig({
         text: "Version",
         items: [
           {
-            text: "latest (v2)",
-            link: "/latest/introduction",
+            text: "v2 (latest)",
+            link: "/latest/getting-started",
             activeMatch: "^/latest/",
           },
           {
@@ -61,10 +60,6 @@ export default defineConfig({
         base: "/latest",
         items: [
           {
-            text: "Introduction",
-            link: "/introduction",
-          },
-          {
             text: "Getting Started",
             link: "/getting-started",
           },
@@ -73,8 +68,8 @@ export default defineConfig({
             link: "/configuration",
           },
           {
-            text: "Component Classes",
-            link: "/component-classes",
+            text: "Semantic Classes",
+            link: "/semantic-classes",
           },
           {
             text: "Migrating to v2",

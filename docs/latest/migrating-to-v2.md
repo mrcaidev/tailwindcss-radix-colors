@@ -4,18 +4,6 @@ Almost everything in v2 is a **breaking change**, because technically speaking, 
 
 As the configuration style of Tailwind CSS v4 is drastically different from that in v3, we suggest you to start from scratch and follow the steps in [Getting Started](/latest/getting-started).
 
-## Opt-out to Opt-in
-
-In plugin v1, all Radix colors are imported by default, because of the confidence that Tailwind CSS v3 will tree-shake all unused colors for us during compilation time. Opting-out (by setting options `include` and `exclude`) is merely an optimization for editor Intellisense, and has nearly zero impact on the final CSS bundle size.
-
-However, this is no longer the case in Tailwind CSS v4, as the compiler no longer tree-shakes unused colors. Importing all colors at once will not only slow down your Intellisense, but also cause a significant increase in the final CSS bundle size.
-
-As such, we have to shift the mindset from opt-out to opt-in. **In v2, every Radix color has to be explicitly imported to be available for use.**
-
-```css
-@import "tailwindcss-radix-colors/dist/red.css";
-```
-
 ## Disable Semantics
 
 In v1, we set `disableSemantics` to `true` to disable the generation of semantic classes.
