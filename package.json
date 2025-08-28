@@ -44,6 +44,6 @@
     "vitepress-plugin-group-icons": "^1.6.3"
   },
   "peerDependencies": {
-    "tailwindcss": ">=4.0.8"
+    "tailwindcss": ">=4.0.0"
   }
 }
