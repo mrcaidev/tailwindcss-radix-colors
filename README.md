@@ -1,11 +1,13 @@
-# Tailwind CSS Radix Colors
+# tailwindcss-radix-colors
 
-![NPM version](https://img.shields.io/npm/v/tailwindcss-radix-colors)
-![CI status](https://img.shields.io/github/actions/workflow/status/mrcaidev/tailwindcss-radix-colors/ci.yaml?label=ci)
+![NPM Version](https://img.shields.io/npm/v/tailwindcss-radix-colors)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/mrcaidev/tailwindcss-radix-colors/ci.yaml)
 
 > [!WARNING]
 >
-> Plugin v2 only supports Tailwind CSS v4. If you are not ready to upgrade, please stick with plugin v1.
+> Since v2, this plugin requires `tailwindcss >= 4.0.0` and is NOT backward compatible.
+>
+> If you are not ready to upgrade Tailwind CSS from v3 to v4, please stick with plugin [v1](/v1/introduction/getting-started).
 
 A [Tailwind CSS](https://tailwindcss.com/) plugin that brings [Radix UI](https://www.radix-ui.com/)'s color system to Tailwind CSS.
 
