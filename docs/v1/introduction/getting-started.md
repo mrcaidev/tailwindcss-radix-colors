@@ -4,7 +4,7 @@
 >
 > You are reading the documentation of plugin v1, which only supports Tailwind CSS [v3](https://v3.tailwindcss.com/) and is NOT compatible with Tailwind CSS [v4](https://tailwindcss.com/).
 >
-> If you are using Tailwind CSS v4, please refer to the [latest documentation](/latest/introduction) instead.
+> If you are using Tailwind CSS v4, please refer to the [latest documentation](/latest/getting-started) instead.
 
 **Tailwind CSS Radix Colors** is a [Tailwind CSS](https://tailwindcss.com/) plugin that brings [Radix UI](https://www.radix-ui.com/)'s color system to Tailwind CSS.
 
